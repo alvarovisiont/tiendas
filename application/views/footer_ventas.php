@@ -77,7 +77,6 @@ $(function(){
                         $("#nombre_cliente").val("");
                         $("#telefono_cliente").val("");
                         $("#direccion_cliente").val("");
-                        $("#buscar_clientes").hide();
                         $("#nombre_cliente").focus();
                     }
                 }
@@ -197,6 +196,7 @@ $(function(){
                                 }
                                 numero_resta = parseInt(total);
                                 total_pagar =  parseInt(numero) + parseInt(total);
+                                total_total = total_total + total_pagar;
                                 total_pagar = format2(total_pagar);
                             }
                             sub_total = format2(sub_total);
@@ -282,6 +282,8 @@ $(function(){
 
             total_restar = numero;
 
+            total_pagar = total_total - parseInt(total_restar);
+
             nuevo_total_pagar = parseInt(total_span) - parseInt(total_restar);
 
             var nombre_articulo_eliminar = $(this).parent().siblings('.nombre').text();
@@ -348,28 +350,11 @@ $(function(){
 
         if(val != "efectivo")
         {
-            var total_span = $("#total span").text(),
+            var total_span,
                 porcentaje = 0;
 
-            array_pagar = [];
-            array_pagar = total_span.split(",");
-            numero = "";
-            for (var i = 0; i < array_pagar.length; i++)
-            {
-                if(array_pagar[i].indexOf('B') != -1)
-                {
-                    var posicion = (array_pagar[i].indexOf('B'));
-                    var cadena = array_pagar[i].substring(0,posicion -1);
-                    numero += cadena
-                }
-                else
-                {
-                    numero += array_pagar[i];
-                }
-            }
-
-            porcentaje = (numero * 2) / 100;
-            total_span = parseInt(numero) - parseInt(porcentaje);
+            porcentaje = (total_total * 2) / 100;
+            total_span = total_total - parseInt(porcentaje);
             total_span = format2(total_span);
             $("#total span").text(total_span+" <?php echo $this->session->userdata('siglas'); ?>");
 
@@ -382,32 +367,16 @@ $(function(){
                 if(total_formateado == true)
                 {
                     
-                    array_pagar = [];
-                    array_pagar = total_total.split(",");
-                    numero = "";
-                    for (var i = 0; i < array_pagar.length; i++)
-                    {
-                        if(array_pagar[i].indexOf('.') != -1)
-                        {
-                            var posicion = (array_pagar[i].indexOf('.'));
-                            var cadena = array_pagar[i].substring(0,posicion);
-                            numero += cadena
-                        }
-                        else
-                        {
-                            numero += array_pagar[i];
-                        }
-                    }
                     
-                    total_total = format2(parseInt(numero));
+                    total_span = format2(parseInt(total_total));
 
-                    $("#total span").text(total_total+" <?php echo $this->session->userdata('siglas'); ?>");
+                    $("#total span").text(total_span+" <?php echo $this->session->userdata('siglas'); ?>");
 
                  }
                  else
                  {
-                    total_total = format2(total_total);
-                    $("#total span").text(total_total+" <?php echo $this->session->userdata('siglas'); ?>");  
+                    total_span = format2(total_total);
+                    $("#total span").text(total_span+" <?php echo $this->session->userdata('siglas'); ?>");  
                     total_formateado = true;
                  }                    
             }
@@ -506,8 +475,16 @@ $(function(){
 
     $("#imprimir_factura").click(function(){
         var ruta = $(this).data('ruta');
-
         window.open(ruta, '_blank');
+        $("#form_agregar_compra")[0].reset();
+        $("#tabla_productos tbody").html('');
+        $("#grabar_compra").prop('disabled');
+        $("#imprimir_factura").hide();
+        $("#total span").html('');
+        $("#monto_suficiente").html('').hide();
+        $("#falta_dinero").html('');
+        $("#boton_agregar_tabla").prop('disabled', false)
+        total_total = 0;
     });
 
 });

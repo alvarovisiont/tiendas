@@ -88,7 +88,7 @@ class Login extends CI_Controller
 		$array = ['hora_desconexion' => $ahora];
 		$this->Auditoria_Model->grabar_ultima_conexion($array);
 
-		$sessiones = ['id', 'usuario', 'nivel', 'empresa', 'logo', 'siglas', 'id_auditoria', 'direccion', 'telefono', 'email'];
+		$sessiones = ['id', 'usuario', 'nivel', 'empresa', 'logo', 'siglas', 'id_auditoria', 'direccion', 'telefono', 'email', 'retencion'];
 		$this->session->unset_userdata($sessiones);
 		redirect(base_url()."Login");
 	}
