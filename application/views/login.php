@@ -8,6 +8,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="initial-scale=1.0, maximum-scale=2.0">
   <link rel="stylesheet" type="text/css" href="./css/bootstrap.css">
+  <link rel="stylesheet" type="text/css" href="./css/bootstrap-datepicker.css">
   <link rel="stylesheet" type="text/css" href="./css/sweetalert2.css">
   <link rel="stylesheet" type="text/css" href="./css/font-awesome.min.css">
     

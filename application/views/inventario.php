@@ -56,149 +56,72 @@
 								{
 									foreach ($datos as $row) 
 									{
+										$class = "";
+
 										if($row->cantidad < 10)
 										{
-											if($session == 1)
-											{
-												echo "<tr class='alert alert-danger'>
-														<td>$row->nombre</td>
-														<td>$row->marca</td>
-														<td>$row->grupo</td>
-														<td>$row->precio_proveedor</td>
-														<td>$row->precio</td>
-														<td><span class='label label-info letras'>$row->cantidad</span></td>
-														<td>".date('d-m-Y' ,strtotime($row->fecha_agregado))."</td>
-														<td>$row->proveedor_nombre</td>
-														<td>$row->observacion</td>
-														
-														<td>
-															<button class='btn btn-warning btn-sm' data-toggle='modal' data-target='#modi_articulo'
-																data-id_modi = '$row->id'
-																data-nombre_modi = '$row->nombre'
-																data-marca_modi = '$row->marca'
-																data-precio_modi = '$row->precio'
-																data-iva_modi = '$row->iva'
-																data-cantidad_modi = '$row->cantidad'
-																data-grupo_modi = '$row->grupo'
-																data-proveedor_modi = '$row->id_proveedor'
-																data-fecha_modi = '".date('d-m-Y',strtotime($row->fecha_agregado))."'
-																data-observacion_modi = '$row->observacion'><i class='fa fa-edit'></i>
-																</button>
-															<button class='btn btn-danger btn-sm' id='eliminar_articulo' data-ruta ='".base_url()."Inventario/eliminar/".$row->id."'><i class='fa fa-trash'></i></button>
-														</td>
-													</tr>";
-											}
-											else
-											{
-												echo "<tr class='alert alert-danger'>
-														<td>$row->nombre</td>
-														<td>$row->marca</td>
-														<td>$row->grupo</td>
-														<td>$row->precio_proveedor</td>
-														<td>$row->precio</td>
-														<td><span class='label label-info letras'>$row->cantidad</span></td>
-														<td>".date('d-m-Y' ,strtotime($row->fecha_agregado))."</td>
-														<td>$row->proveedor_nombre</td>
-														<td>$row->observacion</td>
-													</tr>";	
-											}
+											$class = 'alert alert-danger';
 
 										}
 										elseif ($row->cantidad >= 10 && $row->cantidad < 100) 
 										{
-											if($session == 1)
-											{
-												echo "<tr class='alert alert-warning'>
-														<td>$row->nombre</td>
-														<td>$row->marca</td>
-														<td>$row->grupo</td>
-														<td>$row->precio_proveedor</td>
-														<td>$row->precio</td>
-														<td><span class='label label-info letras'>$row->cantidad</span></td>
-														<td>".date('d-m-Y' ,strtotime($row->fecha_agregado))."</td>
-														<td>$row->proveedor_nombre</td>
-														<td>$row->observacion</td>
-														<td>
-															<button class='btn btn-warning btn-sm' data-toggle='modal' data-target='#modi_articulo'
-																data-id_modi = '$row->id'
-																data-nombre_modi = '$row->nombre'
-																data-marca_modi = '$row->marca'
-																data-precio_modi = '$row->precio'
-																data-cantidad_modi = '$row->cantidad'
-																data-grupo_modi = '$row->grupo'
-																data-proveedor_modi = '$row->id_proveedor'
-																data-fecha_modi = '".date('d-m-Y',strtotime($row->fecha_agregado))."'
-																data-observacion_modi = '$row->observacion'><i class='fa fa-edit'></i>
-																</button>
-															<button class='btn btn-danger btn-sm' id='eliminar_articulo' data-ruta ='".base_url()."Inventario/eliminar/".$row->id."'><i class='fa fa-trash'></i></button>
-														</td>
-													</tr>";	
-											}
-											else
-											{
-												echo "<tr class='alert alert-warning'>
-														<td>$row->nombre</td>
-														<td>$row->marca</td>
-														<td>$row->grupo</td>
-														<td>$row->precio_proveedor</td>
-														<td>$row->precio</td>
-														<td><span class='label label-info letras'>$row->cantidad</span></td>
-														<td>".date('d-m-Y' ,strtotime($row->fecha_agregado))."</td>
-														<td>$row->proveedor_nombre</td>
-														<td>$row->observacion</td>
-													</tr>";		
-											}
+											$class = 'alert alert-warning';
 												
 										}
 										elseif ($row->cantidad >= 100) 
 										{
-											if($session == 1)
-											{
-												echo "<tr class='alert alert-success'>
-														<td>$row->nombre</td>
-														<td>$row->marca</td>
-														<td>$row->grupo</td>
-														<td>$row->precio_proveedor</td>
-														<td>$row->precio</td>
-														<td><span class='label label-info letras'>$row->cantidad</span></td>
-														<td>".date('d-m-Y' ,strtotime($row->fecha_agregado))."</td>
-														<td>$row->proveedor_nombre</td>
-														<td>$row->observacion</td>
-														<td>
-															<button class='btn btn-warning btn-sm' data-toggle='modal' data-target='#modi_articulo'
-																data-id_modi = '$row->id'
-																data-nombre_modi = '$row->nombre'
-																data-marca_modi = '$row->marca'
-																data-costo_modi = '$row->precio_proveedor'
-																data-precio_modi = '$row->precio'
-																data-grupo_modi = '$row->grupo'
-																data-cantidad_modi = '$row->cantidad'
-																data-proveedor_modi = '$row->id_proveedor'
-																data-fecha_modi = '".date('d-m-Y',strtotime($row->fecha_agregado))."'
-																data-observacion_modi = '$row->observacion'><i class='fa fa-edit'></i>
-																</button>
-															<button class='btn btn-danger btn-sm eliminar_articulo' data-ruta ='".base_url()."Inventario/eliminar/".$row->id."'><i class='fa fa-trash'></i></button>
-														</td>
-													</tr>";
-											}
-											else
-											{
-												echo "<tr class='alert alert-success'>
-														<td>$row->nombre</td>
-														<td>$row->marca</td>
-														<td>$row->grupo</td>
-														<td>$row->precio_proveedor</td>
-														<td>$row->precio</td>
-														<td><span class='label label-info letras'>$row->cantidad</span></td>
-														<td>".date('d-m-Y' ,strtotime($row->fecha_agregado))."</td>
-														<td>$row->proveedor_nombre</td>
-														<td>$row->observacion</td>
-													</tr>";	
-											}
-												
+											$class = 'alert alert-success';
 										}
-											//
+										if($session == 1)
+										{
+											echo "<tr class='".$class."'>
+													<td>$row->nombre</td>
+													<td>$row->marca</td>
+													<td>$row->grupo</td>
+													<td>$row->precio_proveedor</td>
+													<td>$row->precio</td>
+													<td><span class='label label-info letras'>$row->cantidad</span></td>
+													<td>".date('d-m-Y' ,strtotime($row->fecha_agregado))."</td>
+													<td>$row->proveedor_nombre</td>
+													<td>$row->observacion</td>
+													<td>
+														<button class='btn btn-warning btn-sm' data-toggle='modal' data-target='#modi_articulo'
+															data-id_modi = '$row->id'
+															data-nombre_modi = '$row->nombre'
+															data-marca_modi = '$row->marca'
+															data-costo_modi = '$row->precio_proveedor'
+															data-precio_modi = '$row->precio'
+															data-grupo_modi = '$row->grupo'
+															data-cantidad_modi = '$row->cantidad'
+															data-proveedor_modi = '$row->id_proveedor'
+															data-fecha_modi = '".date('d-m-Y',strtotime($row->fecha_agregado))."'
+															data-observacion_modi = '$row->observacion'
+															data-iva_modi = '$row->iva'
+															>
+
+															<i class='fa fa-edit'></i>
+															</button>
+														<button class='btn btn-danger btn-sm eliminar_articulo' data-ruta ='".base_url()."Inventario/eliminar/".$row->id."'><i class='fa fa-trash'></i></button>
+													</td>
+												</tr>";
+										}
+										else
+										{
+											echo "<tr class='".$class."'>
+													<td>$row->nombre</td>
+													<td>$row->marca</td>
+													<td>$row->grupo</td>
+													<td>$row->precio_proveedor</td>
+													<td>$row->precio</td>
+													<td><span class='label label-info letras'>$row->cantidad</span></td>
+													<td>".date('d-m-Y' ,strtotime($row->fecha_agregado))."</td>
+													<td>$row->proveedor_nombre</td>
+													<td>$row->observacion</td>
+												</tr>";	
+										}
+											
 									}
+											//
 								}
 								else
 								{
@@ -341,23 +264,6 @@
 	          								echo "<option>Debe Completar los datos en el modulo de configuración</option>";
 	          							}
 	          						 ?>
-	          					</select>
-	          				</div>
-	          			</div>
-	          			<div class="form-group">
-	          				<label for="marca" class="control-label col-md-3">Proveedor</label>
-	          				<div class="col-md-8">
-	          					<select class="form-control" id="proveedor_modi" name="proveedor_modi">
-	          						<option></option>
-	          						<?php
-	          							if($proveedores != "")
-	          							{
-	          								foreach ($proveedores as $row) 
-	          								{
-	          									echo "<option value='$row->id'>$row->nombre</option>";
-	          								}
-	          							}
-	          						?>
 	          					</select>
 	          				</div>
 	          			</div>

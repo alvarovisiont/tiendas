@@ -11,14 +11,12 @@
     <script src='./js/dataTables.bootstrap.js'></script>
     <script src='./js/select2.min.js'></script>
     <script src="./js/sweetalert2.min.js"></script>
+    <script src="js/bootstrap-datepicker.js"></script> 
+    
     <!-- Metis Menu Plugin JavaScript -->
     <script src="./js/metisMenu.min.js"></script>
-
     <!-- Morris Charts JavaScript -->
     <script src="./js/raphael.min.js"></script>
-    <script src="./js/morris.min.js"></script>
-    <script src="./js/morris-data.js"></script>
-
     <!-- Custom Theme JavaScript -->
     <script src="./js/sb-admin-2.min.js"></script>
 
