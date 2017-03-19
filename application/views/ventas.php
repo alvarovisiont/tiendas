@@ -91,7 +91,7 @@
 					</div>
 				</div>
 				<div class="form-group text-center">
-					<p class="alert alert-success" style="color: black; font-weight: bold;" id="total">Total a Pagar:&nbsp;&nbsp;<span></span></p>
+					<p class="alert alert-success" style="color: black; font-weight: bold;" id="total">Total a Pagar:&nbsp;&nbsp;<span></span>&nbsp;&nbsp;<?php echo $this->session->userdata('siglas'); ?></p>
 					<p class="alert alert-danger letras" id="falta_dinero" style="display: none; color: black; font-weight: bold;"></p>
 					<p class="alert alert-success letras" id="monto_suficiente" style="display: none; color: black; font-weight: bold;"></p>
 				</div>
@@ -111,7 +111,7 @@
 					<div class="form-group">
 						<label for="" class="control-label col-md-3">Monto pagado</label>
 						<div class="col-md-3">
-							<input type="number" class="form-control" name="monto_pago" id="monto_pago" required="">
+							<input type="number" class="form-control" name="monto_pago" id="monto_pago" required="" step="any">
 						</div>
 						<label for="" class="control-label col-md-2">Tipo Documento</label>
 						<div class="col-md-4">
@@ -129,49 +129,6 @@
 		</div>
 	</div>
 </div>
-<!--<div class="modal fade" id="agg_clientes" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  	<div class="modal-dialog tabla_modal" role="document">
-    	<div class="modal-content">
-	      <div class="modal-header modal-header2" style="background-color: #FFF">
-	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-	          <span aria-hidden="true">&times;</span>
-	        </button>
-	        <h3 class="text-center">Agregar Cliente&nbsp;<i class="fa fa-user-plus"></i></h3>
-	      </div>
-	      <div class="modal-body">
-	      	<form class="form-horizontal" id="form_agregar_cliente" action="<?php echo base_url().'Clientes/agregar'; ?>">
-	      		<div class="form-group">
-	      			<label class="control-label col-md-3">Nombre</label>
-	      			<div class="col-md-7">
-	      				<input type="text" name="nombre_cliente_agregar" id="nombre_cliente_agregar" class="form-control">
-	      			</div>
-	      		</div>
-	      		<div class="form-group">
-	      			<label class="control-label col-md-3">Apellido</label>
-	      			<div class="col-md-7">
-	      				<input type="text" name="apellido_cliente_agregar" id="nombre_cliente_agregar" class="form-control">
-	      			</div>
-	      		</div>
-	      		<div class="form-group">
-	      			<label class="control-label col-md-3">Teléfono</label>
-	      			<div class="col-md-7">
-	      				<input type="number" name="telefono_cliente_agregar" id="telefono_cliente_agregar" class="form-control">
-	      			</div>
-	      		</div>
-	      		<div class="form-group">
-	      			<label class="control-label col-md-3">Dirección</label>
-	      			<div class="col-md-7">
-	      				<input type="text" name="direccion_clientes_agregar" id="direccion_clientes_agregar" class="form-control">
-	      			</div>
-	      		</div>
-	      	</form>
-	      </div>
-	      <div class="modal-footer">
-	      	<button class="btn btn-success btn-md" type="button" id="boton_agregar_grupo">Agregar&nbsp;<i class="fa fa-thumbs-up"></i></button>
-	      </div>
-    	</div>
-	</div>
-</div>-->
 <div class="modal fade" id="mod_buscar_clientes" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   	<div class="modal-dialog tabla_modal" role="document">
     	<div class="modal-content">

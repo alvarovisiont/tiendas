@@ -24,6 +24,36 @@
         $("#proveedores").select2();
         $("#articulos").select2();
 
+        function format2(n) {
+            return n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
+        }
+        
+        function quitar_siglas(num)
+        {
+            var numero = "";
+            var array_pagar = [];
+
+            array_pagar = num.split(",");
+            for (var i = 0; i < array_pagar.length; i++)
+            {
+                //ciclo para quitar las comas del formato
+
+                if(array_pagar[i].indexOf('B') != -1)
+                {
+                    var posicion = (array_pagar[i].indexOf('B'));
+                    var cadena = array_pagar[i].substring(0,posicion -1);
+                    numero += cadena
+                }
+                else
+                {
+                    numero += array_pagar[i];
+                }
+            }
+
+            return numero;
+        }
+                
+
         $("#proveedores").change(function(){
             var id = $(this).val();
             $.ajax({
@@ -118,16 +148,21 @@
                         if(typeof(data.fallo) == "undefined" && typeof(data.repetido) == "undefined")
                         {
                             //Si llega respuesta se agrega el artículo a la tabla y se muestra el precio a cancelar--------------------------------
-                             var total_pagar = $("#sub-total").text();
+                             var sub_total = $("#sub-total").text();
                              var iva_calculado;
                              var iva_total_pagar;
                              var total = cantidad * data[0].precio_proveedor;
-                            if(total_pagar == "")
+
+                            if(sub_total == "")
                             {
-                                total_pagar = 0;
+                                sub_total = 0;
                             }
-                            total_pagar = parseInt(total_pagar) + parseInt(total);
-                            $("#sub-total").text(total_pagar);
+                            else
+                            {
+                                sub_total = quitar_siglas(sub_total);
+                            }
+                            
+                            sub_total = parseFloat(sub_total) + parseFloat(total);
 
                             var total_pagar_total = $("#total").text();
                             if(total_pagar_total == "")
@@ -140,73 +175,41 @@
                             {
                                 iva_registrado = 0;
                             }
+                            else
+                            {
+                                iva_registrado = quitar_siglas(iva_registrado);
+                            }
 
                             if(data[0].iva == 0)
                             {   
-                                iva_calculado = data[0].iva / 100;
                                 iva_total_pagar = iva_registrado;
+                                total_pagar_total = parseFloat(sub_total) + parseFloat(iva_total_pagar);
+
+                                iva_total_pagar = format2(parseFloat(iva_total_pagar));
+                                      sub_total = format2(sub_total);
+                                
                                 $("#iva").text(iva_total_pagar);
-                                total_pagar_total = parseInt(total_pagar) + parseInt(iva_total_pagar);
-                                $("#total").text(total_pagar_total+" <?php echo $this->session->userdata('siglas'); ?>");
+                                $("#sub-total").text(sub_total);
+                                $("#total").text(parseFloat(total_pagar_total));
                             }
                             else
                             {
                                 iva_calculado = data[0].iva / 100;
-                                var iva_recalculado = Math.round(parseInt(total) * iva_calculado);
-                                    iva_total_pagar = parseInt(iva_registrado) + iva_recalculado;
-                                $("#iva").text(iva_total_pagar);
-
-                                total_pagar_total = parseInt(total_pagar) + parseInt(iva_total_pagar);
-                                $("#total").text(total_pagar_total+" <?php echo $this->session->userdata('siglas'); ?>");
+                                var iva_recalculado = parseFloat(total) * parseFloat(iva_calculado);
+                                    iva_total_pagar = parseFloat(iva_registrado) + iva_recalculado;
+                                  total_pagar_total = parseFloat(sub_total) + parseFloat(iva_total_pagar);
+                                          sub_total = format2(sub_total);
+                                
+                                $("#iva").text( format2( parseFloat(iva_total_pagar) ) );
+                                $("#sub-total").text(sub_total);
+                                $("#total").text( format2( parseFloat(total_pagar_total ) ) );
                             }
                             
-                            var filas = "<tr class='alert alert-info'><td class='nombre_articulo'>"+data[0].nombre+"</td><td>"+data[0].marca+"</td><td>"+data[0].precio_proveedor+"</td><td>"+data[0].nombre_proveedor+"</td><td>"+cantidad+"</td><td class='cantidad'>"+total+"</td><td><a href='#' title='quitar' class='quitar' data-iva ='"+iva_calculado+"'><i class='fa fa-remove'></i></a></td></tr>";
+                            var filas = "<tr class='alert alert-info'><td class='nombre_articulo'>"+data[0].nombre+"</td><td>"+data[0].marca+"</td><td>"+format2(parseFloat(data[0].precio_proveedor))+"</td><td>"+data[0].nombre_proveedor+"</td><td>"+cantidad+"</td><td class='cantidad'>"+format2(parseFloat(total))+"</td><td><a href='#' title='quitar' class='quitar' data-iva ='"+format2(parseFloat(iva_calculado))+"'><i class='fa fa-remove'></i></a></td></tr>";
                             $("#tabla_articulos > tbody").append(filas);
                              
                             $("#section_pagar_oculto").show('slow/400/fast');
 //------------------------------------------------------------------------------------------------------------------------------
-
-//La funcion que se ejecutara al pulsar en la x de remover el artículo----------------------------------------------------
-
-                            $("#tabla_articulos > tbody").on('click', 'tr .quitar', function(){
-                                if(parseInt($("#total").text()) == total_pagar_total)
-                                {
-                                    var iva = $(this).data().iva;
-                                    $(this).parent().parent().remove();
-
-                                    var cantidad_pagar_articulo = parseInt($(this).parent().siblings(".cantidad").text());
-                                    var cantidad_total_pagar = parseInt($("#total").text());
-                                    var iva_flotante = cantidad_pagar_articulo * iva;
-                                    var iva_nuevo = parseInt($("#iva").text()) - iva_flotante;
-                                    var sub_total_nuevo = parseInt($("#sub-total").text()) - cantidad_pagar_articulo;
-                                    var nueva_cantidad_total = cantidad_total_pagar - cantidad_pagar_articulo - iva_flotante;
-                                    $("#sub-total").text('');
-                                    $("#sub-total").text(sub_total_nuevo);
-                                    $("#iva").text('');
-                                    $("#iva").text(iva_nuevo);
-                                    $("#total").text('');
-                                    $("#total").text(nueva_cantidad_total);
-                                    total_pagar_total = nueva_cantidad_total;
-
-                                //Lo siguiente es para eliminar el artículo de la tabla del detalle de la compra-----
-
-                                    var nombre_articulo_eliminar = $(this).parent().siblings(".nombre_articulo").text();
-                                    $.post("<?php echo base_url().'Compras/eliminar_articulo'; ?>",{nombre: nombre_articulo_eliminar});
-                                //-------------------------------------------------------------------------------
-
-                                    var total_filas = 0;
-                                    $("#tabla_articulos > tbody > tr").each(function(){
-                                        total_filas = parseInt(total_filas) + 1;
-                                    });
-                                    
-                                    if(total_filas == 0)
-                                    {
-                                        $("#section_pagar_oculto").hide('slow');
-                                        $("#total").text("");
-                                    }
-                                }
-                                     
-                            });
                         }
                         else if(typeof(data.repetido) != "undefined")
                         {
@@ -220,6 +223,59 @@
                     }
                 });
             }
+        });
+
+//La funcion que se ejecutara al pulsar en la x de remover el artículo----------------------------------------------------
+
+        $("#tabla_articulos > tbody").on('click', 'tr .quitar', function(){
+                
+                var iva = $(this).data().iva;
+                
+                $(this).parent().parent().remove();
+                
+                var cantidad_pagar_articulo = $(this).parent().siblings(".cantidad").text();
+                    cantidad_pagar_articulo = quitar_siglas(cantidad_pagar_articulo);
+
+                var cantidad_total_pagar = $("#total").text();
+                    cantidad_total_pagar = quitar_siglas(cantidad_total_pagar);
+
+                var iva_flotante = cantidad_pagar_articulo * iva;
+                var iva_anterior = $("#iva").text();
+                    iva_anterior = quitar_siglas(iva_anterior);
+                var iva_nuevo = parseFloat(iva_anterior) - parseFloat(iva_flotante);
+                    iva_nuevo = format2(iva_nuevo);
+
+                var sub_total = $("#sub-total").text();
+                    sub_total = quitar_siglas(sub_total);
+
+                var sub_total_nuevo = parseFloat(sub_total) - parseFloat(cantidad_pagar_articulo);
+                    sub_total_nuevo = format2(sub_total_nuevo);
+                var nueva_cantidad_total = parseFloat(cantidad_total_pagar) - parseFloat(cantidad_pagar_articulo) - parseFloat(iva_flotante);
+                    nueva_cantidad_total = format2(nueva_cantidad_total);
+                
+                $("#sub-total").text('');
+                $("#sub-total").text(sub_total_nuevo);
+                $("#iva").text('');
+                $("#iva").text(iva_nuevo);
+                $("#total").text('');
+                $("#total").text(nueva_cantidad_total);
+
+            //Lo siguiente es para eliminar el artículo de la tabla del detalle de la compra-----
+
+                var nombre_articulo_eliminar = $(this).parent().siblings(".nombre_articulo").text();
+                $.post("<?php echo base_url().'Compras/eliminar_articulo'; ?>",{nombre: nombre_articulo_eliminar});
+            //-------------------------------------------------------------------------------
+
+                var total_filas = 0;
+                $("#tabla_articulos > tbody > tr").each(function(){
+                    total_filas = parseInt(total_filas) + 1;
+                });
+                
+                if(total_filas == 0)
+                {
+                    $("#section_pagar_oculto").hide('slow');
+                    $("#total").text("");
+                }
         });
         
         $("#registrar_compra").click(function(){
@@ -256,6 +312,14 @@
             {
                 var ruta = $(this).data('ruta');
                 window.open(ruta, '_blank');
+                $(this).prop('disabled', true);
+                $("#articulos").empty();
+                $("#cantidad").val('');
+                $("#tabla_articulos").children('tbody').empty();
+                $("#sub-total").empty();
+                $("#iva").empty();
+                $("#total").empty();
+                $("#section_pagar_oculto").hide('slow/400/fast');
             }
         });
     });

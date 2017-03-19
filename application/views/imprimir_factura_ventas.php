@@ -121,16 +121,16 @@ clear: both;
 						}
 
 							echo '<tr>
-									<td>Sub-total</td>
-									<td colspan="6" align="right" style="padding-right: 5%"><strong>'.number_format($sub_total,2,",",".")." ".$this->session->userdata('siglas').'</strong></td>
+									<td colspan="2">Sub-total</td>
+									<td colspan="6" align="right" style="padding-right: 9%"><strong>'.number_format($sub_total,2,",",".")." ".$this->session->userdata('siglas').'</strong></td>
 								</tr>
 								<tr>
-									<td>Iva</td>
-									<td colspan="6" align="right" style="padding-right: 5%"><strong>'.number_format($iva,2,",",".")." ".$this->session->userdata('siglas').'</strong></td>
+									<td colspan="2">Iva</td>
+									<td colspan="6" align="right" style="padding-right: 9%"><strong>'.number_format($iva,2,",",".")." ".$this->session->userdata('siglas').'</strong></td>
 								</tr>
 								<tr>
-									<td>Total</td>
-									<td colspan="6" align="right" style="padding-right: 5%"><strong>'.number_format($total,2,",",".")." ".$this->session->userdata('siglas').'</strong></td>
+									<td colspan="2">Total</td>
+									<td colspan="6" align="right" style="padding-right: 9%"><strong>'.number_format($total,2,",",".")." ".$this->session->userdata('siglas').'</strong></td>
 								</tr>';
 					}
 				?>	

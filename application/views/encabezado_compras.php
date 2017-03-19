@@ -57,7 +57,8 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="<?php echo base_url()?>Admin"><?php echo $this->session->userdata('empresa'); ?></a>
+                <a class="navbar-brand" href="<?php echo base_url()?>Admin" width="100%"><img src="./img/<?php echo $this->session->userdata('logo'); ?>" alt="" width="40px" style="float: left;"> <span style=""><?php echo $this->session->userdata('empresa'); ?></span>
+                </a>
             </div>
             <!-- /.navbar-header -->
 

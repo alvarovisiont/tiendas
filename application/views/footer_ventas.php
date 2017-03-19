@@ -166,13 +166,13 @@ $(function(){
                         var sub_total = (data.precio * cantidad),
                             iva_calculado = data.iva / 100,
                             iva = (sub_total * iva_calculado),
-                            total = (parseInt(sub_total) + parseInt(iva));
+                            total = (parseFloat(sub_total) + parseFloat(iva));
                             total_total = total_total + total;
                             total_pagar = $("#total span").text();
                             if(total_pagar == "")
                             {
                                 total_pagar = 0;
-                                total_pagar = parseInt(total_pagar) + parseInt(total);
+                                total_pagar = parseFloat(total_pagar) + parseFloat(total);
                                 total_pagar = format2(total_pagar);
                             }
                             else
@@ -180,9 +180,10 @@ $(function(){
                                 var array_pagar = [];
                                 array_pagar = total_pagar.split(",");
                                 var numero = "";
-                                var numero_resta;
                                 for (var i = 0; i < array_pagar.length; i++)
                                 {
+                                    //ciclo para quitar las comas del formato
+
                                     if(array_pagar[i].indexOf('B') != -1)
                                     {
                                         var posicion = (array_pagar[i].indexOf('B'));
@@ -194,11 +195,10 @@ $(function(){
                                         numero += array_pagar[i];
                                     }
                                 }
-                                numero_resta = parseInt(total);
-                                total_pagar =  parseInt(numero) + parseInt(total);
-                                total_total = total_total + total_pagar;
+                                total_pagar =  parseFloat(numero) + parseFloat(total);
                                 total_pagar = format2(total_pagar);
                             }
+
                             sub_total = format2(sub_total);
                             iva = format2(iva);
                             total = format2(total);
@@ -206,6 +206,7 @@ $(function(){
 
 
                         var filas = "<tr><td class='nombre'>"+data.nombre+"</td><td>"+data.marca+"</td><td>"+data.precio+"</td><td>"+cantidad+"</td><td>"+sub_total+"</td><td>"+iva+"</td><td class='total'>"+total+"</td><td><button type='button' class='btn btn-danger eliminar_articulo'><i class='fa fa-remove'></i></button></td></tr>";
+
                         $("#section_registrar").show('slow/400/fast');
                         $("#tabla_productos tbody").append(filas);
                         $("#nombre_articulo").val('');
@@ -214,7 +215,7 @@ $(function(){
 
                         //definir el total a pagar-----------------------
 
-                        $("#total span").text(total_pagar+" <?php echo $this->session->userdata('siglas'); ?>");
+                        $("#total span").text(total_pagar);
                         //----------------------------------------------------
                     }
                     else if(typeof(data.inventario_insuficiente) != "undefined")
@@ -234,12 +235,8 @@ $(function(){
         }
     });
 
-    $("#tabla_productos tbody").on('click', 'tr td .eliminar_articulo', function(e){
+    $("#tabla_productos tbody").on('click', 'tr td .eliminar_articulo', function(e){       
 
-        var comparacion = $("#total span").text().substring(0, $("#total span").text().indexOf('B') -1);        
-
-        if(parseInt(comparacion) == parseInt(total_pagar))
-        {
             var total_span = $("#total span").text();
             var total_restar = $(this).parent().siblings('.total').text();
             var nuevo_total_pagar = "";
@@ -261,7 +258,7 @@ $(function(){
                 }
             }
 
-            total_span = numero;
+            total_span = parseFloat(numero);
 
             array_pagar = [];
             array_pagar = total_restar.split(",");
@@ -280,11 +277,11 @@ $(function(){
                 }
             }
 
-            total_restar = numero;
+            total_restar = parseFloat(numero);
 
-            total_pagar = total_total - parseInt(total_restar);
+            total_total = parseFloat(total_total) - parseFloat(total_restar);
 
-            nuevo_total_pagar = parseInt(total_span) - parseInt(total_restar);
+            nuevo_total_pagar = parseFloat(total_span) - parseFloat(total_restar);
 
             var nombre_articulo_eliminar = $(this).parent().siblings('.nombre').text();
 
@@ -293,9 +290,7 @@ $(function(){
             nuevo_total_pagar = nuevo_total_pagar;
             nuevo_total_pagar = format2(nuevo_total_pagar);
             
-            $("#total span").text(nuevo_total_pagar+ " <?php echo $this->session->userdata('siglas'); ?>");
-
-            total_pagar = nuevo_total_pagar;
+            $("#total span").text(nuevo_total_pagar);
 
             $.post("<?php echo base_url().'Ventas/eliminar_articulo'; ?>",{nombre: nombre_articulo_eliminar});
 
@@ -308,37 +303,8 @@ $(function(){
             {
                 $("#section_registrar").hide('slow');
             }
-        }
     });
 
-    /*$("#monto_pago").blur(function()
-    {
-        var total_pagar = parseInt($("#total span").text()),
-            monto_pagado = $(this).val();
-            if(monto_pagado < total_pagar)
-            {
-                var monto = parseInt(total_pagar) - parseInt(monto_pagado);
-                $("#falta_dinero").html('');
-                $("#falta_dinero").show('slow/400/fast');
-                $("#falta_dinero").text('La cantidad de dinero es insuficiente, restante por pagar: ' + monto);
-            }
-            else if(monto_pagado == total_pagar)
-            {
-                $("#falta_dinero").hide();
-                $("#monto_suficiente").html('');
-                $("#monto_suficiente").show('slow/400/fast');
-                $("#monto_suficiente").text('total vuelto: ' + 0); 
-                $("#grabar_compra").prop('disabled', false);  
-            }
-            else
-            {
-                var monto = parseInt(monto_pagado) - parseInt(total_pagar);
-                $("#monto_suficiente").html('');
-                $("#monto_suficiente").show('slow/400/fast');
-                $("#monto_suficiente").html('total vuelto: ' + monto);    
-                $("#grabar_compra").prop('disabled', false);
-            }
-    });*/
     $("#monto_pago").keyup(function()
     {
         $("#grabar_compra").prop('disabled', false);
@@ -346,17 +312,15 @@ $(function(){
 
     $("input[name='metodo_pago']").click(function(){
         val = $(this).val();
-        console.log(val);
 
         if(val != "efectivo")
         {
             var total_span,
                 porcentaje = 0;
-
             porcentaje = (total_total * 2) / 100;
-            total_span = total_total - parseInt(porcentaje);
+            total_span = parseFloat(total_total) - parseFloat(porcentaje);
             total_span = format2(total_span);
-            $("#total span").text(total_span+" <?php echo $this->session->userdata('siglas'); ?>");
+            $("#total span").text(total_span);
 
             tipo_venta = true;
         }
@@ -368,15 +332,15 @@ $(function(){
                 {
                     
                     
-                    total_span = format2(parseInt(total_total));
+                    total_span = format2(parseFloat(total_total));
 
-                    $("#total span").text(total_span+" <?php echo $this->session->userdata('siglas'); ?>");
+                    $("#total span").text(total_span);
 
                  }
                  else
                  {
                     total_span = format2(total_total);
-                    $("#total span").text(total_span+" <?php echo $this->session->userdata('siglas'); ?>");  
+                    $("#total span").text(total_span);  
                     total_formateado = true;
                  }                    
             }
@@ -386,91 +350,91 @@ $(function(){
 
     $("#form_agregar_compra").submit(function(e)
     {
-            var total_pagar = $("#total span").text(),
-            monto_pagado = $("#monto_pago").val();
+        var total_pagar = $("#total span").text(),
+        monto_pagado = $("#monto_pago").val();
 
-            array_pagar = [];
-            array_pagar = total_pagar.split(",");
-            numero = "";
-            for (var i = 0; i < array_pagar.length; i++)
+        array_pagar = [];
+        array_pagar = total_pagar.split(",");
+        numero = "";
+        for (var i = 0; i < array_pagar.length; i++)
+        {
+            if(array_pagar[i].indexOf('B') != -1)
             {
-                if(array_pagar[i].indexOf('B') != -1)
-                {
-                    var posicion = (array_pagar[i].indexOf('B'));
-                    var cadena = array_pagar[i].substring(0,posicion -1);
-                    numero += cadena
-                }
-                else
-                {
-                    numero += array_pagar[i];
-                }
-            }
-
-            total_pagar = numero;
-
-            if(monto_pagado < parseInt(total_pagar))
-            {
-                var monto = parseInt(total_pagar) - parseInt(monto_pagado);
-                monto = format2(monto);
-                $("#falta_dinero").html('');
-                $("#falta_dinero").show('slow/400/fast');
-                $("#falta_dinero").text('La cantidad de dinero es insuficiente, restante por pagar: ' + monto);
-                return false;
+                var posicion = (array_pagar[i].indexOf('B'));
+                var cadena = array_pagar[i].substring(0,posicion -1);
+                numero += cadena
             }
             else
             {
-                var vuelto = parseInt(monto_pagado) - parseInt(total_pagar);
-                $("#vuelto").val(vuelto);
-                $.ajax({
-                    url: $(this).attr('action'),
-                    type: "POST",
-                    data: $(this).serialize(),
-                    success: function()
-                    {
-                        swal({
-                            title: "¡Venta Registrada con Éxito!",
-                            type: "success",
-                            showButtonCancel: false,
-                            confirmButtonClass: "btn btn-primary",
-                            confirmButtonText: "confirmar",
-                            closeOnConfirm: true
-                        },function(confirmar)
-                        {
-                            $("#form_agregar_compra").keypress(function(e){
-                                if(e.keyCode == 13)
-                                {
-                                    return false;
-                                }
-                            });
-                            if(monto_pagado == total_pagar)
-                            {
-                                $("#falta_dinero").hide();
-                                $("#monto_suficiente").html('');
-                                $("#monto_suficiente").show('slow/400/fast');
-                                $("#monto_suficiente").text('total vuelto: ' + 0); 
-                                $("#grabar_compra").prop('disabled', true);  
-                            }
-                            else
-                            {
-                                $("#falta_dinero").hide();
-                                var monto = parseInt(monto_pagado) - parseInt(total_pagar);
-                                monto = format2(monto);
-                                $("#monto_suficiente").html('');
-                                $("#monto_suficiente").show('slow/400/fast');
-                                $("#monto_suficiente").html('total vuelto: ' + monto);    
-                                $("#grabar_compra").prop('disabled', true);
-                            }
-
-                            $("#imprimir_factura").show('slow/400/fast');
-
-                            $("#tabla_productos").children("tbody").children("tr").children("td").children(".eliminar_articulo").prop('disabled', true);
-                            $("#grabar_compra").prop('disabled', true);
-                            $("#boton_agregar_tabla").prop('disabled', true)
-                        });
-                    }
-                });
-                return false;
+                numero += array_pagar[i];
             }
+        }
+
+        total_pagar = numero;
+
+        if(parseFloat(monto_pagado) < parseFloat(total_pagar))
+        {
+            var monto = parseFloat(total_pagar) - parseFloat(monto_pagado);
+            monto = format2(monto);
+            $("#falta_dinero").html('');
+            $("#falta_dinero").show('slow/400/fast');
+            $("#falta_dinero").text('La cantidad de dinero es insuficiente, restante por pagar: ' + monto);
+            return false;
+        }
+        else
+        {
+            var vuelto = parseFloat(monto_pagado) - parseFloat(total_pagar);
+            $("#vuelto").val(vuelto);
+            $.ajax({
+                url: $(this).attr('action'),
+                type: "POST",
+                data: $(this).serialize(),
+                success: function()
+                {
+                    swal({
+                        title: "¡Venta Registrada con Éxito!",
+                        type: "success",
+                        showButtonCancel: false,
+                        confirmButtonClass: "btn btn-primary",
+                        confirmButtonText: "confirmar",
+                        closeOnConfirm: true
+                    },function(confirmar)
+                    {
+                        $("#form_agregar_compra").keypress(function(e){
+                            if(e.keyCode == 13)
+                            {
+                                return false;
+                            }
+                        });
+                        if(monto_pagado == total_pagar)
+                        {
+                            $("#falta_dinero").hide();
+                            $("#monto_suficiente").html('');
+                            $("#monto_suficiente").show('slow/400/fast');
+                            $("#monto_suficiente").text('total vuelto: ' + 0); 
+                            $("#grabar_compra").prop('disabled', true);  
+                        }
+                        else
+                        {
+                            $("#falta_dinero").hide();
+                            var monto = parseFloat(monto_pagado) - parseFloat(total_pagar);
+                            monto = format2(monto);
+                            $("#monto_suficiente").html('');
+                            $("#monto_suficiente").show('slow/400/fast');
+                            $("#monto_suficiente").html('total vuelto: ' + monto);    
+                            $("#grabar_compra").prop('disabled', true);
+                        }
+
+                        $("#imprimir_factura").show('slow/400/fast');
+
+                        $("#tabla_productos").children("tbody").children("tr").children("td").children(".eliminar_articulo").prop('disabled', true);
+                        $("#grabar_compra").prop('disabled', true);
+                        $("#boton_agregar_tabla").prop('disabled', true)
+                    });
+                }
+            });
+            return false;
+        }
     });
 
     $("#imprimir_factura").click(function(){

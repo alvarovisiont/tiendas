@@ -74,13 +74,13 @@
 						</div>
 						<div class="panel-body">
 							<div class="col-md-offset-2 col-md-10" style="font-family: Arial;">
-								<h4>Sub-Total:&nbsp;&nbsp;&nbsp;<span class="text-right letras" id="sub-total" style="color: black"></span></h4>
+								<h4>Sub-Total:&nbsp;&nbsp;&nbsp;<span class="text-right letras" id="sub-total" style="color: black"></span>&nbsp;&nbsp;<?php echo $this->session->userdata('siglas'); ?></h4>
 							</div>
 							<div class="col-md-offset-2 col-md-10" style="font-family: Arial;">
-								<h4>Iva:&nbsp;&nbsp;&nbsp;<span class="badge text-right letras" id="iva" style="background-color: white; color: black"></span></h4>
+								<h4>Iva:&nbsp;&nbsp;&nbsp;<span class="badge text-right letras" id="iva" style="background-color: white; color: black"></span>&nbsp;&nbsp;<?php echo $this->session->userdata('siglas'); ?></h4>
 							</div>
 							<div class="col-md-offset-2 col-md-10" style="font-family: Arial;">
-								<h4>Total:&nbsp;&nbsp;&nbsp;<span class=" badge text-right letras" id="total" style="background-color: skyblue;"></span></h4>
+								<h4>Total:&nbsp;&nbsp;&nbsp;<span class=" badge text-right letras" id="total" style="background-color: skyblue;"></span>&nbsp;&nbsp;<?php echo $this->session->userdata('siglas'); ?></h4>
 							</div>
 						</div>
 					</div>
