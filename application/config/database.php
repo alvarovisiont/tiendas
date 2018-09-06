@@ -75,11 +75,11 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',
-	'username' => 'root',
-	'password' => '',
-	'database' => 'tiendas',
-	'dbdriver' => 'mysqli',
+	'hostname' => 'ec2-50-16-196-57.compute-1.amazonaws.com',
+	'username' => 'ngiyxmrhpaurxx',
+	'password' => '9fc27dd075bbda3819546ba16d700d915bf308f524ac9e81dccaef3faac37aca',
+	'database' => 'd2eqtav79eegri',
+	'dbdriver' => 'postgre',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
 	'db_debug' => (ENVIRONMENT !== 'production'),
@@ -94,3 +94,4 @@ $db['default'] = array(
 	'failover' => array(),
 	'save_queries' => TRUE
 );
+
