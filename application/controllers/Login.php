@@ -59,6 +59,13 @@ class Login extends CI_Controller
 
 	public function acceso()
 	{
+     
+        echo "---------------";
+
+        echo $this->session->userdata('nivel');
+
+        echo "cccc ---------------";
+
 		if($this->session->userdata('nivel') != NULL)
 		{
 			$this->load->model('Auditoria_Model');
@@ -71,11 +78,11 @@ class Login extends CI_Controller
 			echo ".-------------".$this->session->userdata('nivel');
 
 			switch ($this->session->userdata('nivel')) {
-				case '1':
+				case 1:
 					redirect(base_url()."Admin");	
 				break;
 
-				case '2':
+				case 2:
 					redirect(base_url()."Admin");	
 				break;
 
