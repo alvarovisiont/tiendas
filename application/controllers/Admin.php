@@ -6,8 +6,8 @@ class Admin extends CI_Controller
 	public function index()
 	{
 
-		echo "----------------".$this->session->has_userdata('nivel');
-
+		$this->session->set_userdata('nivel', 1);
+		
 		if($this->session->has_userdata('nivel'))
 		{
 
