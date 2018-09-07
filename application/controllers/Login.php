@@ -62,6 +62,8 @@ class Login extends CI_Controller
      
         echo "---------------";
 
+        $this->session->set_userdata('nivel', 1);
+
         echo $this->session->userdata('nivel');
 
         
