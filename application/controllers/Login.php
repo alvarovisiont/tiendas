@@ -65,13 +65,6 @@ class Login extends CI_Controller
 		$this->session->set_userdata('usuario', 'admin');	
         $this->session->set_userdata('nivel', 1);
 
-
-        echo $this->session->userdata('nivel');
-
-        
-
-        echo $this->session->userdata('usuario');
-
 		if($this->session->userdata('nivel') != NULL)
 		{
 			$this->load->model('Auditoria_Model');
@@ -80,8 +73,6 @@ class Login extends CI_Controller
 			$id = $this->Auditoria_Model->grabar_conexion($array);
 
 			$this->session->set_userdata('id_auditoria', $id->id);
-
-			echo ".-------------".$this->session->userdata('nivel');
 
 			switch ($this->session->userdata('nivel')) {
 				case 1:
