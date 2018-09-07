@@ -46,9 +46,6 @@ class Login extends CI_Controller
 				}
 				$this->session->set_userdata('id', $datos->id);
 				$this->session->set_userdata('usuario', $datos->usuario);
-
-				echo "consulta-->".$datos->nivel;
-
 				$this->session->set_userdata('nivel', $datos->nivel);
 				echo json_encode($data);
 			}
@@ -67,7 +64,11 @@ class Login extends CI_Controller
 
         echo $this->session->userdata('nivel');
 
+        
+
         echo "cccc ---------------";
+
+        echo $this->session->userdata('usuario');
 
 		if($this->session->userdata('nivel') != NULL)
 		{
