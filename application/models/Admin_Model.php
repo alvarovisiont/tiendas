@@ -32,10 +32,15 @@ class Admin_Model extends CI_Model
       {
          $mes = date('m');
          $año = date('Y');
-         $sql = "SELECT SUM(monto_pagado) as total_ventas, MONTH(fecha_venta) as mes,
+
+        /* $sql = "SELECT SUM(monto_pagado) as total_ventas, MONTH(fecha_venta) as mes,
                 (SELECT SUM(monto_pagado) from compras where YEAR(fecha_compra) = $año and MONTH(fecha_compra) = mes) as total_compras 
                 from ventas 
                 where YEAR(fecha_venta) = $año GROUP BY mes asc";
+          */
+
+          $sql = "SELECT * from ventas";       
+         
          $query = $this->db->query($sql);
          if($query->num_rows() > 0)
          {
