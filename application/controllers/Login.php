@@ -68,6 +68,8 @@ class Login extends CI_Controller
 
 			$this->session->set_userdata('id_auditoria', $id->id);
 
+			echo ".-------------".$this->session->userdata('nivel');
+
 			switch ($this->session->userdata('nivel')) {
 				case '1':
 					redirect(base_url()."Admin");	
