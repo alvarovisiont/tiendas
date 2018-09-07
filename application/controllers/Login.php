@@ -64,6 +64,7 @@ class Login extends CI_Controller
         $this->session->set_userdata('id', 1);
 		$this->session->set_userdata('usuario', 'admin');	
         $this->session->set_userdata('nivel', 1);
+        /* ----------------------------------*/
 
 		if($this->session->userdata('nivel') != NULL)
 		{
