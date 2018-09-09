@@ -103,7 +103,11 @@ class Caja_Model extends CI_Model
    public function saldo_estadistica_año($año)
    {
       
-      $sql = "SELECT SUM(monto_pagado) as total_monto, SUM(vuelto) as total_vuelto, YEAR(fecha_venta) as año from ventas where YEAR(fecha_venta) = $año GROUP BY  año asc";
+      /*$sql = "SELECT SUM(monto_pagado) as total_monto, SUM(vuelto) as total_vuelto, YEAR(fecha_venta) as año from ventas where YEAR(fecha_venta) = $año GROUP BY  año asc";
+      */
+
+      $sql = "SELECT monto_pagado as total_monto, vuelto as total_vuelto, fecha_venta as año from ventas";
+
       $query = $this->db->query($sql);
       if($query->num_rows() > 0)
       {
