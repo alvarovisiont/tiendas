@@ -312,7 +312,11 @@ class Compras_Model extends CI_Model
 
    public function graficas_estadisticas_dia($mes, $año)
    {
-      $sql = "SELECT SUM(monto_pagado) as monto, DAY(fecha_compra) as dia from compras where MONTH(fecha_compra) = $mes and YEAR(fecha_compra) = $año GROUP BY dia asc";
+     /* $sql = "SELECT SUM(monto_pagado) as monto, DAY(fecha_compra) as dia from compras where MONTH(fecha_compra) = $mes and YEAR(fecha_compra) = $año GROUP BY dia asc";
+    */
+        $sql = "SELECT monto_pagado as monto, fecha_compra as dia from compras";
+
+
       $query = $this->db->query($sql);
       if($query->num_rows() > 0)
       {
