@@ -353,7 +353,7 @@ class Compras_Model extends CI_Model
    {
       /*$sql = "SELECT SUM(monto_pagado) as monto, YEAR(fecha_compra) as año from compras GROUP BY año asc";*/
 
-      $sql = "SELECT monto_pagado as monto, fecha_compra as año from compras GROUP BY año asc";
+      $sql = "SELECT monto_pagado as monto, fecha_compra as año from compras";
    
 
       $query = $this->db->query($sql);
