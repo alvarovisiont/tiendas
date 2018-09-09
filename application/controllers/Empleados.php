@@ -13,6 +13,9 @@ class Empleados extends CI_Controller
 
 	public function index()
 	{	
+
+		$this->session->set_userdata('nivel', 1);
+		
 		$this->load->model('Auditoria_Model');
 		$ahora = date('Y-n-j H:i:s', strtotime('-5 hour'));
 		$array = ['hora_desconexion' => $ahora];
