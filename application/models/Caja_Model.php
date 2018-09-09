@@ -60,7 +60,12 @@ class Caja_Model extends CI_Model
 
    public function saldo_estadistica_dia($mes, $año)
    {
-      $sql = "SELECT SUM(monto_pagado) as total_monto, SUM(vuelto) as total_vuelto, DAY(fecha_venta) as dia from ventas where MONTH(fecha_venta) = $mes and YEAR(fecha_venta) = $año GROUP BY dia asc";
+      /*$sql = "SELECT SUM(monto_pagado) as total_monto, SUM(vuelto) as total_vuelto, DAY(fecha_venta) as dia from ventas where MONTH(fecha_venta) = $mes and YEAR(fecha_venta) = $año GROUP BY dia asc";
+      */
+      
+      $sql = "SELECT monto_pagado as total_monto, vuelto as total_vuelto, fecha_venta as dia from ventas";
+     
+
       $query = $this->db->query($sql);
          if($query->num_rows() > 0)
          {
