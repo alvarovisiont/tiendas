@@ -12,7 +12,7 @@ class Proveedores_Model extends CI_Model
 
    public function traer_datos()
    {
-         $sql = "SELECT p.id ,p.nombre, p.telefono, p.email, p.direccion, p.pagina_web, p.fax, p.rif FROM `proveedores` p";
+         $sql = "SELECT p.id ,p.nombre, p.telefono, p.email, p.direccion, p.pagina_web, p.fax, p.rif FROM proveedores p";
    		$query = $this->db->query($sql);
    		if($query->num_rows() > 0)
    		{
