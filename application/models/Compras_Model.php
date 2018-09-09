@@ -332,7 +332,9 @@ class Compras_Model extends CI_Model
 
    public function grafico_estadistica_mes($año)
    {
-      $sql = "SELECT SUM(monto_pagado) as monto, MONTH(fecha_compra) as mes from compras where YEAR(fecha_compra) = $año GROUP BY mes asc";
+      /*$sql = "SELECT SUM(monto_pagado) as monto, MONTH(fecha_compra) as mes from compras where YEAR(fecha_compra) = $año GROUP BY mes asc";
+      */
+       $sql = "SELECT monto_pagado as monto, fecha_compra as mes from compras";
 
       $query = $this->db->query($sql);
       if($query->num_rows() > 0)
