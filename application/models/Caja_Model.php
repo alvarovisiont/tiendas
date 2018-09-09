@@ -16,8 +16,12 @@ class Caja_Model extends CI_Model
          {
             $mes = date('m');
          }
-         $this->db->where('MONTH(fecha_venta)', $mes);
-   		$query = $this->db->get('ventas');
+        // $this->db->where('MONTH(fecha_venta)', $mes);
+   		
+
+         $this->db->select('*');
+
+         $query = $this->db->get('ventas');
    		if($query->num_rows() > 0)
    		{
             $filas = $query->result();
