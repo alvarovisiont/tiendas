@@ -29,7 +29,7 @@ class Caja extends CI_Controller
 			$mes = date('m');
 			$datos = $this->Caja_Model->traer_datos($mes);
 			$monto = $this->Caja_Model->saldo($mes);
-			$monto = $monto->total_monto - $monto->total_vuelto;
+			$monto = @$monto->total_monto - @$monto->total_vuelto;
 			$this->load->view("encabezado");
 			$this->load->view("caja", compact('datos', 'monto'));
 			$this->load->view("footer_caja");
