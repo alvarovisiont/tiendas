@@ -38,9 +38,11 @@ class Caja_Model extends CI_Model
    public function saldo($mes)
    {
         // $this->db->where('MONTH(fecha_venta)', $mes);
-        // $this->db->select('SUM(monto_pagado) as total_monto, SUM(vuelto) as total_vuelto');
         
-        $this->db->select('*');
+
+         $this->db->select('monto_pagado as total_monto','vuelto as total_vuelto');
+        
+       // $this->db->select('*');
          $query = $this->db->get('ventas');
          if($query->num_rows() > 0)
          {
