@@ -260,8 +260,8 @@
 	          							//if($this->session->has_userdata('iva'))
 	          						    if( 1 == 1)
 	          							{
-	          						echo "<option value='".$this->session->userdata('iva')."'>".$this->session->userdata('iva')."</option>
-	          									<option value='0'>Excento de Iva</option>";
+	          						echo "<option value='0'>Excento de Iva</option>
+	          									<option value='14'>14%</option>";
 	          							}
 	          							else
 	          							{
@@ -402,8 +402,9 @@
 	          							//if($this->session->has_userdata('iva'))
 	          							if(1 == 1)
 	          							{
-	          								echo "<option value='".$this->session->userdata('iva')."'>".$this->session->userdata('iva')."</option>
-	          									<option value='0'>Excento de Iva</option>";
+	          								echo "
+	          									<option value='0'>Excento de Iva</option>
+	          									<option value='14'>14%</option>";
 	          							}
 	          							else
 	          							{
