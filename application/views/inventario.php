@@ -1,5 +1,6 @@
 <?php
-	$session = $this->session->userdata('nivel');
+	$session = 1;
+	//$this->session->userdata('nivel');
 ?>
 <div class="row">
 	<div class="container-fluid">
