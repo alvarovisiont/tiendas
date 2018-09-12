@@ -19,7 +19,7 @@
                     </div>
                     <a href="<?php echo base_url().'Inventario'; ?>">
                         <div class="panel-footer">
-                            <span class="pull-left">Ver detalles</span>
+                            <span class="pull-left">Ver detalles1111111111111111111111111</span>
                             <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                             <div class="clearfix"></div>
                         </div>

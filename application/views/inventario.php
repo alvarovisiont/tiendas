@@ -17,7 +17,7 @@
 			<br>
 			<div class="panel panel-green">
 				<div class="panel-heading">
-					<h3>Inventario1111111111111111111111111111111111111 del Almacen&nbsp;&nbsp;<i class="fa fa-book"></i>
+					<h3>Inventario del Almacen&nbsp;&nbsp;<i class="fa fa-book"></i>
 					<?php 
 					if($session == 1)
 					{
