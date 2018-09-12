@@ -259,12 +259,13 @@
 	          							//if($this->session->has_userdata('iva'))
 	          						    if( 1 == 1)
 	          							{
-	          								echo "<option value='".$this->session->userdata('iva')."'>".$this->session->userdata('iva')."</option>
+	          						echo "<option value='".$this->session->userdata('iva')."'>".$this->session->userdata('iva')."</option>
 	          									<option value='0'>Excento de Iva</option>";
 	          							}
 	          							else
 	          							{
-	          								echo "<option>Debe Completar los datos en el modulo de configuración</option>";
+	          								echo "<option value='0'>Excento de Iva</option>
+	          								<option value='14'>14%";
 	          							}
 	          						 ?>
 	          					</select>
@@ -405,7 +406,9 @@
 	          							}
 	          							else
 	          							{
-	          								echo "<option>Debe Completar los datos en el modulo de configuración</option>";
+	          								echo "<option value='0'>Excento de Iva</option>
+	          								<option value='14'>14%";
+	          								/*echo "<option>Debe Completar los datos en el modulo de configuración</option>";*/
 	          							}
 	          						 ?>
 	          					</select>
