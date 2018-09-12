@@ -445,14 +445,17 @@
 	          	</div>
 	          	<div class="modal-footer">
 	          		<?php 
-	          			if($this->session->has_userdata('iva'))
+
+	          		echo '<button type="submit" class="btn btn-danger">Agregar&nbsp;&nbsp;<i class="fa fa-thumbs-up"></i></button>';
+
+	          		/*	if($this->session->has_userdata('iva'))
 	          			{
 	          				echo '<button type="submit" class="btn btn-danger">Agregar&nbsp;&nbsp;<i class="fa fa-thumbs-up"></i></button>';
 	          			}
 	          			else
 	          			{
 	          				echo '<button type="submit" class="btn btn-danger" disabled>Agregar&nbsp;&nbsp;<i class="fa fa-thumbs-up"></i></button>';
-	          			}
+	          			}*/
 	          		 ?>
 	                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar&nbsp;&nbsp;<i class="fa fa-remove"></i></button>
 	            </div>
