@@ -1,8 +1,5 @@
 <?php
-
-echo "------------------------------------------";
-	$session = 1;
-	//$this->session->userdata('nivel');
+	$session = $this->session->userdata('nivel');
 ?>
 <div class="row">
 	<div class="container-fluid">
@@ -448,7 +445,10 @@ echo "------------------------------------------";
 	          	</div>
 	          	<div class="modal-footer">
 	          		<?php 
-	          			if($this->session->has_userdata('iva'))
+	          			//if($this->session->has_userdata('iva'))
+	          			
+	          				if(1 == 1)
+
 	          			{
 	          				echo '<button type="submit" class="btn btn-danger">Agregar&nbsp;&nbsp;<i class="fa fa-thumbs-up"></i></button>';
 	          			}
