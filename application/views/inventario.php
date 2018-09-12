@@ -254,6 +254,8 @@
 	          				<div class="col-md-8">
 	          					<select class="form-control" id="iva_modi" name="iva_modi">
 	          						<?php 
+	          						$this->session->has_userdata('iva') = 14;
+	   
 	          							if($this->session->has_userdata('iva'))
 	          							{
 	          								echo "<option value='".$this->session->userdata('iva')."'>".$this->session->userdata('iva')."</option>
