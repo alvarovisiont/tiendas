@@ -1,4 +1,6 @@
 <?php
+
+echo "------------------------------------------";
 	$session = 1;
 	//$this->session->userdata('nivel');
 ?>
