@@ -254,9 +254,10 @@
 	          				<div class="col-md-8">
 	          					<select class="form-control" id="iva_modi" name="iva_modi">
 	          						<?php 
-	          						$this->session->has_userdata('iva') = 14;
-	   
-	          							if($this->session->has_userdata('iva'))
+	          						
+
+	          							//if($this->session->has_userdata('iva'))
+	          						    if( 1 == 1)
 	          							{
 	          								echo "<option value='".$this->session->userdata('iva')."'>".$this->session->userdata('iva')."</option>
 	          									<option value='0'>Excento de Iva</option>";
@@ -396,7 +397,8 @@
 	          				<div class="col-md-8">
 	          					<select class="form-control" id="iva" name="iva">
 	          						<?php 
-	          							if($this->session->has_userdata('iva'))
+	          							//if($this->session->has_userdata('iva'))
+	          							if(1 == 1)
 	          							{
 	          								echo "<option value='".$this->session->userdata('iva')."'>".$this->session->userdata('iva')."</option>
 	          									<option value='0'>Excento de Iva</option>";
