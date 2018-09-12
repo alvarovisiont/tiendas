@@ -250,7 +250,7 @@
 	          				</div>
 	          			</div>
 	          			<div class="form-group">
-	          				<label for="marca" class="control-label col-md-3">Iva</label>
+	          				<label for="marca" class="control-label col-md-3">Iva11111</label>
 	          				<div class="col-md-8">
 	          					<select class="form-control" id="iva_modi" name="iva_modi">
 	          						<?php 
@@ -394,7 +394,7 @@
 	          				</div>
 	          			</div>
 	          			<div class="form-group">
-	          				<label for="marca" class="control-label col-md-3">Iva</label>
+	          				<label for="marca" class="control-label col-md-3">Iva222222</label>
 	          				<div class="col-md-8">
 	          					<select class="form-control" id="iva" name="iva">
 	          						<?php 
