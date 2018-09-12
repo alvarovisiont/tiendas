@@ -1,5 +1,6 @@
 <?php
-	$session = $this->session->userdata('nivel');
+	$session = 1;
+	//$this->session->userdata('nivel');
 ?>
 <div class="row">
 	<div class="container-fluid">
@@ -250,7 +251,7 @@
 	          				</div>
 	          			</div>
 	          			<div class="form-group">
-	          				<label for="marca" class="control-label col-md-3">Iva11111</label>
+	          				<label for="marca" class="control-label col-md-3">Iva</label>
 	          				<div class="col-md-8">
 	          					<select class="form-control" id="iva_modi" name="iva_modi">
 	          						<?php 
@@ -394,7 +395,7 @@
 	          				</div>
 	          			</div>
 	          			<div class="form-group">
-	          				<label for="marca" class="control-label col-md-3">Iva222222</label>
+	          				<label for="marca" class="control-label col-md-3">Iva</label>
 	          				<div class="col-md-8">
 	          					<select class="form-control" id="iva" name="iva">
 	          						<?php 
@@ -445,17 +446,14 @@
 	          	</div>
 	          	<div class="modal-footer">
 	          		<?php 
-
-	          		echo '<button type="submit" class="btn btn-danger">Agregar&nbsp;&nbsp;<i class="fa fa-thumbs-up"></i></button>';
-
-	          		/*	if($this->session->has_userdata('iva'))
+	          			if($this->session->has_userdata('iva'))
 	          			{
 	          				echo '<button type="submit" class="btn btn-danger">Agregar&nbsp;&nbsp;<i class="fa fa-thumbs-up"></i></button>';
 	          			}
 	          			else
 	          			{
 	          				echo '<button type="submit" class="btn btn-danger" disabled>Agregar&nbsp;&nbsp;<i class="fa fa-thumbs-up"></i></button>';
-	          			}*/
+	          			}
 	          		 ?>
 	                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar&nbsp;&nbsp;<i class="fa fa-remove"></i></button>
 	            </div>
