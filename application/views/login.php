@@ -184,7 +184,7 @@
             <p id="profile-name" class="profile-name-card"></p>
             <form class="form-signin" action="" method="POST" id="form_email">
                 <div class="form-group">
-                        <input type="text" id="correousuario" name="correousuario" class="form-control" placeholder="Introduzca su correo electrónico" required autofocus>
+                        <input type="text" id="correousuario" name="correousuario" class="form-control" placeholder="Introduzca su correo electrónicossssssssssss" required autofocus>
                     <div id="aviso"></div>
                 </div>
                 <button class="btn btn-lg btn-danger btn-block btn-signin" type="submit">Enviar&nbsp;&nbsp;<span class="glyphicon glyphicon-check"></span></button>
