@@ -172,7 +172,7 @@
             <form class="form-signin" action="<?php echo base_url();?>Login/verificar" method="POST" id="form_registro">
                 <input type="text" id="usuario" name="usuario" class="form-control" placeholder="Usuario" required autofocus>
                 <input type="password" id="clave" name="clave" class="form-control" placeholder="Clave" required>
-                <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Acceder&nbsp;&nbsp;<i class="fa fa-check"></i></button>
+                <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Acceder prueba&nbsp;&nbsp;<i class="fa fa-check"></i></button>
             </form><!-- /form -->
             <p id="aviso" class="alert alert-info"></p>
         </div><!-- /card-container -->
@@ -184,7 +184,7 @@
             <p id="profile-name" class="profile-name-card"></p>
             <form class="form-signin" action="" method="POST" id="form_email">
                 <div class="form-group">
-                        <input type="text" id="correousuario" name="correousuario" class="form-control" placeholder="Introduzca su correo electrónicossssssssssss" required autofocus>
+                        <input type="text" id="correousuario" name="correousuario" class="form-control" placeholder="Introduzca su correo electrónico" required autofocus>
                     <div id="aviso"></div>
                 </div>
                 <button class="btn btn-lg btn-danger btn-block btn-signin" type="submit">Enviar&nbsp;&nbsp;<span class="glyphicon glyphicon-check"></span></button>
