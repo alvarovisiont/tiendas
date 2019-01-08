@@ -22,7 +22,6 @@ class Login extends CI_Controller
 			if(isset($datos->id))
 			{
 				$empresa = $this->Login_Model->traer_empresa();
-				$data = ['exito' => 'bien'];
 				if($empresa != false)
 				{
 					$this->session->set_userdata('empresa', $empresa->nombre);
@@ -47,6 +46,9 @@ class Login extends CI_Controller
 				$this->session->set_userdata('id', $datos->id);
 				$this->session->set_userdata('usuario', $datos->usuario);
 				$this->session->set_userdata('nivel', $datos->nivel);
+				$data = ['exito' => 'bien'];
+				$data['nivel'] = $datos->nivel;
+				
 				echo json_encode($data);
 			}
 			else

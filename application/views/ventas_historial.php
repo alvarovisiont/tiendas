@@ -7,7 +7,7 @@
 					<h3 style="color: white; display: inline-block;">Historial de ventas</h3>
 				</div>
 				<div class="panel-body">
-					<table class="table table-streped table-hover" id="tabla">
+					<table class="table table-streped table-hover table-responsive" id="tabla">
 						<thead>
 							<th class="text-center">Factura</th>
 							<th class="text-center">Fecha Venta</th>
