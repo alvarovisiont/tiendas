@@ -172,7 +172,7 @@
             <form class="form-signin" action="<?php echo base_url();?>Login/verificar" method="POST" id="form_registro">
                 <input type="text" id="usuario" name="usuario" class="form-control" placeholder="Usuario" required autofocus>
                 <input type="password" id="clave" name="clave" class="form-control" placeholder="Clave" required>
-                <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Acceder&nbsp;&nbsp;<i class="fa fa-check"></i></button>
+                <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Acceder prueba&nbsp;&nbsp;<i class="fa fa-check"></i></button>
             </form><!-- /form -->
             <p id="aviso" class="alert alert-info"></p>
         </div><!-- /card-container -->
