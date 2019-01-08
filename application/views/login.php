@@ -264,7 +264,11 @@
                 {
                     if(typeof(data.exito) != "undefined")
                     {
-                        window.location.href = "<?php echo base_url()?>Login/acceso";
+                      if(data.nivel == 1){
+                        window.location.href = "<?php echo base_url()?>Admin";
+                      }else{
+                        window.location.href = "<?php echo base_url()?>Admin";
+                      }
                     }
                     else
                     {

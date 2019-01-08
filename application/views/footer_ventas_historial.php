@@ -8,6 +8,7 @@
     <script src="./js/bootstrap.min.js"></script>
     <script src='./js/jquery.dataTables.js'></script>
     <script src='./js/dataTables.bootstrap.js'></script>
+    <script src='./js/dataTables.responsive.min.js'></script>
     <!-- Metis Menu Plugin JavaScript -->
     <script src="./js/metisMenu.min.js"></script>
 
@@ -23,7 +24,8 @@
     $(function(){
         $("#tabla").dataTable({
             "language" : {"url" : "json/esp.json"},
-            order : [1, 'desc']
+            order : [1, 'desc'],
+            responsive: true
         });
 
         $("#modal_detalle").on('show.bs.modal', function(e){

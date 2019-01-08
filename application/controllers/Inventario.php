@@ -40,7 +40,7 @@ class Inventario extends CI_Controller
 	{
 		if ($this->input->is_ajax_request()) 
 		{
-			$data = ['nombre' => $this->input->post('nombre', TRUE),
+			$data = ['nombre' => strtoupper($this->input->post('nombre', TRUE)),
 					'id_proveedor' => $this->input->post('proveedor', TRUE),
 					'marca' => $this->input->post('marca', TRUE),
 					'grupo' => $this->input->post('grupo', TRUE),
@@ -60,7 +60,7 @@ class Inventario extends CI_Controller
 
 	public function modificar()
 	{
-		$data = ['nombre' => $this->input->post('nombre_modi', TRUE),
+		$data = ['nombre' => strtoupper($this->input->post('nombre_modi', TRUE)),
 					'id_proveedor' => $this->input->post('proveedor_modi', TRUE),
 					'marca' => $this->input->post('marca_modi', TRUE),
 					'grupo' => $this->input->post('grupo_modi', TRUE),
