@@ -6,6 +6,10 @@
 	<div class="container-fluid">
 		<div class="col-md-12">
 			<br>
+			 
+			
+
+
 			<div class="col-md-12">
 				<div class="col-md-offset-6 col-md-3">
 					<button type="button" class="btn btn-danger btn-md btn-block btn-outline" data-ruta="<?php echo base_url().'Inventario/exportar_pdf';?>" id="exportar_pdf">Exportar a PDF&nbsp;<i class="fa fa-file-pdf-o"></i></button>
@@ -73,14 +77,15 @@
 										}
 										if($session == 1)
 										{
+
 											echo "<tr class='".$class."'>
 													<td>$row->nombre</td>
 													<td>$row->marca</td>
 													<td>$row->grupo</td>
 													
-													<td>".number_format($row->precio_proveedor,2,',','.')." ".$conf->siglas." / <br> ".number_format($row->precio_proveedor / $conf->dolar_value,2,',','.')."$</td>
+													<td> <img src='./img/dolar.jpg' class='img-responsive' width='100px'> ".number_format($row->precio_proveedor,2,',','.')." ".$conf->siglas." <br> <img src='./img/bolivar.png' class='img-responsive' width='60px'>".number_format($row->precio_proveedor * $conf->dolar_value,2,',','.')." Bs.S</td>
 
-													<td>".number_format($row->precio,2,',','.')." ".$conf->siglas." / <br/> ".number_format($row->precio / $conf->dolar_value,2,',','.')." $</td>
+													<td> <img src='./img/dolar.jpg' class='img-responsive' width='100px'> ".number_format($row->precio,2,',','.')." ".$conf->siglas." <br> <img src='./img/bolivar.png' class='img-responsive' width='60px'> ".number_format($row->precio * $conf->dolar_value,2,',','.')." Bs.S</td>
 													<td><span class='label label-info letras'>$row->cantidad</span></td>
 													<td>$row->proveedor_nombre</td>
 													<td>
