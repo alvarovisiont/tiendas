@@ -51,9 +51,9 @@ class Login extends CI_Controller
 				
 				$this->load->model('Auditoria_Model');
 				
-				$id = $this->Auditoria_Model->grabar_conexion($array);
+				//$id = $this->Auditoria_Model->grabar_conexion($array);
 				
-				$this->session->set_userdata('id_auditoria', $id->id);
+				//$this->session->set_userdata('id_auditoria', $id->id);
 
 				echo json_encode($data);
 			}
