@@ -14,6 +14,7 @@
 							data-siglas_modi = '$datos->siglas'
 							data-iva_modi = '$datos->iva'
 							data-retencion_modi = '$datos->retencion'
+							data-dolar_modi = '$datos->dolar_value'
 							>Modificar Configuración&nbsp;<i class='fa fa-cog'></i></button>";	
 					}
 				 ?>
@@ -22,11 +23,27 @@
 			<table class="table table-striped table-hover">
 				<tbody>
 					<tr>
-						<td><label class="control-label col-md-2"><h4>Móneda</h4></label><span class="col-md-10 text-center"><h4><?php if(!empty($datos->siglas)){echo $datos->siglas;}?></h4></span></td>
+						<td>
+							<label class="control-label col-md-2">
+								<h4><b>Móneda</b></h4>
+							</label>
+							<span class="col-md-10 text-center">
+								<h4><?php if(!empty($datos->siglas)){echo $datos->siglas;}?>
+									
+								</h4>
+							</span>
+						</td>
 						<td><label class="control-label col-md-2">Iva Impuesto: </label><span class="col-md-10 text-center"><h4><?php if(!empty($datos->iva)){echo $datos->iva."%";}?></h4></span></td>									
 					</tr>
 					<tr>
 						<td><label for="" class="control-label col-md-2">% de Retención</label><span class="col-md-10 text-center"><h4><?php if(!empty($datos->retencion)){echo $datos->retencion."%";}?></h4></span></td>
+						<td><label class="control-label col-md-2">Valor Dolar en <?= !isset($datos->siglas) ? 'BSS' : $datos->siglas ?> </label>
+							<span class="col-md-10 text-center">
+								<h4>
+									<?= number_format($datos->dolar_value,2,',','.'); ?>
+								</h4>
+							</span>
+						</td>		
 					</tr>
 				</tbody>
 			</table>
@@ -62,6 +79,12 @@
 	      			<input type="number" id="retencion" name="retencion" pattern="[0-9]" class="form-control" required="" placeholder="Expresión en números enteros">
 	      		</div>
 	      	</div>
+	      	<div class="form-group">
+	      		<label for="" class="control-label col-md-3">Dolar en <?= !isset($datos->siglas) ? 'BSS' : $datos->siglas ?></label>
+	      		<div class="col-md-7">
+	      			<input type="number" id="dolar_value" name="dolar_value" step="any" class="form-control" required="" placeholder="">
+	      		</div>
+	      	</div>
 	      </div>
 	      <div class="modal-footer">
 	      	<button class="btn btn-success" type="submit" id="boton_agregar_grupo">Agregar&nbsp;<i class="fa fa-thumbs-up"></i></button>
@@ -86,7 +109,7 @@
 	      	<div class="form-group">
 	      		<label for="" class="control-label col-md-3">Siglas de la moneda</label>
 	      		<div class="col-md-7">
-	      			<input type="text" id="siglas_modi" name="siglas_modi" pattern="[A-Za-z]{2,}" class="form-control" placeholder="Ejemplo: Moneda: Bolivares Siglas(BSF)" required="">
+	      			<input type="text" id="siglas_modi" name="siglas_modi" class="form-control" placeholder="Ejemplo: Moneda: Bolivares Siglas(BSS)" required="">
 	      		</div>
 	      	</div>
 	      	<div class="form-group">
@@ -99,6 +122,12 @@
 	      		<label for="" class="control-label col-md-3">Retención Monetaria</label>
 	      		<div class="col-md-7">
 	      			<input type="number" id="retencion_modi" name="retencion_modi" pattern="[0-9]" class="form-control" required="" placeholder="Expresión en números enteros">
+	      		</div>
+	      	</div>
+	      	<div class="form-group">
+	      		<label for="" class="control-label col-md-3">Dolar en <?= !isset($datos->siglas) ? 'BSS' : $datos->siglas ?></label>
+	      		<div class="col-md-7">
+	      			<input type="number" id="dolar_value_modi" name="dolar_value_modi" step="any" class="form-control" required="" placeholder="">
 	      		</div>
 	      	</div>
 	      </div>

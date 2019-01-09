@@ -56,6 +56,10 @@
 						{
 							foreach ($datos as  $row)
 							{
+								$sueldo = number_format($row->sueldo,2,',','.').$conf->siglas;
+								
+								$sueldo_dolares = number_format($row->sueldo / $conf->dolar_value,2,',','.')."$";
+
 								$botones = "<button class='btn btn-warning btn-md' data-toggle='modal' data-target='#modal_editar' 
 									data-id= '$row->id'
 									data-nombre= '$row->nombre'
@@ -67,7 +71,7 @@
 										<td>$row->nombre</td>
 										<td>$row->cedula</td>
 										<td>$row->telefono</td>
-										<td>$row->sueldo</td>
+										<td>".$sueldo." / <br/> ".$sueldo_dolares."</td>
 										<td>$botones</td>
 									</tr>";
 							}

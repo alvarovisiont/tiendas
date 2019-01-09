@@ -17,9 +17,7 @@ class Ventas extends CI_Controller
 		if($this->session->has_userdata('nivel'))
 		{	
 			$this->load->model('Auditoria_Model');
-			$ahora = date('Y-n-j H:i:s', strtotime('-5 hour'));
-			$array = ['hora_desconexion' => $ahora];
-			$this->Auditoria_Model->grabar_ultima_conexion($array);
+			$this->Auditoria_Model->grabar_ultima_conexion();
 			
 			$clientes = $this->Ventas_Model->traer_clientes();
 			$articulos = $this->Ventas_Model->articulos_modal();

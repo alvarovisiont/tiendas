@@ -8,6 +8,8 @@ class Compras extends CI_Controller
 	{
           
           parent:: __Construct(); 
+          $array = ['Auditoria_Model','Compras_Model','Configuracion_Finanza_Model'];
+          $this->load->model($array)
 	}
 
 	public function index()
@@ -20,14 +22,11 @@ class Compras extends CI_Controller
 		}
 		else
 		{
-			$this->load->model('Auditoria_Model');
-			$ahora = date('Y-n-j H:i:s', strtotime('-5 hour'));
-			$array = ['hora_desconexion' => $ahora];
-			$this->Auditoria_Model->grabar_ultima_conexion($array);
-			
-			 $this->load->model('Compras_Model');	 
+			$this->Auditoria_Model->grabar_ultima_conexion();
+
 			 $proveedores = $this->Compras_Model->traer_proveedores();
 			 $this->Compras_Model->eliminar_articulos_flotantes();
+
 			 $this->load->view('encabezado_compras');
 			 $this->load->view('compras', compact('proveedores', 'moneda'));
 			 $this->load->view('footer_compras');
@@ -37,7 +36,7 @@ class Compras extends CI_Controller
 	public function traer_articulos()
 	{
 		$arreglo = [];
-		$this->load->model('Compras_Model');	 
+		¿
 		$id = $this->input->post('id');
 		$datos = $this->Compras_Model->traer_articulos($id);
 		if($datos != false)
@@ -58,7 +57,6 @@ class Compras extends CI_Controller
 	public function agregar_tabla()
 	{
 		$arreglo = [];
-		$this->load->model('Compras_Model');	
 		$cantidad = $this->input->post('cantidad');
 		$id_proveedor = $this->input->post('id_proveedor');
 		$id_articulo = $this->input->post('id_articulo');
@@ -85,7 +83,6 @@ class Compras extends CI_Controller
 
 	public function eliminar_articulo()
 	{
-		$this->load->model('Compras_Model');	
 		$nombre = $this->input->post('nombre');
 		$this->Compras_Model->eliminar_articulo($nombre);
 	}
@@ -96,7 +93,6 @@ class Compras extends CI_Controller
 		{
 			if(!empty($this->input->post('accion')))
 			{
-				$this->load->model('Compras_Model');
 				$total = $this->input->post('total');
 				$this->Compras_Model->agregar_compra($total);
 			}
@@ -105,7 +101,6 @@ class Compras extends CI_Controller
 
 	public function imprimir_factura()
 	{
-		$this->load->model('Compras_Model');
         $datos = $this->Compras_Model->imprimir_factura();
         $data = $this->Compras_Model->encabezado_factura();
         if($datos != "Error")

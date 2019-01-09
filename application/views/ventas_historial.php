@@ -61,7 +61,7 @@
 <div class="modal fade" id="modal_detalle" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog tabla_modal" role="document" class="tabla_modal">
 	    <div class="modal-content">
-	      	<div class="modal-header modal-header2" style="background-color: #FFF">
+	      	<div class="modal-header">
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 		          <span aria-hidden="true">&times;</span>
 		        </button>
@@ -95,7 +95,7 @@
 <div class="modal fade" id="modal_clientes" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog tabla_modal" role="document" class="tabla_modal">
 	    <div class="modal-content">
-	      	<div class="modal-header modal-header2" style="background-color: #FFF">
+	      	<div class="modal-header">
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 		          <span aria-hidden="true">&times;</span>
 		        </button>

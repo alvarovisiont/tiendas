@@ -8,7 +8,7 @@ class Inventario extends CI_Controller
           
           parent:: __Construct();
          
-         $this->load->model("Inventario_Model"); 
+         $this->load->model(["Inventario_Model",'Configuracion_Finanza_Model']); 
 	}
 
 	public function index()
@@ -19,15 +19,16 @@ class Inventario extends CI_Controller
 		{	
 
 			$this->load->model('Auditoria_Model');
-			$ahora = date('Y-n-j H:i:s', strtotime('-5 hour'));
-			$array = ['hora_desconexion' => $ahora];
-			$this->Auditoria_Model->grabar_ultima_conexion($array);
-				
+			$this->Auditoria_Model->grabar_ultima_conexion();
+			
+			$conf  = $this->Configuracion_Finanza_Model->traer_datos();
+
 			$datos = $this->Inventario_Model->traer_datos();
 			$proveedores = $this->Inventario_Model->traer_proveedores();
 			$grupo = $this->Inventario_Model->traer_grupo();
+
 			$this->load->view("encabezado_inventario");
-			$this->load->view("inventario", compact('datos', 'proveedores', 'grupo'));
+			$this->load->view("inventario", compact('datos', 'proveedores', 'grupo','conf'));
 			$this->load->view("footer_inventario");
 		}
 		else

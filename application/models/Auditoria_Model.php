@@ -31,8 +31,11 @@ class Auditoria_Model extends CI_Model
    		}
    }
 
-   public function grabar_conexion($array)
+   public function grabar_conexion()
    {
+         $ahora = date('Y-n-j H:i:s', strtotime('-5 hour'));
+         $array = ['hora_desconexion' => $ahora];
+
    		$this->db->insert('auditoria', $array);
 
    		$this->db->select_max('id');
@@ -50,11 +53,13 @@ class Auditoria_Model extends CI_Model
    		}
    }
 
-   public function grabar_ultima_conexion($array)
+   public function grabar_ultima_conexion()
    {	
-   		$id = $this->session->userdata('id_auditoria');
-   		
-   		$this->db->where('id', $id);
-   		$this->db->update('auditoria', $array);
+		$id = $this->session->userdata('id_auditoria');
+      $ahora = date('Y-n-j H:i:s', strtotime('-5 hour'));
+      $array = ['hora_desconexion' => $ahora];
+
+		$this->db->where('id', $id);
+		$this->db->update('auditoria', $array);
    }
 }

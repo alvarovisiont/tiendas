@@ -91,15 +91,18 @@
 </div>
 <div class="modal fade" id="ver_articulos" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   	<div class="modal-dialog tabla_modal" role="document">
-    	<div class="modal-content">
-	      <div class="modal-header modal-header2" style="background-color: #FFF">
+    	<div class="modal-content modal-lg">
+	      <div class="modal-header">
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	          <span aria-hidden="true">&times;</span>
 	        </button>
 	        <h3 class="text-center">Artículos del Proveedor&nbsp;<i class="fa fa-truck"></i></h3>
 	      </div>
 	      <div class="modal-body">
-	      	<div class="row" id="div_tabla">
+	      	<div class="row">
+	      		<div class="col-md-12 col-sm-12" id="div_tabla">
+	      			
+	      		</div>
 	      	</div>
 	      </div>
 	      <div class="modal-footer">

@@ -9,7 +9,7 @@ class Ventas_historial extends CI_Controller
 	{
           
           parent:: __Construct(); 
-          $this->load->model('Ventas_Historial_Model');
+          $this->load->model(['Ventas_Historial_Model','Configuracion_Finanza_Model']);
 	}
 
 	public function index()
@@ -21,13 +21,13 @@ class Ventas_historial extends CI_Controller
 			$datos = $this->Ventas_Historial_Model->traer_datos();
 			
 			$this->load->model('Auditoria_Model');
-			$ahora = date('Y-n-j H:i:s', strtotime('-5 hour'));
-			$array = ['hora_desconexion' => $ahora];
-			$this->Auditoria_Model->grabar_ultima_conexion($array);
-		
+			$this->Auditoria_Model->grabar_ultima_conexion();
+			
+			$conf = $this->Configuracion_Finanza_Model->traer_datos();
+
 			$this->load->view('encabezado_inventario');
-			$this->load->view('ventas_historial', compact('datos'));
-			$this->load->view('footer_ventas_historial');
+			$this->load->view('ventas_historial', compact('datos','conf'));
+			$this->load->view('footer_ventas_historial','conf');
 			
 		}
 	}

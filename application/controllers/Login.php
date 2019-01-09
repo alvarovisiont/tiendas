@@ -92,9 +92,7 @@ class Login extends CI_Controller
 	public function salir()
 	{
 		$this->load->model('Auditoria_Model');
-		$ahora = date('Y-n-j H:i:s', strtotime('-5 hour'));
-		$array = ['hora_desconexion' => $ahora];
-		$this->Auditoria_Model->grabar_ultima_conexion($array);
+		$this->Auditoria_Model->grabar_ultima_conexion();
 
 		$sessiones = ['id', 'usuario', 'nivel', 'empresa', 'logo', 'siglas', 'id_auditoria', 'direccion', 'telefono', 'email', 'retencion'];
 		$this->session->unset_userdata($sessiones);
