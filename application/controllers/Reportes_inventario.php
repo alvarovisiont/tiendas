@@ -1,6 +1,8 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+require_once __DIR__ . '/../../vendor/autoload.php';
+
 class Reportes_inventario extends CI_Controller 
 {
 	function __Construct()
@@ -177,9 +179,10 @@ class Reportes_inventario extends CI_Controller
 		if($datos != false)
 		{
 			$html = $this->load->view('imprimir_inventario_pdf', compact('datos'), TRUE);
-			$this->load->library('m_pdf');
-			$this->m_pdf->pdf->WriteHTML($html);
-			$this->m_pdf->pdf->Output('Inventario.pdf', "I");
+			
+			$mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8', 'format' => 'A4', [190, 236] ] );
+			$mpdf->WriteHTML($html);
+			$mpdf->Output('Inventario.pdf', "I");
 		}
 	}
 }

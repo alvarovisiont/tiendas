@@ -1,6 +1,8 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+require_once __DIR__ . '/../../vendor/autoload.php';
+
 class Compras_vista extends CI_Controller 
 {
 
@@ -62,20 +64,19 @@ class Compras_vista extends CI_Controller
 		$id = $this->uri->segment(3);
 		$data = $this->Compras_Vista_Model->encabezado_factura($id);
 		$datos = $this->Compras_Vista_Model->imprimir_factura($id);
+
+
 		if($datos != false)
 		{
+
 			$html = $this->load->view('imprimir_factura_compra_vista', compact('datos', 'data'), TRUE);
-
-			$pdfFilePath = "Factura de Compras.pdf";
-
-			$this->load->library('m_pdf');
-	 
-	       //generate the PDF from the given html
-	        $this->m_pdf->pdf->WriteHTML($html);
-	 		
-	 		//$this->m_pdf->pdf->setFooter('{PAGENO}');
-	        //download it.
-	        $this->m_pdf->pdf->Output($pdfFilePath, "I");
+			
+			$mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8', 'format' => 'A4', [190, 236] ] );
+			$mpdf->WriteHTML($html);
+			$mpdf->Output('FacturaCompras.pdf', "I");
+		}else
+		{
+			echo "Pon en contacto con soporte"; die();
 		}
 	}
 }

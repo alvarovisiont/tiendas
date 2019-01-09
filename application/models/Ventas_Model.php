@@ -304,7 +304,7 @@ class Ventas_Model extends CI_Model
 
    public function buscar_cliente_factura()
    {
-      $sql = "SELECT nombre, cedula, direccion, (SELECT factura from ventas where id = clientes.id_venta) as factura from clientes where id_venta = (SELECT max(id_venta) from clientes)";
+      $sql = "SELECT nombre, cedula, telefono, direccion, (SELECT factura from ventas where id = clientes.id_venta) as factura from clientes where id_venta = (SELECT max(id_venta) from clientes)";
       /*$this->db->where('id_venta', $this->db->select_max());
       $this->db->select('nombre, cedula, telefono, direccion, factura');
       $this->db->from('clientes');
