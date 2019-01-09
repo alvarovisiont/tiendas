@@ -9,7 +9,9 @@ class Compras_vista extends CI_Controller
 	function __Construct()
 	{
           parent:: __Construct(); 
-          $this->load->model('Compras_Vista_Model');
+          
+          $array = ['Auditoria_Model','Compras_Vista_Model','Configuracion_Finanza_Model'];
+          $this->load->model($array);
 	}
 
 	public function index()
@@ -18,15 +20,14 @@ class Compras_vista extends CI_Controller
 		
 		if($this->session->has_userdata('nivel'))
 		{
-			$this->load->model('Auditoria_Model');
-			$ahora = date('Y-n-j H:i:s', strtotime('-5 hour'));
-			$array = ['hora_desconexion' => $ahora];
-			$this->Auditoria_Model->grabar_ultima_conexion($array);
+			$this->Auditoria_Model->grabar_ultima_conexion();
 			
 			$datos = $this->Compras_Vista_Model->traer_datos();
+			$conf  = $this->Configuracion_Finanza_Model->traer_datos();
+
 			$this->load->view('encabezado_descuentos');
-			$this->load->view('compras_vista',compact('datos'));
-			$this->load->view('footer_compras_vista');
+			$this->load->view('compras_vista',compact('datos','conf'));
+			$this->load->view('footer_compras_vista',compact('conf'));
 		}
 		else
 		{

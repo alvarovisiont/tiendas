@@ -14,9 +14,7 @@ class Usuarios_agregar extends CI_Controller
 		else
 		{
 			$this->load->model('Auditoria_Model');
-			$ahora = date('Y-n-j H:i:s', strtotime('-5 hour'));
-			$array = ['hora_desconexion' => $ahora];
-			$this->Auditoria_Model->grabar_ultima_conexion($array);
+			$this->Auditoria_Model->grabar_ultima_conexion();
 			
 			$this->load->model('Usuarios_model');
 			$datos = $this->Usuarios_model->traer_usuarios();

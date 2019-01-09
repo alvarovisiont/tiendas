@@ -17,11 +17,17 @@
 
     <!-- Custom Theme JavaScript -->
     <script src="./js/sb-admin-2.min.js"></script>
+    <!-- Custom Theme JavaScript -->
+    <script src="./js/main.js"></script>
 
 </body>
 </html>
 <script type="text/javascript">
     $(function(){
+        
+        var dolar_value = parseFloat(<?= $conf->dolar_value ?>)
+        var siglas = "<?= $conf->siglas ?>"
+
         $("#tabla").dataTable({
             "language" : {"url" : "json/esp.json"},
             order : [1, 'desc'],
@@ -39,7 +45,12 @@
                 $.each(data, function(i,e)
                 {
                     id_cliente = e.id_venta;
-                    filas += "<tr><td>"+e.nombre_articulo+"</td><td>"+e.marca+"</td><td>"+e.precio+"</td><td>"+e.cantidad+"</td><td>"+e.sub_total+"</td><td>"+e.iva+"</td><td>"+e.total+"</td><td>"+button+"</td>";
+                    let precio_dolar = formatNumber(e.precio / dolar_value,2,',','.')
+                        iva_dolar = formatNumber(e.iva / dolar_value,2,',','.'),
+                        sub_total_dolar = formatNumber(e.sub_total / dolar_value,2,',','.'),
+                        total_dolar = formatNumber(e.total / dolar_value,2,',','.')
+
+                    filas += "<tr><td>"+e.nombre_articulo+"</td><td>"+e.marca+"</td><td>"+formatNumber(e.precio,2,',','.')+siglas+" / <br/> "+precio_dolar+"$</td><td>"+e.cantidad+"</td><td>"+formatNumber(e.sub_total,2,',','.')+siglas+" / <br> "+sub_total_dolar+"$</td><td>"+formatNumber(e.iva,2,',','.')+siglas+"/ <br/> "+iva_dolar+"$</td><td>"+formatNumber(e.total,2,',','.')+siglas+" / <br/> "+total_dolar+"$</td><td>"+button+"</td>";
                 });
 
                 button = "<button class='btn btn-success btn-md' data-toggle='modal' data-target='#modal_clientes' data-id_cliente='"+id_cliente+"'>Ver Cliente&nbsp;<i class='fa fa-user'></i></button><button type='button' class='btn btn-primary' data-dismiss='modal'>cerrar&nbsp;&nbsp;<i class='fa fa-remove'></i></button>";

@@ -15,9 +15,7 @@ class Admin extends CI_Controller
 			$this->load->model('Empleados_Model');
 
 			$this->load->model('Auditoria_Model');
-			$ahora = date('Y-n-j H:i:s', strtotime('-5 hour'));
-			$array = ['hora_desconexion' => $ahora];
-			$this->Auditoria_Model->grabar_ultima_conexion($array);
+			$this->Auditoria_Model->grabar_ultima_conexion();
 
 			$datos = $this->Admin_Model->traer_datos();
 			$data = $this->Admin_Model->traer_compras_ventas();

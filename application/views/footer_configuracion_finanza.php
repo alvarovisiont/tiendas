@@ -29,6 +29,8 @@
                      $("#iva_modi").val(x);
             var  x = $(e.relatedTarget).data().retencion_modi;
                      $("#retencion_modi").val(x);
+            var  x = $(e.relatedTarget).data().dolar_modi;
+                     $("#dolar_value_modi").val(x);
 
         });
     });

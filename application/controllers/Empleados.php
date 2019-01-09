@@ -8,7 +8,7 @@ class Empleados extends CI_Controller
 	{
           
           parent:: __Construct(); 
-          $this->load->model('Empleados_Model');
+          $this->load->model(['Empleados_Model','Configuracion_Finanza_Model']);
 	}
 
 	public function index()
@@ -17,13 +17,13 @@ class Empleados extends CI_Controller
 		$this->session->set_userdata('nivel', 1);
 		
 		$this->load->model('Auditoria_Model');
-		$ahora = date('Y-n-j H:i:s', strtotime('-5 hour'));
-		$array = ['hora_desconexion' => $ahora];
-		$this->Auditoria_Model->grabar_ultima_conexion($array);
+		$this->Auditoria_Model->grabar_ultima_conexion();
 			
 		$datos = $this->Empleados_Model->traer_datos();
+		$conf  = $this->Configuracion_Finanza_Model->traer_datos();
+
 		$this->load->view('encabezado');
-		$this->load->view('empleados', compact('datos'));
+		$this->load->view('empleados', compact('datos','conf'));
 		$this->load->view('footer_empleados');
 	}
 

@@ -19,9 +19,7 @@ class Caja_chica extends CI_Controller
 		else
 		{
 			$this->load->model('Auditoria_Model');
-			$ahora = date('Y-n-j H:i:s', strtotime('-5 hour'));
-			$array = ['hora_desconexion' => $ahora];
-			$this->Auditoria_Model->grabar_ultima_conexion($array);
+			$this->Auditoria_Model->grabar_ultima_conexion();
 			
 			$this->load->model("Caja_chica_Model"); 
 			$cajas_chicas = $this->Caja_chica_Model->traer_datos();

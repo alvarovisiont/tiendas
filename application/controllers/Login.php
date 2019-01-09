@@ -49,6 +49,12 @@ class Login extends CI_Controller
 				$data = ['exito' => 'bien'];
 				$data['nivel'] = $datos->nivel;
 				
+				$this->load->model('Auditoria_Model');
+				
+				$id = $this->Auditoria_Model->grabar_conexion($array);
+				
+				$this->session->set_userdata('id_auditoria', $id->id);
+
 				echo json_encode($data);
 			}
 			else
@@ -72,9 +78,7 @@ class Login extends CI_Controller
 			$this->load->model('Auditoria_Model');
 			$ahora = date('Y-n-j H:i:s', strtotime('-5 hour'));
 			$array = ['usuario' => $this->session->userdata('id'), 'hora_conexion' => $ahora];
-			$id = $this->Auditoria_Model->grabar_conexion($array);
-
-			$this->session->set_userdata('id_auditoria', $id->id);
+			
 
 			switch ($this->session->userdata('nivel')) {
 				case 1:
@@ -92,9 +96,7 @@ class Login extends CI_Controller
 	public function salir()
 	{
 		$this->load->model('Auditoria_Model');
-		$ahora = date('Y-n-j H:i:s', strtotime('-5 hour'));
-		$array = ['hora_desconexion' => $ahora];
-		$this->Auditoria_Model->grabar_ultima_conexion($array);
+		$this->Auditoria_Model->grabar_ultima_conexion();
 
 		$sessiones = ['id', 'usuario', 'nivel', 'empresa', 'logo', 'siglas', 'id_auditoria', 'direccion', 'telefono', 'email', 'retencion'];
 		$this->session->unset_userdata($sessiones);

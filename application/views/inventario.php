@@ -39,9 +39,7 @@
 							<th class="text-center">Costo</th>
 							<th class="text-center">Precio Venta</th>
 							<th class="text-center">Cantidad</th>
-							<th class="text-center">Fecha_Registro</th>
 							<th class="text-center">Proveedor</th>
-							<th class="text-center">Observación</th>
 							<?php 
 								if($session == 1)
 								{
@@ -79,12 +77,12 @@
 													<td>$row->nombre</td>
 													<td>$row->marca</td>
 													<td>$row->grupo</td>
-													<td>$row->precio_proveedor</td>
-													<td>$row->precio</td>
+													
+													<td>".number_format($row->precio_proveedor,2,',','.')." ".$conf->siglas." / <br> ".number_format($row->precio_proveedor / $conf->dolar_value,2,',','.')."$</td>
+
+													<td>".number_format($row->precio,2,',','.')." ".$conf->siglas." / <br/> ".number_format($row->precio / $conf->dolar_value,2,',','.')." $</td>
 													<td><span class='label label-info letras'>$row->cantidad</span></td>
-													<td>".date('d-m-Y' ,strtotime($row->fecha_agregado))."</td>
 													<td>$row->proveedor_nombre</td>
-													<td>$row->observacion</td>
 													<td>
 														<button class='btn btn-warning btn-sm' data-toggle='modal' data-target='#modi_articulo'
 															data-id_modi = '$row->id'
@@ -115,9 +113,7 @@
 													<td>$row->precio_proveedor</td>
 													<td>$row->precio</td>
 													<td><span class='label label-info letras'>$row->cantidad</span></td>
-													<td>".date('d-m-Y' ,strtotime($row->fecha_agregado))."</td>
 													<td>$row->proveedor_nombre</td>
-													<td>$row->observacion</td>
 												</tr>";	
 										}
 											
@@ -137,15 +133,11 @@
 												<td></td>
 												<td></td>
 												<td></td>
-												<td></td>
-												<td></td>
 											</tr>";
 									}
 									else
 									{
 										echo "<tr>
-												<td></td>
-												<td></td>
 												<td></td>
 												<td></td>
 												<td></td>
@@ -167,7 +159,7 @@
 <div class="modal fade" id="modi_articulo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
-	      <div class="modal-header modal-header2" style="background-color: #FFF">
+	      <div class="modal-header">
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	          <span aria-hidden="true">&times;</span>
 	        </button>
@@ -312,7 +304,7 @@
 <div class="modal fade" id="agg_articulo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
-	      <div class="modal-header modal-header2" style="background-color: #FFF">
+	      <div class="modal-header">
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	          <span aria-hidden="true">&times;</span>
 	        </button>
@@ -468,7 +460,7 @@
 <div class="modal fade" id="agg_grupo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   	<div class="modal-dialog" role="document">
     	<div class="modal-content">
-	      <div class="modal-header modal-header2" style="background-color: #FFF">
+	      <div class="modal-header">
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	          <span aria-hidden="true">&times;</span>
 	        </button>

@@ -16,12 +16,17 @@
 
     <!-- Custom Theme JavaScript -->
     <script src="./js/sb-admin-2.min.js"></script>
+    <!-- Custom Theme JavaScript -->
+    <script src="./js/main.js"></script>
 
 </body>
 
 </html>
 <script type="text/javascript">
     $(function(){
+
+        var dolar_value = parseFloat(<?= $conf->dolar_value ?>)
+        var siglas = "<?= $conf->siglas ?>"
 
         $("#tabla1").dataTable({
             "language" : {"url" : "json/esp.json"},
@@ -44,7 +49,12 @@
                     var filas_tabla = "";
                     $.each(data, function(i,e)
                     {
-                        filas_tabla += "<tr><td>"+e.nombre_articulo+"</td><td>"+e.marca+"</td><td>"+e.costo+"</td><td>"+e.proveedor+"</td><td>"+e.cantidad+"</td><td>"+e.sub_total+"</td><td>"+e.iva+"</td><td><span  class='badge letras' style='background-color: darkred; color: white;'>"+e.total+"</span></td></tr>";
+                        let sub_total_dolar = formatNumber(parseFloat(e.sub_total) / parseFloat(dolar_value),2,',','.')
+                        
+                        let iva_dolar = formatNumber( parseFloat(e.iva) / parseFloat(dolar_value),',','.')
+                        let total_dolar = formatNumber( parseFloat(e.total) / parseFloat(dolar_value),2,',','.')
+
+                        filas_tabla += "<tr><td>"+e.nombre_articulo+"</td><td>"+e.marca+"</td><td>"+e.costo+"</td><td>"+e.proveedor+"</td><td>"+e.cantidad+"</td><td>"+formatNumber(e.sub_total,2,',','.')+" "+siglas+" / <br/> "+sub_total_dolar+" $</td><td>"+formatNumber(e.iva,2,',','.')+" "+siglas+" / <br/> "+iva_dolar+" $</td><td><span  class='badge letras' style='background-color: darkred; color: white;'>"+formatNumber(e.total,2,',','.')+" "+siglas+" / <br/> "+total_dolar+" $</span></td></tr>";
                     });
                     $("#tabla_detalle > tbody").html(filas_tabla);
                     $("#tabla_detalle").dataTable({

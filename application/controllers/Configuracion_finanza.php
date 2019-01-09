@@ -16,9 +16,7 @@ class Configuracion_finanza extends CI_Controller
 		if($this->session->has_userdata('nivel'))
 		{
 			$this->load->model('Auditoria_Model');
-			$ahora = date('Y-n-j H:i:s', strtotime('-5 hour'));
-			$array = ['hora_desconexion' => $ahora];
-			$this->Auditoria_Model->grabar_ultima_conexion($array);
+			$this->Auditoria_Model->grabar_ultima_conexion();
 			
 			$this->load->model('Configuracion_Finanza_Model');
 			$datos = $this->Configuracion_Finanza_Model->traer_datos();
@@ -38,7 +36,8 @@ class Configuracion_finanza extends CI_Controller
 		$array = [
 					'siglas' => $this->input->post('siglas', TRUE),
 					'iva' => $this->input->post('iva', TRUE),
-					'retencion' => $this->input->post('retencion', TRUE)
+					'retencion' => $this->input->post('retencion', TRUE),
+					'dolar_value' => $this->input->post('dolar_value', TRUE),
 				];
 		$this->load->model('Configuracion_Finanza_Model');
 
@@ -54,7 +53,8 @@ class Configuracion_finanza extends CI_Controller
 		$array = [
 					'siglas' => $this->input->post('siglas_modi', TRUE),
 					'iva' => $this->input->post('iva_modi', TRUE),
-					'retencion' => $this->input->post('retencion_modi', TRUE)
+					'retencion' => $this->input->post('retencion_modi', TRUE),
+					'dolar_value' => $this->input->post('dolar_value_modi', TRUE)
 				];
 		$this->load->model('Configuracion_Finanza_Model');
 

@@ -17,10 +17,16 @@
     <script src="./js/raphael.min.js"></script>
     <!-- Custom Theme JavaScript -->
     <script src="./js/sb-admin-2.min.js"></script>
+    <!-- Custom Theme JavaScript -->
+    <script src="./js/main.js"></script>
 </body>
 </html>
 <script type="text/javascript">
     $(function(){
+        var sub_total_limpio = 0;
+        var total_limpio = 0;
+        var iva_limpio = 0;
+
         $("#proveedores").select2();
         $("#articulos").select2();
 
@@ -63,7 +69,7 @@
                 dataType: "JSON",
                 success: function(data)
                 {
-                    if(typeof(data.fallo) == "undefined")
+                    if(typeof(data.fallo) == "undefined" && typeof(data.vacio) == "undefined")
                     {
                         var filas = "<option></option>";
                         $.each(data, function(i, e)
@@ -92,10 +98,15 @@
                     }
                     else
                     {
+                        
+                        $("#articulos").select2("val", "");
+                        $("#articulos").html('')
+                        var text = data.fallo ? data.fallo : data.vacio
+
                         $("#aviso").html('');
                         $("#aviso").show('slow/400/fast');
-                        $("#aviso").html(data.fallo);
-                        setTimeOut(function(){
+                        $("#aviso").html(text);
+                        setTimeout(function(){
                             $("#aviso").hide('fast');
                         }, 2000);
                     }
@@ -148,64 +159,67 @@
                         if(typeof(data.fallo) == "undefined" && typeof(data.repetido) == "undefined")
                         {
                             //Si llega respuesta se agrega el artículo a la tabla y se muestra el precio a cancelar--------------------------------
-                             var sub_total = $("#sub-total").text();
-                             var iva_calculado;
+                             var sub_total = sub_total_limpio
+                             var iva_calculado = 0;
                              var iva_total_pagar;
                              var total = cantidad * data[0].precio_proveedor;
-
-                            if(sub_total == "")
-                            {
-                                sub_total = 0;
-                            }
-                            else
-                            {
-                                sub_total = quitar_siglas(sub_total);
-                            }
                             
                             sub_total = parseFloat(sub_total) + parseFloat(total);
 
-                            var total_pagar_total = $("#total").text();
-                            if(total_pagar_total == "")
-                            {
-                                total_pagar_total = 0;
-                            }
+                            var total_pagar_total = total_limpio
+                            console.log(total_limpio,'total fresco')
 
-                            var iva_registrado = $("#iva").text();
-                            if(iva_registrado == "")
-                            {
-                                iva_registrado = 0;
-                            }
-                            else
-                            {
-                                iva_registrado = quitar_siglas(iva_registrado);
-                            }
+                            var iva_registrado = iva_limpio
 
                             if(data[0].iva == 0)
                             {   
                                 iva_total_pagar = iva_registrado;
                                 total_pagar_total = parseFloat(sub_total) + parseFloat(iva_total_pagar);
+                                
+                                console.log(total_pagar_total,'total pagar')
+                                console.log(sub_total,'sub_total pagar')
 
-                                iva_total_pagar = format2(parseFloat(iva_total_pagar));
-                                      sub_total = format2(sub_total);
+                                total_limpio = total_pagar_total
+
+                                console.log(total_limpio,'total limpio de nuevo')
+
+                                iva_limpio = iva_total_pagar
+                                sub_total_limpio = sub_total
+
+                                iva_total_pagar = formatNumber(parseFloat(iva_total_pagar),2,',','.');
+
+                                sub_total = formatNumber(sub_total,2,',','.');
+                                iva_total_pagar = formatNumber(iva_total_pagar,2,',','.')
+                                total_pagar_total = formatNumber(total_pagar_total,2,',','.')
                                 
                                 $("#iva").text(iva_total_pagar);
                                 $("#sub-total").text(sub_total);
-                                $("#total").text(parseFloat(total_pagar_total));
+                                $("#total").text(total_pagar_total);
                             }
                             else
                             {
                                 iva_calculado = data[0].iva / 100;
                                 var iva_recalculado = parseFloat(total) * parseFloat(iva_calculado);
-                                    iva_total_pagar = parseFloat(iva_registrado) + iva_recalculado;
-                                  total_pagar_total = parseFloat(sub_total) + parseFloat(iva_total_pagar);
-                                          sub_total = format2(sub_total);
                                 
-                                $("#iva").text( format2( parseFloat(iva_total_pagar) ) );
+                                iva_total_pagar = parseFloat(
+                                    iva_registrado) + iva_recalculado;
+
+                                total_pagar_total = parseFloat(sub_total) + parseFloat(iva_total_pagar);
+
+                                total_limpio = total_pagar_total
+                                iva_limpio = iva_total_pagar
+                                sub_total_limpio = sub_total
+
+                                sub_total = formatNumber(sub_total,2,',','.');
+                                iva_total_pagar = formatNumber(iva_total_pagar,2,',','.')
+                                total_pagar_total = formatNumber(total_pagar_total,2,',','.')
+                                
+                                $("#iva").text( iva_total_pagar );
                                 $("#sub-total").text(sub_total);
-                                $("#total").text( format2( parseFloat(total_pagar_total ) ) );
+                                $("#total").text( total_pagar_total );
                             }
                             
-                            var filas = "<tr class='alert alert-info'><td class='nombre_articulo'>"+data[0].nombre+"</td><td>"+data[0].marca+"</td><td>"+format2(parseFloat(data[0].precio_proveedor))+"</td><td>"+data[0].nombre_proveedor+"</td><td>"+cantidad+"</td><td class='cantidad'>"+format2(parseFloat(total))+"</td><td><a href='#' title='quitar' class='quitar' data-iva ='"+format2(parseFloat(iva_calculado))+"'><i class='fa fa-remove'></i></a></td></tr>";
+                            var filas = "<tr class='alert alert-info'><td class='nombre_articulo'>"+data[0].nombre+"</td><td>"+data[0].marca+"</td><td>"+formatNumber(parseFloat(data[0].precio_proveedor),2,',','.')+"</td><td>"+data[0].nombre_proveedor+"</td><td>"+cantidad+"</td><td class='cantidad'>"+formatNumber(parseFloat(total),2,'.',',')+"</td><td><a href='#' title='quitar' class='quitar' data-iva ='"+parseFloat(iva_calculado)+"' data-total='"+parseFloat(parseFloat(total))+"'><i class='fa fa-remove'></i></a></td></tr>";
                             $("#tabla_articulos > tbody").append(filas);
                              
                             $("#section_pagar_oculto").show('slow/400/fast');
@@ -230,28 +244,36 @@
         $("#tabla_articulos > tbody").on('click', 'tr .quitar', function(){
                 
                 var iva = $(this).data().iva;
+                var cantidad_pagar_articulo = $(this).data().total;
                 
                 $(this).parent().parent().remove();
                 
-                var cantidad_pagar_articulo = $(this).parent().siblings(".cantidad").text();
-                    cantidad_pagar_articulo = quitar_siglas(cantidad_pagar_articulo);
 
-                var cantidad_total_pagar = $("#total").text();
-                    cantidad_total_pagar = quitar_siglas(cantidad_total_pagar);
+                var cantidad_total_pagar = total_limpio;
+                    
 
                 var iva_flotante = cantidad_pagar_articulo * iva;
-                var iva_anterior = $("#iva").text();
-                    iva_anterior = quitar_siglas(iva_anterior);
+                var iva_anterior = iva_limpio;
+                    
                 var iva_nuevo = parseFloat(iva_anterior) - parseFloat(iva_flotante);
-                    iva_nuevo = format2(iva_nuevo);
+                iva_limpio = iva_nuevo
+                iva_nuevo = formatNumber(iva_nuevo,2,',','.');
 
-                var sub_total = $("#sub-total").text();
-                    sub_total = quitar_siglas(sub_total);
+                var sub_total = sub_total_limpio;
 
                 var sub_total_nuevo = parseFloat(sub_total) - parseFloat(cantidad_pagar_articulo);
-                    sub_total_nuevo = format2(sub_total_nuevo);
+                sub_total_limpio = sub_total_nuevo
+
+                sub_total_nuevo = formatNumber(sub_total_nuevo,2,',','.');
+        
+
                 var nueva_cantidad_total = parseFloat(cantidad_total_pagar) - parseFloat(cantidad_pagar_articulo) - parseFloat(iva_flotante);
-                    nueva_cantidad_total = format2(nueva_cantidad_total);
+                
+                total_limpio = nueva_cantidad_total
+
+                console.log(total_limpio,'nuevo total')
+
+                nueva_cantidad_total = formatNumber(nueva_cantidad_total,2,',','.');
                 
                 $("#sub-total").text('');
                 $("#sub-total").text(sub_total_nuevo);

@@ -54,9 +54,9 @@
 	</div>
 </div>
 <div class="modal fade" id="modal_articulos" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	  <div class="modal-dialog tabla_modal" role="document">
+	  <div class="modal-dialog tabla_modal modal-lg" role="document">
 	    <div class="modal-content">
-	      <div class="modal-header modal-header2" style="background-color: #FFF">
+	      <div class="modal-header">
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	          <span aria-hidden="true">&times;</span>
 	        </button>
@@ -74,7 +74,7 @@
 							<th class="text-center">Iva</th>
 							<th class="text-center">Total</th>
 						</thead>
-						<tbody>
+						<tbody class="text-center">
 							
 						</tbody>
 					</table>

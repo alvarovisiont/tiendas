@@ -19,6 +19,7 @@
 
     <!-- Custom Theme JavaScript -->
     <script src="./js/sb-admin-2.min.js"></script>
+    <script src="./js/main.js"></script>
 
 </body>
 
@@ -40,7 +41,7 @@
                     var filas = "";
                     $.each(data, function(i,e)
                     {
-                        filas += "<tr class='alert alert-warning'><td>"+e.nombre_articulo+"</td><td>"+e.marca+"</td><td>"+e.precio+"</td><td>"+e.cantidad+"</td><td>"+e.sub_total+"</td><td>"+e.iva+"</td><td>"+e.total+"</td></tr>";
+                        filas += "<tr class='alert alert-warning'><td>"+e.nombre_articulo+"</td><td>"+e.marca+"</td><td>"+formatNumber(e.precio,2,',','.')+"</td><td>"+e.cantidad+"</td><td>"+formatNumber(e.sub_total,2,',','.')+"</td><td>"+e.iva+"</td><td>"+formatNumber(e.total,2,',','.')+"</td></tr>";
                     });
                     $("#tabla_articulos tbody").html('');
                     $("#tabla_articulos tbody").html(filas);
