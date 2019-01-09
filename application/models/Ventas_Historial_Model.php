@@ -62,7 +62,7 @@ class Ventas_Historial_Model extends CI_Model
    public function buscar_cliente_factura($id_venta)
    {
       $this->db->where('id_venta', $id_venta);
-      $this->db->select('nombre, cedula, direccion, factura');
+      $this->db->select('nombre, cedula, direccion, factura, telefono');
       $this->db->from('clientes');
       $this->db->join('ventas', 'ventas.id = clientes.id_venta');
       $query = $this->db->get();

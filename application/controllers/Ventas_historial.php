@@ -1,7 +1,8 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-include_once FCPATH.'\vendor\autoload.php';
+//include_once FCPATH.'\vendor\autoload.php';
+require_once __DIR__ . '/../../vendor/autoload.php';
 
 class Ventas_historial extends CI_Controller 
 {
@@ -67,17 +68,23 @@ class Ventas_historial extends CI_Controller
 
 	public function imprimir_factura()
 	{
+
 		$id_venta = $this->uri->segment(3);
 		$datos = $this->Ventas_Historial_Model->buscar_cliente_factura($id_venta);
 		$data = $this->Ventas_Historial_Model->detalles_compra_factura($id_venta);
 
 		if($datos != false && $data != false)
 		{
+
 			$html = $this->load->view('imprimir_factura_ventas_seleccionada', compact('datos', 'data'), TRUE);
 			
 			$mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8', 'format' => 'A4', [190, 236] ] );
 			$mpdf->WriteHTML($html);
 			$mpdf->Output('Reporte de facturas.pdf', "I");
+		}else
+		{
+			echo "ver3";
+		     die();
 		}
 	}
 }
