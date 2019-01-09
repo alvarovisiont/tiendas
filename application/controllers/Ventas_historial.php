@@ -1,7 +1,8 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-include_once FCPATH.'\vendor\autoload.php';
+//include_once FCPATH.'\vendor\autoload.php';
+require_once __DIR__ . '/../../vendor/autoload.php';
 
 class Ventas_historial extends CI_Controller 
 {
