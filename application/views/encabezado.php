@@ -233,6 +233,101 @@
                     else
                     {
                     ?>
+
+
+                    <li>
+                            <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Almancen<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="<?php echo base_url()?>Proveedores">Proveedores</a>
+                                </li>
+                                <li>
+                                    <a href="<?php echo base_url()?>Inventario">Inventario</a>
+                                </li>
+                                <li>
+                                    <a href="<?php echo base_url()?>Reportes_inventario">Reportes detallados</a>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-table fa-fw"></i> Caja<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="<?php echo base_url()?>Caja">Movimientos de la Caja</a>
+                                </li>
+                                <li>
+                                    <a href="<?php echo base_url()?>Clientes">Clientes</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-shopping-cart"></i> Compras<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="<?php echo base_url()?>Compras"> Realizar Compra</a>
+                                </li>
+                                <li>
+                                    <a href="<?php echo base_url()?>Compras_vista">Historial de Compras</a>
+                                </li>
+                                <li>
+                                    <a href="<?php echo base_url()?>Compras_estadisticas">Estadísticas de Compras</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-shopping-cart"></i>  Ventas<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="<?php echo base_url()?>Ventas">Realizar Venta</a>
+                                </li>
+                                <li>
+                                    <a href="<?php echo base_url()?>Ventas_historial">Historial de Ventas</a>
+                                </li>
+                                <li>
+                                    <a href="<?php echo base_url()?>Caja_estadisticas">Gráficos estadísticos</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-users"></i>  Usuarios<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="<?php echo base_url()?>Usuarios_agregar">Agregar Usuarios</a>   
+                                </li>
+                                <li>
+                                    <a href="<?php echo base_url()?>Usuarios_administracion">Administración de Usuarios</a>   
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-users"></i>  Empleados<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="<?php echo base_url()?>Empleados">Administración de empleados</a>   
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-cog fa-spin fa-1x fa-fw" aria-hidden="true"></i>
+                                        <span class="sr-only">Saving. Hang tight!</span> Configuración<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="<?php echo base_url().'Configuracion'; ?>">Datos de la Empresa</a>
+                                </li>
+                                <li>
+                                    <a href="<?php echo base_url().'Configuracion_finanza'; ?>">Configuración de moneda</a>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                        <li><a href="<?php echo base_url().'Auditoria'; ?>"><i class='fa fa-book'></i>&nbsp;Auditoria del Sistema</a></li>
+
+
+                        <?php /*
+
+
+
                         <li>
                             <a href="#"><i class="fa fa-table fa-fw"></i> Caja<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
@@ -255,6 +350,9 @@
                                 </li>
                             </ul>
                         </li>
+
+                    */ ?>
+
                 <?php
                     }
                     ?>
