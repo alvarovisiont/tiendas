@@ -10,7 +10,7 @@ class Reportes_inventario extends CI_Controller
           
           parent:: __Construct();
          
-         $this->load->model("Inventario_Model"); 
+         $this->load->model(["Inventario_Model",'Configuracion_Finanza_Model']); 
 	}
 
 	public function index()
@@ -70,6 +70,8 @@ class Reportes_inventario extends CI_Controller
 		$datos = $this->Inventario_Model->exportar_inventario_filtrado($where);
 		if($datos != false)
 		{
+			$conf  = $this->Configuracion_Finanza_Model->traer_datos();
+
 			$array = [];
 			foreach ($datos as $row) 
 			{
@@ -80,6 +82,7 @@ class Reportes_inventario extends CI_Controller
 							'cantidad' => $row->cantidad,
 							'precio_proveedor' => $row->precio_proveedor,
 							'precio' => $row->precio,
+							'preciodolar' => $conf->dolar_value,
 							'fecha_agregado' => date('d-m-Y', strtotime($row->fecha_agregado))];
 			}
 			echo json_encode($array);
