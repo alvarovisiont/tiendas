@@ -34,7 +34,7 @@ class Auditoria_Model extends CI_Model
    public function grabar_conexion()
    {
          $ahora = date('Y-n-j H:i:s', strtotime('-5 hour'));
-         $array = ['hora_desconexion' => $ahora];
+         $array = ['usuario' => $this->session->userdata('id'), 'hora_conexion' => $ahora];
 
    		$this->db->insert('auditoria', $array);
 

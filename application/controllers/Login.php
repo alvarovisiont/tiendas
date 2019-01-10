@@ -56,16 +56,15 @@ class Login extends CI_Controller
 				$arreglo_sesion['usuario'] = $datos->usuario;
 				$arreglo_sesion['nivel'] = $datos->nivel;
 
-				$this->session->set_userdata($arreglo_sesion);
-
 				$data = ['exito' => 'bien'];
 				$data['nivel'] = $datos->nivel;
 				
 				$this->load->model('Auditoria_Model');
 				
-				$id = $this->Auditoria_Model->grabar_conexion($array);
+				$id = $this->Auditoria_Model->grabar_conexion();
 				
-				$this->session->set_userdata('id_auditoria', $id->id);
+				$arreglo_sesion['id_auditoria'] = $id->id;				
+				$this->session->set_userdata($arreglo_sesion);
 
 				echo json_encode($data);
 			}
