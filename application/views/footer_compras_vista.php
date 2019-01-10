@@ -49,12 +49,8 @@
                     var filas_tabla = "";
                     $.each(data, function(i,e)
                     {
-                        let sub_total_dolar = formatNumber(parseFloat(e.sub_total) / parseFloat(dolar_value),2,',','.')
-                        
-                        let iva_dolar = formatNumber( parseFloat(e.iva) / parseFloat(dolar_value),',','.')
-                        let total_dolar = formatNumber( parseFloat(e.total) / parseFloat(dolar_value),2,',','.')
 
-                        filas_tabla += "<tr><td>"+e.nombre_articulo+"</td><td>"+e.marca+"</td><td>"+e.costo+"</td><td>"+e.proveedor+"</td><td>"+e.cantidad+"</td><td>"+formatNumber(e.sub_total,2,',','.')+" "+siglas+" / <br/> "+sub_total_dolar+" $</td><td>"+formatNumber(e.iva,2,',','.')+" "+siglas+" / <br/> "+iva_dolar+" $</td><td><span  class='badge letras' style='background-color: darkred; color: white;'>"+formatNumber(e.total,2,',','.')+" "+siglas+" / <br/> "+total_dolar+" $</span></td></tr>";
+                        filas_tabla += "<tr><td>"+e.nombre_articulo+"</td><td>"+e.marca+"</td><td>"+e.costo+"</td><td>"+e.proveedor+"</td><td>"+e.cantidad+"</td><td>"+formatNumber(e.sub_total,2,',','.')+" "+siglas+"</td><td>"+formatNumber(e.iva,2,',','.')+" "+siglas+"</td><td><span  class='badge letras' style='background-color: darkred; color: white;'>"+formatNumber(e.total,2,',','.')+" "+siglas+"</span></td></tr>";
                     });
                     $("#tabla_detalle > tbody").html(filas_tabla);
                     $("#tabla_detalle").dataTable({

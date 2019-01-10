@@ -16,6 +16,8 @@
     <!-- Morris Charts JavaScript -->
     <!-- Custom Theme JavaScript -->
     <script src="./js/sb-admin-2.min.js"></script>
+    <!-- Custom Theme JavaScript -->
+    <script src="./js/main.js"></script>
 </body>
 </html>
 <script type="text/javascript">
@@ -27,9 +29,17 @@ $(function(){
 
     var tipo_venta = false,
         total_total = 0,
-        total_formateado = false;
+        total_formateado = false,
+        iva_limpio = 0,
+        sub_total_limpio = 0
+
 
     $("#tabla_clientes").dataTable({
+        "language" : {"url" : "json/esp.json"},
+        order: [0, 'asc']
+    });
+
+    $("#tabla_empleados").dataTable({
         "language" : {"url" : "json/esp.json"},
         order: [0, 'asc']
     });
@@ -93,6 +103,12 @@ $(function(){
         $("#mod_buscar_clientes").modal('hide');
     });
 
+    $("#tabla_empleados tbody").on('click', 'tr .escoger_empleado', function()
+    {
+        $("#id_empleado").val($(this).data('id'));
+        $("#mod_buscar_empleado").modal('hide');
+    });
+
      $("#nombre_articulo" ).autocomplete({
             source: function(request, response)
             {
@@ -100,7 +116,7 @@ $(function(){
                     url : "<?php echo base_url().'Ventas/traer_articulos'; ?>",
                     type: "POST",
                     dataType: "JSON",
-                    data: {art : request.term},
+                    data: {art : request.term.toUpperCase()},
                     success: function(data)
                     {
                         response(data);
@@ -168,44 +184,23 @@ $(function(){
                             iva = (sub_total * iva_calculado),
                             total = (parseFloat(sub_total) + parseFloat(iva));
                             total_total = total_total + total;
-                            total_pagar = $("#total span").text();
-                            if(total_pagar == "")
+                            total_pagar = total_total
+                            if(total_pagar === 0)
                             {
-                                total_pagar = 0;
-                                total_pagar = parseFloat(total_pagar) + parseFloat(total);
-                                total_pagar = format2(total_pagar);
-                            }
-                            else
-                            {
-                                var array_pagar = [];
-                                array_pagar = total_pagar.split(",");
-                                var numero = "";
-                                for (var i = 0; i < array_pagar.length; i++)
-                                {
-                                    //ciclo para quitar las comas del formato
-
-                                    if(array_pagar[i].indexOf('B') != -1)
-                                    {
-                                        var posicion = (array_pagar[i].indexOf('B'));
-                                        var cadena = array_pagar[i].substring(0,posicion -1);
-                                        numero += cadena
-                                    }
-                                    else
-                                    {
-                                        numero += array_pagar[i];
-                                    }
-                                }
-                                total_pagar =  parseFloat(numero) + parseFloat(total);
-                                total_pagar = format2(total_pagar);
+                                total_pagar = parseFloat(total);
                             }
 
-                            sub_total = format2(sub_total);
-                            iva = format2(iva);
-                            total = format2(total);
+                            sub_total_limpio = parseFloat(sub_total) + parseFloat(sub_total_limpio)
+                            iva_limpio = parseFloat(iva_limpio) + parseFloat(iva)
+
+                            sub_total = formatNumber(sub_total,2,',','.');
+                            iva = formatNumber(iva,2,',','.');
+                            let total1 = formatNumber(total,2,',','.');
+                            total_pagar = formatNumber(total_pagar,2,',','.');
 
 
 
-                        var filas = "<tr><td class='nombre'>"+data.nombre+"</td><td>"+data.marca+"</td><td>"+data.precio+"</td><td>"+cantidad+"</td><td>"+sub_total+"</td><td>"+iva+"</td><td class='total'>"+total+"</td><td><button type='button' class='btn btn-danger eliminar_articulo'><i class='fa fa-remove'></i></button></td></tr>";
+                        var filas = "<tr><td class='nombre'>"+data.nombre+"</td><td>"+data.marca+"</td><td>"+data.precio+"</td><td>"+cantidad+"</td><td>"+sub_total+"</td><td>"+iva+"</td><td class='total'>"+total1+"</td><td><button type='button' class='btn btn-danger eliminar_articulo' data-total='"+total+"'><i class='fa fa-remove'></i></button></td></tr>";
 
                         $("#section_registrar").show('slow/400/fast');
                         $("#tabla_productos tbody").append(filas);
@@ -237,47 +232,9 @@ $(function(){
 
     $("#tabla_productos tbody").on('click', 'tr td .eliminar_articulo', function(e){       
 
-            var total_span = $("#total span").text();
-            var total_restar = $(this).parent().siblings('.total').text();
+            var total_span = total_total
+            var total_restar = $(this).data('total');
             var nuevo_total_pagar = "";
-
-            array_pagar = [];
-            array_pagar = total_span.split(",");
-            numero = "";
-            for (var i = 0; i < array_pagar.length; i++)
-            {
-                if(array_pagar[i].indexOf('B') != -1)
-                {
-                    var posicion = (array_pagar[i].indexOf('B'));
-                    var cadena = array_pagar[i].substring(0,posicion -1);
-                    numero += cadena
-                }
-                else
-                {
-                    numero += array_pagar[i];
-                }
-            }
-
-            total_span = parseFloat(numero);
-
-            array_pagar = [];
-            array_pagar = total_restar.split(",");
-            numero = "";
-            for (var i = 0; i < array_pagar.length; i++)
-            {
-                if(array_pagar[i].indexOf('B') != -1)
-                {
-                    var posicion = (array_pagar[i].indexOf('B'));
-                    var cadena = array_pagar[i].substring(0,posicion -1);
-                    numero += cadena
-                }
-                else
-                {
-                    numero += array_pagar[i];
-                }
-            }
-
-            total_restar = parseFloat(numero);
 
             total_total = parseFloat(total_total) - parseFloat(total_restar);
 
@@ -287,8 +244,7 @@ $(function(){
 
             $(this).parent().parent().remove();
 
-            nuevo_total_pagar = nuevo_total_pagar;
-            nuevo_total_pagar = format2(nuevo_total_pagar);
+            nuevo_total_pagar = formatNumber(nuevo_total_pagar,2,',','.');
             
             $("#total span").text(nuevo_total_pagar);
 
@@ -319,7 +275,7 @@ $(function(){
                 porcentaje = 0;
             porcentaje = (total_total * 2) / 100;
             total_span = parseFloat(total_total) - parseFloat(porcentaje);
-            total_span = format2(total_span);
+            total_span = formatNumber(total_span,2,',','.');
             $("#total span").text(total_span);
 
             tipo_venta = true;
@@ -332,14 +288,14 @@ $(function(){
                 {
                     
                     
-                    total_span = format2(parseFloat(total_total));
+                    total_span = formatNumber(total_total,2,',','.');
 
                     $("#total span").text(total_span);
 
                  }
                  else
                  {
-                    total_span = format2(total_total);
+                    total_span = formatNumber(total_total,2,',','.');
                     $("#total span").text(total_span);  
                     total_formateado = true;
                  }                    
@@ -350,32 +306,13 @@ $(function(){
 
     $("#form_agregar_compra").submit(function(e)
     {
-        var total_pagar = $("#total span").text(),
+        var total_pagar = total_total,
         monto_pagado = $("#monto_pago").val();
-
-        array_pagar = [];
-        array_pagar = total_pagar.split(",");
-        numero = "";
-        for (var i = 0; i < array_pagar.length; i++)
-        {
-            if(array_pagar[i].indexOf('B') != -1)
-            {
-                var posicion = (array_pagar[i].indexOf('B'));
-                var cadena = array_pagar[i].substring(0,posicion -1);
-                numero += cadena
-            }
-            else
-            {
-                numero += array_pagar[i];
-            }
-        }
-
-        total_pagar = numero;
 
         if(parseFloat(monto_pagado) < parseFloat(total_pagar))
         {
             var monto = parseFloat(total_pagar) - parseFloat(monto_pagado);
-            monto = format2(monto);
+            monto = formatNumber(monto,2,',','.');
             $("#falta_dinero").html('');
             $("#falta_dinero").show('slow/400/fast');
             $("#falta_dinero").text('La cantidad de dinero es insuficiente, restante por pagar: ' + monto);
@@ -418,7 +355,7 @@ $(function(){
                         {
                             $("#falta_dinero").hide();
                             var monto = parseFloat(monto_pagado) - parseFloat(total_pagar);
-                            monto = format2(monto);
+                            monto = formatNumber(monto,2,',','.');
                             $("#monto_suficiente").html('');
                             $("#monto_suficiente").show('slow/400/fast');
                             $("#monto_suficiente").html('total vuelto: ' + monto);    

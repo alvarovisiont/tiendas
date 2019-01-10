@@ -2,7 +2,8 @@
 	<div class="container-fixed">
 		<div class="col-md-12">
 			<form class="form-horizontal" id="form_agregar_compra" action="<?php echo base_url().'Ventas/grabar_compra';?>" method="POST">
-			<input type="hidden" name="vuelto" id="vuelto">
+			<input type="hidden" name="vuelto" id="vuelto" value="0">
+			<input type="hidden" id="id_empleado" name="id_empleado">
 			<br>
 				<div class="form-group">
 					<label class="control-label col-md-2">Cédula del Cliente</label>
@@ -14,12 +15,17 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-md-2 col-md-offset-1" id="div_btn_buscar_usuario">
+					<div class="col-md-2" id="div_btn_buscar_usuario">
 						<button type="button" class="btn btn-info btn-block" title="Buscar Usuario" data-toggle="modal" data-target="#mod_buscar_clientes"><i class="fa fa-user fa-1x"></i>&nbsp;<i class="fa fa-search fa-1x"></i></button>
 					</div>
 					<div class="col-md-2">
 						<button type="button" class="btn btn-success btn-block" title="Buscar Articulos" data-toggle="modal" data-target="#mod_buscar_articulos"><i class="fa fa-shopping-cart fa-1x"></i>&nbsp;<i class="fa fa-search fa-1x"></i></button>
 					</div>
+
+					<div class="col-md-2">
+						<button type="button" class="btn btn-primary btn-block" title="Empleado Venta" data-toggle="modal" data-target="#mod_buscar_empleado"><i class="fa fa-users fa-1x"></i>&nbsp;<i class="fa fa-search fa-1x"></i></button>
+					</div>
+
 				</div>
 				<div class="form-group">
 					<div class="col-md-4 col-md-offset-1" id="barra_oculta" style="display:none">
@@ -132,7 +138,7 @@
 <div class="modal fade" id="mod_buscar_clientes" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   	<div class="modal-dialog tabla_modal" role="document">
     	<div class="modal-content">
-	      <div class="modal-header modal-header2" style="background-color: #FFF">
+	      <div class="modal-header">
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	          <span aria-hidden="true">&times;</span>
 	        </button>
@@ -188,10 +194,64 @@
     	</div>
 	</div>
 </div>
+
+<div class="modal fade" id="mod_buscar_empleado" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  	<div class="modal-dialog tabla_modal" role="document">
+    	<div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	        <h3 class="text-center">Empleados del Sistema&nbsp;<i class="fa fa-user"></i>&nbsp;<i class="fa fa-pencil"></i></h3>
+	      </div>
+	      <div class="modal-body">
+	      	<table class="table table-striped table-hover" id="tabla_empleados">
+	      		<thead>
+	      			<th class="text-center">Cédula</th>
+	      			<th class="text-center">Nombre y Apellido</th>
+	      			<th class="text-center">Teléfono</th>
+	      			<th></th>
+	      		</thead>
+	      		<tbody>
+	      			<?php
+	      				if(!empty($workers))
+	      				{
+	      					foreach ($workers as $row) 
+	      					{
+	      						$button = "<button class='btn btn-md btn-danger escoger_empleado'
+	      									data-id = '$row->id'>
+	      									Agregar&nbsp;<i class='fa fa-thumbs-up'></i></button>";
+	      						echo "<tr>
+	      								<td>$row->cedula</td>
+	      								<td>$row->nombre</td>
+	      								<td>$row->telefono</td>
+	      								<td>".$button."</td>";
+	      					}
+	      				}
+	      				else
+	      				{
+	      					echo 	"<tr>
+	      								<td></td>
+	      								<td></td>
+	      								<td></td>
+	      								<td></td>
+	      							</tr>";
+	      				}
+
+	      			?>
+	      		</tbody>
+	      	</table>
+	      </div>
+	      <div class="modal-footer">
+	      	<button class="btn btn-primary btn-md" type="button" data-dismiss="modal">Cerrar&nbsp;<i class="fa fa-remove"></i></button>
+	      </div>
+    	</div>
+	</div>
+</div>
 <div class="modal fade" id="mod_buscar_articulos" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   	<div class="modal-dialog tabla_modal" role="document">
     	<div class="modal-content">
-	      <div class="modal-header modal-header2" style="background-color: #FFF">
+	      <div class="modal-header">
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	          <span aria-hidden="true">&times;</span>
 	        </button>

@@ -10,7 +10,7 @@ class Ventas extends CI_Controller
 	{
           
           parent:: __Construct(); 
-          $this->load->model('Ventas_Model');
+          $this->load->model(['Ventas_Model','Empleados_Model','Comision_Model','Configuracion_Finanza_Model']);
 	}
 
 	public function index()
@@ -24,9 +24,11 @@ class Ventas extends CI_Controller
 			
 			$clientes = $this->Ventas_Model->traer_clientes();
 			$articulos = $this->Ventas_Model->articulos_modal();
+			$workers = $this->Empleados_Model->traer_datos();
+
 			$this->Ventas_Model->eliminar_articulos_flotantes();
 			$this->load->view("encabezado_compras");
-			$this->load->view("ventas", compact('clientes', 'articulos'));
+			$this->load->view("ventas", compact('clientes', 'articulos','workers'));
 			$this->load->view("footer_ventas");
 		}
 		else
@@ -113,7 +115,21 @@ class Ventas extends CI_Controller
 			$vuelto = $this->input->post('vuelto');
 			$tipo_venta = $this->input->post('metodo_pago');
 			$monto_pagado  = $this->input->post('monto_pago');
+
 			$this->Ventas_Model->grabar_compra($monto_pagado, $tipo_venta, $vuelto);
+			
+			$id_empleado = $this->input->post('id_empleado');
+			$id_empleado = !empty($id_empleado) ? $id_empleado : $this->session->userdata('id');
+
+			$array_comision = [
+													'id_empleado' => $id_empleado,
+													'porcentaje' => 15,
+													'monto' => (($monto_pagado - $vuelto) * 15) /100,
+													'created_at' => date('Y-m-d H:i:s')
+												];
+
+			$this->Comision_Model->store($array_comision);
+
 			$this->Ventas_Model->agregar_clientes($array_cliente);
 		}
 	}

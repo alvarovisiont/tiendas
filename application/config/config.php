@@ -34,8 +34,8 @@ if (!isset($_SERVER['ORIG_SCRIPT_NAME']))
 else
 {
   $config['base_url'] .= str_replace(basename($_SERVER['ORIG_SCRIPT_NAME']),"",$_SERVER['ORIG_SCRIPT_NAME']);
-}
-*/
+}*/
+
 
 $config['base_url'] = 'https://web21facturacion.herokuapp.com/';
 
@@ -395,10 +395,11 @@ $config['sess_regenerate_destroy'] = FALSE;
 
 $config['sess_driver'] = 'files';
 $config['sess_cookie_name'] = 'ci_session';
-$config['sess_expiration'] = 500000;
+$config['sess_expiration'] = 7200;
 $config['sess_save_path'] = sys_get_temp_dir();
-$config['sess_match_ip'] = FALSE;
-$config['sess_time_to_update'] = 0;
+$config['sess_match_ip'] = TRUE;
+$config['sess_time_to_update'] = TRUE;
+$config['sess_match_useragent'] = TRUE;
 $config['sess_regenerate_destroy'] = FALSE;
 /*
 |--------------------------------------------------------------------------

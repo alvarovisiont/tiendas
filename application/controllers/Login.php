@@ -4,6 +4,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Login extends CI_Controller 
 {
 
+	function __Construct()
+	{
+    parent:: __Construct(); 
+	}
+
 	public function index()
 	{
 		$this->load->view('login');
@@ -19,19 +24,22 @@ class Login extends CI_Controller
 						"clave" => $this->input->post("clave", TRUE)];
 			
 			$datos = $this->Login_Model->login($data);
+			$arreglo_sesion = [];
+
 			if(isset($datos->id))
 			{
 				$empresa = $this->Login_Model->traer_empresa();
 				if($empresa != false)
-				{
-					$this->session->set_userdata('empresa', $empresa->nombre);
-					$this->session->set_userdata('direccion', $empresa->direccion);
-					$this->session->set_userdata('telefono', $empresa->telefono);
-					$this->session->set_userdata('email', $empresa->email);
+				{	
+					$arreglo_sesion['empresa'] = $empresa->nombre;
+					$arreglo_sesion['direccion'] = $empresa->direccion;
+					$arreglo_sesion['telefono'] = $empresa->telefono;
+					$arreglo_sesion['email'] = $empresa->email;
 					
 					if(!empty($empresa->logo))
 					{
-						$this->session->set_userdata('logo', $empresa->logo);
+						
+						$arreglo_sesion['logo'] = $empresa->logo;
 					}
 				}
 
@@ -39,21 +47,25 @@ class Login extends CI_Controller
 				
 				if($moneda != false)
 				{
-					$this->session->set_userdata('siglas', $moneda->siglas);
-					$this->session->set_userdata('iva', $moneda->iva);
-					$this->session->set_userdata('retencion', $moneda->retencion);
+					$arreglo_sesion['siglas'] = $moneda->siglas;
+					$arreglo_sesion['iva'] = $moneda->iva;
+					$arreglo_sesion['retencion'] = $moneda->retencion;
 				}
-				$this->session->set_userdata('id', $datos->id);
-				$this->session->set_userdata('usuario', $datos->usuario);
-				$this->session->set_userdata('nivel', $datos->nivel);
+				
+				$arreglo_sesion['id'] = $datos->id;
+				$arreglo_sesion['usuario'] = $datos->usuario;
+				$arreglo_sesion['nivel'] = $datos->nivel;
+
+				$this->session->set_userdata($arreglo_sesion);
+
 				$data = ['exito' => 'bien'];
 				$data['nivel'] = $datos->nivel;
 				
 				$this->load->model('Auditoria_Model');
 				
-				//$id = $this->Auditoria_Model->grabar_conexion($array);
+				$id = $this->Auditoria_Model->grabar_conexion($array);
 				
-				//$this->session->set_userdata('id_auditoria', $id->id);
+				$this->session->set_userdata('id_auditoria', $id->id);
 
 				echo json_encode($data);
 			}
@@ -66,7 +78,7 @@ class Login extends CI_Controller
 	}
 
 	public function acceso()
-	{
+	{ 
         /*  ver ..............................*/
        $this->session->set_userdata('id', 1);
 	   $this->session->set_userdata('usuario', 'admin');	

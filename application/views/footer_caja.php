@@ -16,6 +16,8 @@
     <script src="./js/raphael.min.js"></script>
     <!-- Custom Theme JavaScript -->
     <script src="./js/sb-admin-2.min.js"></script>
+    <!-- Custom Theme JavaScript -->
+    <script src="./js/main.js"></script>
 </body>
 </html>
 <script>
@@ -34,7 +36,7 @@
                 {
                     var filas = "";
                     $.each(data, function(i, e){
-                        filas += "<tr><td>"+e.nombre_articulo+"</td><td>"+e.marca+"</td><td>"+e.precio+"</td><td>"+e.cantidad+"</td><td>"+e.sub_total+"</td><td>"+e.iva+"</td><td><span class='label label-success letras'>"+e.total+"</span></td></tr>";
+                        filas += "<tr><td>"+e.nombre_articulo+"</td><td>"+e.marca+"</td><td>"+formatNumber(e.precio,2,',','.')+"</td><td>"+e.cantidad+"</td><td>"+formatNumber(e.sub_total,2,',','.')+"</td><td>"+formatNumber(e.iva,2,',','.')+"</td><td><span class='label label-success letras'>"+formatNumber(e.total,2,',','.')+"</span></td></tr>";
                     });
                     $("#tabla_detalle tbody").html('');
                     $("#tabla_detalle tbody").html(filas);

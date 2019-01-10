@@ -58,7 +58,7 @@
 							{
 								$sueldo = number_format($row->sueldo,2,',','.').$conf->siglas;
 								
-								$sueldo_dolares = number_format($row->sueldo / $conf->dolar_value,2,',','.')."$";
+								$sueldo_dolares = number_format($row->sueldo * $conf->dolar_value,2,',','.')."Bs.S";
 
 								$botones = "<button class='btn btn-warning btn-md' data-toggle='modal' data-target='#modal_editar' 
 									data-id= '$row->id'

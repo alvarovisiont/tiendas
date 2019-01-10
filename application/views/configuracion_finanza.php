@@ -37,7 +37,7 @@
 					</tr>
 					<tr>
 						<td><label for="" class="control-label col-md-2">% de Retención</label><span class="col-md-10 text-center"><h4><?php if(!empty($datos->retencion)){echo $datos->retencion."%";}?></h4></span></td>
-						<td><label class="control-label col-md-2">Valor Dolar en <?= !isset($datos->siglas) ? 'BSS' : $datos->siglas ?> </label>
+						<td><label class="control-label col-md-2">Valor Dolar en Bs.S </label>
 							<span class="col-md-10 text-center">
 								<h4>
 									<?= number_format($datos->dolar_value,2,',','.'); ?>
