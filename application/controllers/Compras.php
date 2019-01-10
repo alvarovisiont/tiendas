@@ -9,7 +9,7 @@ class Compras extends CI_Controller
           
           parent:: __Construct(); 
           $array = ['Auditoria_Model','Compras_Model','Configuracion_Finanza_Model'];
-          $this->load->model($array)
+          $this->load->model($array);
 	}
 
 	public function index()
@@ -36,7 +36,7 @@ class Compras extends CI_Controller
 	public function traer_articulos()
 	{
 		$arreglo = [];
-		¿
+		
 		$id = $this->input->post('id');
 		$datos = $this->Compras_Model->traer_articulos($id);
 		if($datos != false)
