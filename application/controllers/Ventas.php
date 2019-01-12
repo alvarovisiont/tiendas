@@ -149,7 +149,7 @@ class Ventas extends CI_Controller
 			$mpdf->Output('Reporte de facturas.pdf', "I");
 		}else
 		{
-			echo "ver3";
+			echo "Comuniquese con soporte del sistema";
 		     die();
 		}
 

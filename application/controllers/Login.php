@@ -28,6 +28,11 @@ class Login extends CI_Controller
 
 			if(isset($datos->id))
 			{
+
+				$sessiones = ['id', 'usuario', 'nivel', 'empresa', 'logo', 'siglas', 'id_auditoria', 'direccion', 'telefono', 'email', 'retencion'];
+				$this->session->unset_userdata($sessiones);
+
+
 				$empresa = $this->Login_Model->traer_empresa();
 				if($empresa != false)
 				{	
@@ -63,7 +68,8 @@ class Login extends CI_Controller
 				
 				$id = $this->Auditoria_Model->grabar_conexion();
 				
-				$arreglo_sesion['id_auditoria'] = $id->id;				
+				$arreglo_sesion['id_auditoria'] = $id->id;
+
 				$this->session->set_userdata($arreglo_sesion);
 
 				echo json_encode($data);
@@ -84,13 +90,14 @@ class Login extends CI_Controller
        $this->session->set_userdata('nivel', 1);
         /* ----------------------------------*/
 
-		if($this->session->userdata('nivel') != NULL)
+   		if($this->session->userdata('nivel') != NULL)
 		{
 			$this->load->model('Auditoria_Model');
 			$ahora = date('Y-n-j H:i:s', strtotime('-5 hour'));
 			$array = ['usuario' => $this->session->userdata('id'), 'hora_conexion' => $ahora];
 			
 
+			
 			switch ($this->session->userdata('nivel')) {
 				case 1:
 					redirect(base_url()."Admin");	

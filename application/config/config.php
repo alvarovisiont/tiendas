@@ -400,6 +400,7 @@ $config['sess_save_path'] = sys_get_temp_dir();
 $config['sess_match_ip'] = FALSE;
 $config['sess_time_to_update'] = 0;
 $config['sess_regenerate_destroy'] = FALSE;
+
 /*
 |--------------------------------------------------------------------------
 | Cookie Related Variables
