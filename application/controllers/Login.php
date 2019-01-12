@@ -28,11 +28,6 @@ class Login extends CI_Controller
 
 			if(isset($datos->id))
 			{
-
-				$sessiones = ['id', 'usuario', 'nivel', 'empresa', 'logo', 'siglas', 'id_auditoria', 'direccion', 'telefono', 'email', 'retencion'];
-				$this->session->unset_userdata($sessiones);
-
-
 				$empresa = $this->Login_Model->traer_empresa();
 				if($empresa != false)
 				{	
