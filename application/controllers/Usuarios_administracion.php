@@ -8,7 +8,7 @@ class Usuarios_administracion extends CI_Controller
           
           parent:: __Construct();
          
-         $this->load->model("Usuarios_model"); 
+         $this->load->model("Usuarios_Model"); 
 	}
 
 	public function index()
