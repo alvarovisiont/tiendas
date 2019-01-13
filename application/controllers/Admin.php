@@ -13,6 +13,10 @@ class Admin extends CI_Controller
 
 	public function index()
 	{
+
+		echo "-------------".$this->session->userdata('nivel');
+		die();
+
 		if($this->session->userdata('nivel') == 1 )
 		{
 
@@ -29,7 +33,8 @@ class Admin extends CI_Controller
 			$this->load->view("admin", compact('datos', 'empleados'));
 			$this->load->view("footer_admin", compact('data'));
 		}
-		if($this->session->userdata('nivel') == 2 )
+
+		elseif($this->session->userdata('nivel') == 2 )
 		{
 
 			$this->load->model('Empleados_Model');
