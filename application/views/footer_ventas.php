@@ -32,7 +32,8 @@ $(function(){
         total_formateado = false,
         iva_limpio = 0,
         sub_total_limpio = 0,
-        dolar_value = parseFloat(<?= $config->dolar_value ?>)
+        dolar_value = parseFloat(<?= $config->dolar_value ?>),
+        iva_conf = parseInt(<?= $config->iva ?>)
 
 
     $("#tabla_clientes").dataTable({
@@ -184,9 +185,9 @@ $(function(){
                     else if(typeof(data.nombre) != "undefined")
                     {
                         $("#falta_dinero").hide('slow/400/fast');
-
+                        
                         var sub_total = (data.precio * cantidad),
-                            iva_calculado = data.iva / 100,
+                            iva_calculado = iva_conf / 100,
                             iva = (sub_total * iva_calculado),
                             total = (parseFloat(sub_total) + parseFloat(iva));
                             total_total = total_total + total;
@@ -316,7 +317,9 @@ $(function(){
         $('#section_debito').show()
         hide_sections_payment_method(2)
       }else if(val === "visa"){
-        hide_sections_payment_method(1)
+        let total_dolar = parseFloat(total_total) / dolar_value
+        $('#dolares_cancelar').val(total_dolar)
+        hide_sections_payment_method(5)
       }else if(val === "mixto"){
         $('#section_mixto').show()
         hide_sections_payment_method(3)
@@ -333,15 +336,24 @@ $(function(){
         $('#section_trans').hide()
         $('#section_debito').hide()
         $('#section_mixto').hide()
+        $('#section_dolar_cancelar').hide()
       }else if(type === 2){
         $('#section_trans').hide()
         $('#section_mixto').hide()
+        $('#section_dolar_cancelar').hide()
       }else if(type === 3){
         $('#section_debito').hide()
         $('#section_trans').hide()
+        $('#section_dolar_cancelar').hide()
       }else if(type === 4){
         $('#section_debito').hide()
         $('#section_mixto').hide()
+        $('#section_dolar_cancelar').hide()
+      }else if(type === 5){
+        $('#section_trans').hide()
+        $('#section_debito').hide()
+        $('#section_mixto').hide()
+        $('#section_dolar_cancelar').show()
       }
     }
 
@@ -431,10 +443,15 @@ $(function(){
                         {
                             $("#falta_dinero").hide();
                             var monto = parseFloat(monto_pagado) - parseFloat(total_pagar);
+
+                            if(metodo_pago === "visa"){
+                                monto = monto / dolar_value
+                            }
+
                             monto = formatNumber(monto,2,',','.');
                             $("#monto_suficiente").html('');
                             $("#monto_suficiente").show('slow/400/fast');
-                            $("#monto_suficiente").html('total vuelto: ' + monto+" Bs.S");    
+                            $("#monto_suficiente").html('total vuelto: ' + monto+siglas);    
                             $("#grabar_compra").prop('disabled', true);
                         }
 

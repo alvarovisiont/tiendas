@@ -88,7 +88,7 @@ class Ventas_Model extends CI_Model
    		}
    }
 
-   public function agregar_tabla($art, $cantidad)
+   public function agregar_tabla($art, $cantidad,$conf)
    {     
    		$this->db->where('nombre', $art);
          $this->db->where('cantidad >=', $cantidad);
@@ -106,6 +106,9 @@ class Ventas_Model extends CI_Model
             {
                
                $filas1 = $query1->row();
+
+               $fila->precio = $fila->precio * $conf->dolar_value;
+
                $query1->free_result();
 
                if($filas1->id != "")
@@ -122,7 +125,7 @@ class Ventas_Model extends CI_Model
                   else
                   {  
                         $sub_total = $cantidad * $fila->precio;
-                        $iva_calculado = $fila->iva / 100;
+                        $iva_calculado = $conf->iva / 100;
                         $iva = round($sub_total * $iva_calculado);
                         $total = $sub_total + $iva;
 
@@ -144,7 +147,7 @@ class Ventas_Model extends CI_Model
                {
                   $id = 1;
                   $sub_total = $cantidad * $fila->precio;
-                  $iva_calculado = $fila->iva / 100;
+                  $iva_calculado = $conf->iva / 100;
                   $iva = round($sub_total * $iva_calculado);
                   $total = $sub_total + $iva;
                   $array = [  
@@ -164,7 +167,7 @@ class Ventas_Model extends CI_Model
             {
                   $id = 1;
                   $sub_total = $cantidad * $fila->precio;
-                  $iva_calculado = $fila->iva / 100;
+                  $iva_calculado = $conf->iva / 100;
                   $iva = round($sub_total * $iva_calculado);
                   $total = $sub_total + $iva;
                   $array = [  

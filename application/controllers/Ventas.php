@@ -31,6 +31,7 @@ class Ventas extends CI_Controller
 			$workers = $this->Usuarios_Model->traer_trabajadores();
 			$bancos = $this->Banco_Model->get();
 			$config = $this->Configuracion_Finanza_Model->traer_datos();
+			$seller = $this->Usuarios_Model->getById($this->session->userdata('id'));
 
 			$option_bancos = "<option>Seleccione</option>";
 			foreach ($bancos as $row) {
@@ -39,7 +40,7 @@ class Ventas extends CI_Controller
 
 			$this->Ventas_Model->eliminar_articulos_flotantes();
 			$this->load->view("encabezado_compras");
-			$this->load->view("ventas", compact('clientes', 'articulos','workers','option_bancos'));
+			$this->load->view("ventas", compact('clientes', 'articulos','workers','option_bancos','seller'));
 			$this->load->view("footer_ventas",compact('config'));
 		}
 		else
@@ -94,7 +95,9 @@ class Ventas extends CI_Controller
 		{
 			$art = $this->input->post('articulo');
 			$cantidad = $this->input->post('cantidad');
-			$datos = $this->Ventas_Model->agregar_tabla($art, $cantidad);
+			$config = $this->Configuracion_Finanza_Model->traer_datos();
+
+			$datos = $this->Ventas_Model->agregar_tabla($art, $cantidad,$config);
 			if($datos != false && $datos != "Repetido")
 			{
 				echo json_encode($datos);

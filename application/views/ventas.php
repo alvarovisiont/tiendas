@@ -21,11 +21,6 @@
 					<div class="col-md-2">
 						<button type="button" class="btn btn-success btn-block" title="Buscar Articulos" data-toggle="modal" data-target="#mod_buscar_articulos"><i class="fa fa-shopping-cart fa-1x"></i>&nbsp;<i class="fa fa-search fa-1x"></i></button>
 					</div>
-
-					<div class="col-md-2">
-						<button type="button" class="btn btn-primary btn-block" title="Empleado Venta" data-toggle="modal" data-target="#mod_buscar_empleado"><i class="fa fa-users fa-1x"></i>&nbsp;<i class="fa fa-search fa-1x"></i></button>
-					</div>
-
 				</div>
 				<div class="form-group">
 					<div class="col-md-4 col-md-offset-1" id="barra_oculta" style="display:none">
@@ -97,7 +92,7 @@
 					</div>
 				</div>
 				<div class="form-group text-center">
-					<p class="alert alert-success" style="color: black; font-weight: bold;"><span id="total">Total a Pagar:&nbsp;&nbsp;<span></span>&nbsp;&nbsp;<?php echo $this->session->userdata('siglas'); ?> </span><br><br> <span style="font-size: 15px;" class="badge alert-danger" id="cliente_encargado"></span></p>
+					<p class="alert alert-success" style="color: black; font-weight: bold;"><span id="total">Total a Pagar:&nbsp;&nbsp;<span></span>&nbsp;&nbsp;<?php echo $this->session->userdata('siglas'); ?> </span><br><br> <span style="font-size: 15px;" class="badge alert-danger" id="cliente_encargado">Encargado de la Venta: <?= $seller->nombre_apellido ?></span></p>
 					<p class="alert alert-danger letras" id="falta_dinero" style="display: none; color: black; font-weight: bold;"></p>
 					<p class="alert alert-success letras" id="monto_suficiente" style="display: none; color: black; font-weight: bold;"></p>
 				</div>
@@ -154,6 +149,12 @@
 						<label for="" class="control-label col-md-2">Tipo Documento</label>
 						<div class="col-md-4">
 							<input type="text" readonly="" id="factura" name="factura" value="Factura" class="form-control" style="text-align: center; font-size: 14px; font-weight: bold;">
+						</div>
+					</div>
+					<div class="form-group" id="section_dolar_cancelar" style="display: none;">
+						<label for="" class="control-label col-md-3">Dolares a Cancelar</label>
+						<div class="col-md-3">
+							<input type="text" class="form-control" id="dolares_cancelar" readonly="">
 						</div>
 					</div>
 					<div class="form-group">
@@ -227,60 +228,6 @@
 	</div>
 </div>
 
-<div class="modal fade" id="mod_buscar_empleado" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  	<div class="modal-dialog tabla_modal" role="document">
-    	<div class="modal-content">
-	      <div class="modal-header">
-	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-	          <span aria-hidden="true">&times;</span>
-	        </button>
-	        <h3 class="text-center">Empleados del Sistema&nbsp;<i class="fa fa-user"></i>&nbsp;<i class="fa fa-pencil"></i></h3>
-	      </div>
-	      <div class="modal-body">
-	      	<table class="table table-striped table-hover" id="tabla_empleados">
-	      		<thead>
-	      			<th class="text-center">Usuario</th>
-	      			<th class="text-center">Nombre y Apellido</th>
-	      			<th class="text-center">Teléfono</th>
-	      			<th></th>
-	      		</thead>
-	      		<tbody>
-	      			<?php
-	      				if(!empty($workers))
-	      				{
-	      					foreach ($workers as $row) 
-	      					{
-	      						$button = "<button class='btn btn-md btn-danger escoger_empleado'
-	      									data-id = '$row->id'
-	      									data-nombre = '$row->nombre_apellido'>
-	      									Agregar&nbsp;<i class='fa fa-thumbs-up'></i></button>";
-	      						echo "<tr>
-	      								<td>$row->usuario</td>
-	      								<td>$row->nombre_apellido</td>
-	      								<td>$row->telefono</td>
-	      								<td>".$button."</td>";
-	      					}
-	      				}
-	      				else
-	      				{
-	      					echo 	"<tr>
-	      								<td></td>
-	      								<td></td>
-	      								<td></td>
-	      								<td></td>
-	      							</tr>";
-	      				}
-
-	      			?>
-	      		</tbody>
-	      	</table>
-	      </div>
-	      <div class="modal-footer">
-	      	<button class="btn btn-primary btn-md" type="button" data-dismiss="modal">Cerrar&nbsp;<i class="fa fa-remove"></i></button>
-	      </div>
-    	</div>
-	</div>
-</div>
 <div class="modal fade" id="mod_buscar_articulos" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   	<div class="modal-dialog tabla_modal" role="document">
     	<div class="modal-content">
