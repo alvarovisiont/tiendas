@@ -7,7 +7,7 @@ class Comision_Model extends CI_Model
    function __Construct()
    {
 
-   	parent:: __Construct();
+   	//parent:: __Construct();
    }
 
   public function get($id = null){
