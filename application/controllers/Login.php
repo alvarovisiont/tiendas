@@ -5,7 +5,7 @@ class Login extends CI_Controller
 {
 	 public function __construct() {
          parent::__construct();
-         $this->load->library('session');
+        // $this->load->library('session');
         
     }
 
@@ -56,7 +56,7 @@ class Login extends CI_Controller
 				$arreglo_sesion['usuario'] = $datos->usuario;
 				//$arreglo_sesion['nivel'] = $datos->nivel;
 
-				$arreglo_sesion['nivel'] = 9;
+				$arreglo_sesion['nivel'] = 1;
 
 				$data = ['exito' => 'bien'];
 				$data['nivel'] = $datos->nivel;
