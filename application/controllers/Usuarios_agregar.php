@@ -17,7 +17,7 @@ class Usuarios_agregar extends CI_Controller
 			$this->Auditoria_Model->grabar_ultima_conexion();
 			
 			$this->load->model('Usuarios_Model');
-			$datos = $this->Usuarios_model->traer_usuarios();
+			$datos = $this->Usuarios_Model->traer_usuarios();
 			$this->load->view("encabezado");
 			$this->load->view("usuarios_agregar", compact('datos'));
 			$this->load->view('footer_usuarios');
@@ -28,7 +28,7 @@ class Usuarios_agregar extends CI_Controller
 	{
 		if($this->input->is_ajax_request())
 		{
-			$this->load->model('Usuarios_model');
+			$this->load->model('Usuarios_Model');
 			$array = [
 				'usuario' => $this->input->post('usuario'),
 				'clave' => $this->input->post('clave'),
