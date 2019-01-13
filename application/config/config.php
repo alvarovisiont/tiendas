@@ -1,4 +1,4 @@
-<?php
+<?php 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /*
@@ -50,8 +50,6 @@ $config['base_url'] = 'https://web21facturacion.herokuapp.com/';
 |
 */
 $config['index_page'] = '';
-
-
 
 /*
 |--------------------------------------------------------------------------
@@ -152,7 +150,7 @@ $config['subclass_prefix'] = 'MY_';
 | Note: This will NOT disable or override the CodeIgniter-specific
 |	autoloading (application/config/autoload.php)
 */
-$config['composer_autoload'] = FALSE;
+$config['composer_autoload'] = TRUE;
 
 /*
 |--------------------------------------------------------------------------
@@ -174,7 +172,8 @@ $config['composer_autoload'] = FALSE;
 | DO NOT CHANGE THIS UNLESS YOU FULLY UNDERSTAND THE REPERCUSSIONS!!
 |
 */
-$config['permitted_uri_chars'] = 'a-z 0-9~%.:_\-';
+$config['permitted_uri_chars'] = 'a-z A-Z 0-9~%.:_\- =$%.@';
+
 
 /*
 |--------------------------------------------------------------------------
@@ -232,6 +231,7 @@ $config['directory_trigger'] = 'd';
 $config['log_threshold'] = 0;
 
 /*
+
 |--------------------------------------------------------------------------
 | Error Logging Directory Path
 |--------------------------------------------------------------------------
@@ -330,6 +330,7 @@ $config['cache_query_string'] = FALSE;
 | https://codeigniter.com/user_guide/libraries/encryption.html
 |
 */
+
 $config['encryption_key'] = 'a8f5f167f44f4964e6c998dee827110c ';
 
 /*
@@ -383,19 +384,10 @@ $config['encryption_key'] = 'a8f5f167f44f4964e6c998dee827110c ';
 | except for 'cookie_prefix' and 'cookie_httponly', which are ignored here.
 |
 */
-/*
 $config['sess_driver'] = 'files';
 $config['sess_cookie_name'] = 'ci_session';
-$config['sess_expiration'] = 7200;
-$config['sess_save_path'] = sys_get_temp_dir();
-$config['sess_match_ip'] = FALSE;
-$config['sess_time_to_update'] = 300;
-$config['sess_regenerate_destroy'] = FALSE;
-*/
-
-$config['sess_driver'] = 'files';
-$config['sess_cookie_name'] = 'ci_session';
-$config['sess_expiration'] = 7200;
+$config['sess_expiration'] = 0;
+//$config['sess_save_path'] = NULL;
 $config['sess_save_path'] = sys_get_temp_dir();
 $config['sess_match_ip'] = FALSE;
 $config['sess_time_to_update'] = 0;
@@ -537,3 +529,14 @@ $config['rewrite_short_tags'] = FALSE;
 | Array:		array('10.0.1.200', '192.168.5.0/24')
 */
 $config['proxy_ips'] = '';
+
+$config['email'] = [
+  "protocol"  => "smtp",
+  "smtp_host" => "smtp.mailtrap.io",
+  "smtp_port" => 2525,
+  "smtp_user" => "b5c71ad7c334f5",
+  "smtp_pass" => "da646f29dd4bf6",
+  "crlf"      => "\r\n",
+  "newline"   => "\r\n"
+];
+
