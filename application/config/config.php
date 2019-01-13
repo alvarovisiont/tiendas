@@ -37,7 +37,7 @@ else
 }
 */
 
-$config['base_url'] = 'https://web21facturacion.herokuapp.com/';
+$config['base_url'] = 'https://web21facturacion.herokuapp.com/'; 
 
 /*
 |--------------------------------------------------------------------------
