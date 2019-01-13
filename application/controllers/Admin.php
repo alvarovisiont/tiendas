@@ -6,6 +6,7 @@ class Admin extends CI_Controller
 	 public function __construct() {
          parent:: __Construct(); 
          $this->load->model(["Admin_Model","Empleados_Model"]); 
+         $this->load->library('session');
         
     }
 
@@ -13,6 +14,10 @@ class Admin extends CI_Controller
 
 	public function index()
 	{
+
+		echo "--------------".$this->session->userdata('nivel');
+		die();
+
 		//if($this->session->has_userdata('nivel'))
 		if($this->session->userdata('nivel') == 1 )
 		{
