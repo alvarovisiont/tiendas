@@ -8,7 +8,7 @@ class Usuarios_administracion extends CI_Controller
           
           parent:: __Construct();
          
-         $this->load->model("Usuarios_model"); 
+         $this->load->model("Usuarios_Model"); 
 	}
 
 	public function index()
@@ -20,7 +20,7 @@ class Usuarios_administracion extends CI_Controller
 			$this->load->model('Auditoria_Model');
 			$this->Auditoria_Model->grabar_ultima_conexion();
 			
-			$datos = $this->Usuarios_model->traer_usuarios();
+			$datos = $this->Usuarios_Model->traer_usuarios();
 			$this->load->view("encabezado");
 			$this->load->view("administracion_usuarios", compact('datos'));
 			$this->load->view('footer_usuarios');
@@ -40,7 +40,7 @@ class Usuarios_administracion extends CI_Controller
 			'comision' => $this->input->post('comision_modi')
 		];
 
-		$this->Usuarios_model->modificar($id, $array);
+		$this->Usuarios_Model->modificar($id, $array);
 		redirect(base_url()."Usuarios_administracion");
 	}
 

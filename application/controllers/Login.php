@@ -3,11 +3,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Login extends CI_Controller 
 {
-
-	function __Construct()
-	{
-    parent:: __Construct(); 
-	}
+	 public function __construct() {
+         parent::__construct();
+        
+    }
 
 	public function index()
 	{
@@ -63,8 +62,10 @@ class Login extends CI_Controller
 				
 				$id = $this->Auditoria_Model->grabar_conexion();
 				
-				$arreglo_sesion['id_auditoria'] = $id->id;				
+				$arreglo_sesion['id_auditoria'] = $id->id;
+
 				$this->session->set_userdata($arreglo_sesion);
+				
 
 				echo json_encode($data);
 			}
@@ -78,19 +79,20 @@ class Login extends CI_Controller
 
 	public function acceso()
 	{ 
-        /*  ver ..............................*/
+        /*  ver ..............................
        $this->session->set_userdata('id', 1);
 	   $this->session->set_userdata('usuario', 'admin');	
        $this->session->set_userdata('nivel', 1);
         /* ----------------------------------*/
 
-		if($this->session->userdata('nivel') != NULL)
+   		if($this->session->userdata('nivel') != NULL)
 		{
 			$this->load->model('Auditoria_Model');
 			$ahora = date('Y-n-j H:i:s', strtotime('-5 hour'));
 			$array = ['usuario' => $this->session->userdata('id'), 'hora_conexion' => $ahora];
 			
 
+			
 			switch ($this->session->userdata('nivel')) {
 				case 1:
 					redirect(base_url()."Admin");	

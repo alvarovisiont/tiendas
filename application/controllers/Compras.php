@@ -1,6 +1,9 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+require_once __DIR__ . '/../../vendor/autoload.php';
+
+
 class Compras extends CI_Controller 
 {
 
@@ -106,23 +109,17 @@ class Compras extends CI_Controller
         if($datos != "Error")
         {
 
-        	$html = $this->load->view('factura_compras', compact('datos', 'data'), TRUE);
-
-        	//this the the PDF filename that user will get to download
-        	$pdfFilePath = "Factura de Compras.pdf";
-        	//load mPDF library
-	        $this->load->library('m_pdf');
-	 
-	       //generate the PDF from the given html
-	        $this->m_pdf->pdf->WriteHTML($html);
-	 		
-	 		//$this->m_pdf->pdf->setFooter('{PAGENO}');
-	        //download it.
-	        $this->m_pdf->pdf->Output($pdfFilePath, "I");
+			$html = $this->load->view('factura_compras', compact('datos', 'data'), TRUE);
+			
+			$mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8', 'format' => 'A4', [190, 236] ] );
+			$mpdf->WriteHTML($html);
+			$mpdf->Output('FacturaCompras.pdf', "I");
+		
         }
         else
         {
-        	print_r($datos);
+        	echo "Comuniquese con soporte del sistema";
+		     die();
         }
 	}
 }

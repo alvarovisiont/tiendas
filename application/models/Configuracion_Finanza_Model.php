@@ -7,7 +7,7 @@ class Configuracion_Finanza_Model extends CI_Model
    function __Construct()
    {
 
-   	parent:: __Construct();
+   	//parent:: __Construct();
    }
 
    public function traer_datos()

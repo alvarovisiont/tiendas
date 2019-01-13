@@ -180,7 +180,7 @@
                         <li><a href="<?php echo base_url().'Auditoria'; ?>"><i class='fa fa-book'></i>&nbsp;Auditoria del Sistema</a></li>
                 <?php
                     }
-                    elseif($this->session->userdata('nivel') == 2)
+                    elseif($this->session->userdata('nivel') == 3)
                     {
                     ?>
                         <li>
@@ -229,8 +229,21 @@
                             </ul>
                         </li>
                 <?php
-                    }
-                    else
+                    } ?>
+                    
+                    </ul>
+                </div>
+                <!-- /.sidebar-collapse -->
+            </div>
+            <!-- /.navbar-static-side -->
+        </nav>
+
+        <div id="page-wrapper">
+
+
+ <?php /*
+
+            else
                     {
                     ?>
 
@@ -324,8 +337,7 @@
                         <li><a href="<?php echo base_url().'Auditoria'; ?>"><i class='fa fa-book'></i>&nbsp;Auditoria del Sistema</a></li>
 
 
-                        <?php /*
-
+                       
 
 
                         <li>
@@ -353,14 +365,4 @@
 
                     */ ?>
 
-                <?php
-                    }
-                    ?>
-                    </ul>
-                </div>
-                <!-- /.sidebar-collapse -->
-            </div>
-            <!-- /.navbar-static-side -->
-        </nav>
-
-        <div id="page-wrapper">
+               
