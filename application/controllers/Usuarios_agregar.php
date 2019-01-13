@@ -16,7 +16,7 @@ class Usuarios_agregar extends CI_Controller
 			$this->load->model('Auditoria_Model');
 			$this->Auditoria_Model->grabar_ultima_conexion();
 			
-			$this->load->model('Usuarios_model');
+			$this->load->model('Usuarios_Model');
 			$datos = $this->Usuarios_model->traer_usuarios();
 			$this->load->view("encabezado");
 			$this->load->view("usuarios_agregar", compact('datos'));
