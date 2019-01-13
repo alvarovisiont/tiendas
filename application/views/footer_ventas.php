@@ -109,11 +109,15 @@ $(function(){
         $("#mod_buscar_clientes").modal('hide');
     });
 
-    $("#tabla_empleados tbody").on('click', 'tr .escoger_empleado', function()
-    {
-        $("#id_empleado").val($(this).data('id'));
-        $('#cliente_encargado').text('Encargado de la venta: '+$(this).data('nombre'))
-        $("#mod_buscar_empleado").modal('hide');
+    $("#tabla_articulos tbody").on('click', 'tr .escoger_producto', function(){
+
+        let name = $(this).data('nombre')
+
+        $('#nombre_articulo').val(name)
+        $("#cantidad").focus();
+        $("#falta_dinero").hide('slow/400/fast');
+        $('#mod_buscar_articulos').modal('hide')
+
     });
 
      $("#nombre_articulo" ).autocomplete({
@@ -315,6 +319,7 @@ $(function(){
         hide_sections_payment_method(1)
       }else if(val === "debito"){
         $('#section_debito').show()
+        $('#monto_pago').val(total_total)
         hide_sections_payment_method(2)
       }else if(val === "visa"){
         let total_dolar = parseFloat(total_total) / dolar_value
@@ -325,6 +330,7 @@ $(function(){
         hide_sections_payment_method(3)
       }else{
         $('#section_trans').show()
+        $('#monto_pago').val(total_total)
         hide_sections_payment_method(4)
       }
 

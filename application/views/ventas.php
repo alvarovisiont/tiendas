@@ -229,13 +229,13 @@
 </div>
 
 <div class="modal fade" id="mod_buscar_articulos" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  	<div class="modal-dialog tabla_modal" role="document">
+  	<div class="modal-dialog modal-lg" role="document">
     	<div class="modal-content">
 	      <div class="modal-header">
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	          <span aria-hidden="true">&times;</span>
 	        </button>
-	        <h3 class="text-center">Clientes Agregados&nbsp;<i class="fa fa-user"></i>&nbsp;<i class="fa fa-pencil"></i></h3>
+	        <h3 class="text-center">Productos Inventario&nbsp;<i class="fa fa-book"></i>&nbsp;<i class="fa fa-pencil"></i></h3>
 	      </div>
 	      <div class="modal-body">
 	      	<table class="table table-striped table-hover" id="tabla_articulos">
@@ -245,6 +245,7 @@
 	      			<th class="text-center">Grupo</th>
 	      			<th class="text-center">Cantidad</th>
 	      			<th class="text-center">Precio</th>
+	      			<th class="text-center">Agregar Producto</th>
 	      		</thead>
 	      		<tbody class="text-center">
 	      			<?php
@@ -252,20 +253,27 @@
 	      				{
 	      					foreach ($articulos as $row) 
 	      					{
-	      						$button = "<button class='btn btn-md btn-danger escoger_cliente'
-	      									data-nombre = '$row->nombre'>
-	      									Agregar&nbsp;<i class='fa fa-thumbs-up'></i></button>";
+	      						$button = "";
+	      						if($row->cantidad > 0){
+
+		      						$button = "<button class='btn btn-md btn-danger escoger_producto'
+		      									data-nombre = '".strtoupper($row->nombre)."'>
+		      									Agregar&nbsp;<i class='fa fa-thumbs-up'></i></button>";
+	      						}
+
 	      						echo "<tr>
 	      								<td>$row->nombre</td>
 	      								<td>$row->marca</td>
 	      								<td>$row->grupo</td>
 	      								<td><span class='label label-warning letras'>$row->cantidad</span></td>
-	      								<td>$row->precio</td>";
+	      								<td>".number_format($row->precio * $config->dolar_value)."</td>
+	      								<td>$button</td>";
 	      					}
 	      				}
 	      				else
 	      				{
 	      					echo 	"<tr>
+	      								<td></td>
 	      								<td></td>
 	      								<td></td>
 	      								<td></td>

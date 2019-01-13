@@ -40,7 +40,7 @@ class Ventas extends CI_Controller
 
 			$this->Ventas_Model->eliminar_articulos_flotantes();
 			$this->load->view("encabezado_compras");
-			$this->load->view("ventas", compact('clientes', 'articulos','workers','option_bancos','seller'));
+			$this->load->view("ventas", compact('clientes', 'articulos','workers','option_bancos','seller','config'));
 			$this->load->view("footer_ventas",compact('config'));
 		}
 		else
