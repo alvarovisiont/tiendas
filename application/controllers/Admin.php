@@ -13,6 +13,10 @@ class Admin extends CI_Controller
 
 	public function index()
 	{
+
+		echo "----".$this->session->userdata('nivel');
+		die(); 
+
 		//if($this->session->has_userdata('nivel'))
 		if($this->session->userdata('nivel') == 1 )
 		//if(1 == 1 )
