@@ -43,11 +43,19 @@ class Ventas_Model extends CI_Model
       }
    }
 
-   public function buscar_clientes($cedula)
-   {
-         $this->db->where('cedula', $cedula);
+   public function buscar_clientes($filtro,$string)
+   {  
+         if($string == 1){
+            $this->db->like('nombre',$filtro);
+            $this->db->or_like('telefono',$filtro);
+         }else{
+            $this->db->where('cedula', $filtro);
+            $this->db->or_like('nombre',$filtro);
+            $this->db->or_like('telefono',$filtro);
+         }
+
          $this->db->select('nombre, telefono, direccion');
-         $query = $this->db->get('clientes');
+         $query = $this->db->get('clientes',1);
          if($query->num_rows() > 0)
          {
             $fila = $query->row();
@@ -179,12 +187,12 @@ class Ventas_Model extends CI_Model
    		}
    }
 
-   public function grabar_compra($monto, $tipo, $vuelto)
+   public function grabar_compra($monto, $tipo, $vuelto,$arreglo_pago)
    {
-      $this->verificar($monto, $tipo, $vuelto);
+      return $this->verificar($monto, $tipo, $vuelto,$arreglo_pago);
    }
 
-   private function verificar($monto, $tipo, $vuelto)
+   private function verificar($monto, $tipo, $vuelto,$arreglo_pago)
    {
       $codigo = "fac-".rand(10000, 100000000);
       $this->db->where('factura', $codigo);
@@ -196,19 +204,35 @@ class Ventas_Model extends CI_Model
       }
       else
       {
+         
             $array = [ 
-                        'factura' => $codigo,
-                        'fecha_venta' => date('Y-m-d'),
-                        'monto_pagado' => $monto,
-                        'vuelto' => $vuelto,
-                        'tipo_venta' => $tipo
-                     ];      
+               'factura' => $codigo,
+               'fecha_venta' => date('Y-m-d'),  
+               'monto_pagado' => $monto,
+               'vuelto' => $vuelto,
+               'tipo_venta' => $tipo
+            ];      
+
+            if($tipo === "mixto"){
+               $array['monto_dolares'] = $arreglo_pago['monto_dolares'];
+            }elseif($tipo === "transferencia"){
+               $array['nro_transferencia'] = $arreglo_pago['nro_transferencia'];
+               $array['id_banco'] = $arreglo_pago['banco_transferencia'];
+            }elseif($tipo === "debito"){
+               $array['id_banco'] = $arreglo_pago['banco_debito'];
+            }elseif($tipo === "visa"){
+               $array['monto_dolares'] = $monto;
+               $array['monto_pagado'] = $monto * $arreglo_pago['dolar_value'];
+            }
+                  
             $this->db->insert('ventas', $array);
             $this->db->select_max('id');
             $query = $this->db->get('ventas');
+            $id_venta = 0;
             if($query->num_rows() > 0)
             {
                $row = $query->row();
+               $id_venta = $row->id;
                $query->free_result();
 
                $this->db->select('cantidad, nombre_articulo');
@@ -224,6 +248,8 @@ class Ventas_Model extends CI_Model
                   $query->free_result();
                }
             }
+
+         return $id_venta;
       }
    }
 
@@ -236,7 +262,7 @@ class Ventas_Model extends CI_Model
          $row = $query->row();
          $query->free_result();
 
-         if($row->id < 1 || $row->id == "")
+         if($row->id < 1 || $row->id == null)
          {
             $array['id_venta'] = 1;
             $this->db->insert('clientes', $array);   

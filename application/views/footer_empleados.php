@@ -53,6 +53,8 @@
                     $("#telefono_modi").val(x);
             var x = $(e.relatedTarget).data().sueldo;
                     $("#sueldo_modi").val(x);
+            var x = $(e.relatedTarget).data().sueldo;
+                    $("#comision_modi").val(x);
         });
 
         function pregunta()

@@ -31,7 +31,8 @@ $(function(){
         total_total = 0,
         total_formateado = false,
         iva_limpio = 0,
-        sub_total_limpio = 0
+        sub_total_limpio = 0,
+        dolar_value = parseFloat(<?= $config->dolar_value ?>)
 
 
     $("#tabla_clientes").dataTable({
@@ -60,16 +61,20 @@ $(function(){
         var x = $("#cedula_cliente").val();
         if(x == "")
         {
-            alert("Debe ingresar la cédula del cliente que desea buscar");
+            alert("Debe ingresar la cédula,teléfono o nombre del cliente que desea buscar");
         }
         else
         {
+            let isString = 2
             $("#barra_oculta").show('slow/400/fast');
+            if(isNaN(x)){
+                isString = 1
+            }
 
             $.ajax({
                 url: "<?php echo base_url().'Ventas/buscar_clientes'; ?>",
                 type: "POST",
-                data: {cedula : x},
+                data: {cedula : x, isString},
                 dataType: "JSON",
                 success: function(data)
                 {
@@ -106,6 +111,7 @@ $(function(){
     $("#tabla_empleados tbody").on('click', 'tr .escoger_empleado', function()
     {
         $("#id_empleado").val($(this).data('id'));
+        $('#cliente_encargado').text('Encargado de la venta: '+$(this).data('nombre'))
         $("#mod_buscar_empleado").modal('hide');
     });
 
@@ -259,6 +265,8 @@ $(function(){
             {
                 $("#section_registrar").hide('slow');
             }
+
+            $('#falta_dinero').hide()
     });
 
     $("#monto_pago").keyup(function()
@@ -269,7 +277,7 @@ $(function(){
     $("input[name='metodo_pago']").click(function(){
         val = $(this).val();
 
-        if(val != "efectivo")
+        /*if(val != "efectivo")
         {
             var total_span,
                 porcentaje = 0;
@@ -300,22 +308,90 @@ $(function(){
                     total_formateado = true;
                  }                    
             }
-        }
+        }*/
+
+      if(val === "efectivo"){
+        hide_sections_payment_method(1)
+      }else if(val === "debito"){
+        $('#section_debito').show()
+        hide_sections_payment_method(2)
+      }else if(val === "visa"){
+        hide_sections_payment_method(1)
+      }else if(val === "mixto"){
+        $('#section_mixto').show()
+        hide_sections_payment_method(3)
+      }else{
+        $('#section_trans').show()
+        hide_sections_payment_method(4)
+      }
 
     });
 
+    function hide_sections_payment_method(type){
+      type = parseInt(type)
+      if(type === 1){
+        $('#section_trans').hide()
+        $('#section_debito').hide()
+        $('#section_mixto').hide()
+      }else if(type === 2){
+        $('#section_trans').hide()
+        $('#section_mixto').hide()
+      }else if(type === 3){
+        $('#section_debito').hide()
+        $('#section_trans').hide()
+      }else if(type === 4){
+        $('#section_debito').hide()
+        $('#section_mixto').hide()
+      }
+    }
+
     $("#form_agregar_compra").submit(function(e)
     {
+        e.preventDefault()
+
         var total_pagar = total_total,
-        monto_pagado = $("#monto_pago").val();
+        monto_pagado = $("#monto_pago").val(),
+        monto_pagado_limpio = monto_pagado,
+        metodo_pago  = '',
+        monto_pagado_dolares = parseFloat($('#monto_dolares').val()),
+        siglas = " Bs.S"
+
+        $("input[name='metodo_pago']").each(function(e){
+          if($(this).is(':checked')){
+            metodo_pago =  $(this).val()
+          }
+        })
+
+        if(metodo_pago === "visa"){
+          monto_pagado = parseFloat(monto_pagado) * parseFloat(dolar_value)
+          siglas = " $";
+
+        }else if(metodo_pago === "mixto"){
+
+          let dolar_to_bs = monto_pagado_dolares * dolar_value
+          monto_pagado = parseFloat(monto_pagado) + dolar_to_bs
+        }
+
 
         if(parseFloat(monto_pagado) < parseFloat(total_pagar))
         {
-            var monto = parseFloat(total_pagar) - parseFloat(monto_pagado);
+          let monto = 0
+
+          if(metodo_pago === "visa"){
+          
+            let dolar_total_pagar = parseFloat(total_pagar) / dolar_value
+            monto = dolar_total_pagar - monto_pagado_limpio
+          
+          }else if(metodo_pago === "mixto"){
+            monto = parseFloat(total_pagar) - parseFloat(monto_pagado);
+          }else{
+            monto = parseFloat(total_pagar) - parseFloat(monto_pagado);
+          }
+
             monto = formatNumber(monto,2,',','.');
             $("#falta_dinero").html('');
             $("#falta_dinero").show('slow/400/fast');
-            $("#falta_dinero").text('La cantidad de dinero es insuficiente, restante por pagar: ' + monto);
+            $("#falta_dinero").text('La cantidad de dinero es insuficiente, restante por pagar: ' + monto+siglas);
             return false;
         }
         else
@@ -358,7 +434,7 @@ $(function(){
                             monto = formatNumber(monto,2,',','.');
                             $("#monto_suficiente").html('');
                             $("#monto_suficiente").show('slow/400/fast');
-                            $("#monto_suficiente").html('total vuelto: ' + monto);    
+                            $("#monto_suficiente").html('total vuelto: ' + monto+" Bs.S");    
                             $("#grabar_compra").prop('disabled', true);
                         }
 
@@ -385,7 +461,9 @@ $(function(){
         $("#monto_suficiente").html('').hide();
         $("#falta_dinero").html('');
         $("#boton_agregar_tabla").prop('disabled', false)
+        $('#cliente_encargado').text('')
         total_total = 0;
+        hide_sections_payment_method(1)
     });
 
 });

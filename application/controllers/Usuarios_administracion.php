@@ -33,7 +33,11 @@ class Usuarios_administracion extends CI_Controller
 		$array = [
 			'usuario' => $this->input->post('usuario_modi'),
 			'clave' => $this->input->post('clave_modi'),
-			'nivel' => $this->input->post('perfil_modi')
+			'nivel' => $this->input->post('perfil_modi'),
+			'nombre_apellido' => $this->input->post('nombre_apellido_modi'),
+			'sueldo' => $this->input->post('sueldo_modi'),
+			'telefono' => $this->input->post('telefono_modi'),
+			'comision' => $this->input->post('comision_modi')
 		];
 
 		$this->Usuarios_model->modificar($id, $array);

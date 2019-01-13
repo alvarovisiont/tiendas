@@ -33,7 +33,8 @@ class Empleados extends CI_Controller
 					'nombre' => $this->input->post('nombre'),
 					'cedula' => $this->input->post('cedula'),
 					'telefono' => $this->input->post('telefono'),
-					'sueldo' => $this->input->post('sueldo')
+					'sueldo' => $this->input->post('sueldo'),
+					'comision' => $this->input->post('comision')
 				];
 
 		$this->Empleados_Model->insertar($array);
@@ -49,7 +50,8 @@ class Empleados extends CI_Controller
 					'nombre' => $this->input->post('nombre_modi'),
 					'cedula' => $this->input->post('cedula_modi'),
 					'telefono' => $this->input->post('telefono_modi'),
-					'sueldo' => $this->input->post('sueldo_modi')
+					'sueldo' => $this->input->post('sueldo_modi'),
+					'comision' => $this->input->post('comision_modi')
 				];
 
 		$this->Empleados_Model->modificar($id ,$array);

@@ -24,6 +24,14 @@ class Usuarios_Model extends CI_Model
        }
    }
 
+   public function getById($id){
+      return $this->db->where('id',$id)->get('usuarios')->row();
+   }
+
+   public function traer_trabajadores(){
+      return $this->db->where('nivel',3)->get('usuarios')->result();
+   }
+
    public function agregar($datos)
    {
       $this->db->like('usuario', $datos['usuario']);

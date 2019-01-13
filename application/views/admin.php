@@ -177,9 +177,9 @@
                             <table class="table table-striped table-hover">
                                 <thead>
                                     <th class="text-center">Nombre Completo</th>
-                                    <th class="text-center">Cédula</th>
                                     <th class="text-center">Télefono</th>
                                     <th class="text-center">Sueldo</th>
+                                    <th class="text-center">Comisión</th>
                                 </thead>
                                 <tbody class="text-center">
                                     <?php 
@@ -188,10 +188,10 @@
                                             foreach ($empleados as $row)
                                             {
                                                 echo "<tr>
-                                                            <td>$row->nombre</td>
-                                                            <td>$row->cedula</td>
+                                                            <td>$row->nombre_apellido</td>
                                                             <td>$row->telefono</td>
-                                                            <td>$row->sueldo</td>
+                                                            <td>".number_format($row->sueldo,2,',','.')."</td>
+                                                            <td>$row->comision %</td>
                                                         </tr>";
                                             }
                                         }

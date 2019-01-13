@@ -26,6 +26,11 @@ class Ventas_Historial_Model extends CI_Model
    		}
    }
 
+   public function get_sub_total_sell($id_venta){
+      $sql = "SELECT SUM(sub_total) as sub_total from ventas_detalle where id_venta = $id_venta";
+      return $this->db->query($sql)->row();
+   }
+
    public function traer_detalle($id_venta)
    {
       $this->db->where('id_venta', $id_venta);

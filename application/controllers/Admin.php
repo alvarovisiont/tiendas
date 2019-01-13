@@ -7,7 +7,7 @@ class Admin extends CI_Controller
 	{
           
     parent:: __Construct(); 
-    $this->load->model(["Admin_Model","Empleados_Model"]); 
+    $this->load->model(["Admin_Model","Usuarios_Model"]); 
 	}
 
 	public function index()
@@ -23,7 +23,7 @@ class Admin extends CI_Controller
 
 			$datos = $this->Admin_Model->traer_datos();
 			$data = $this->Admin_Model->traer_compras_ventas();
-			$empleados = $this->Empleados_Model->traer_datos();
+			$empleados = $this->Usuarios_Model->traer_trabajadores();
 
 			$this->load->view("encabezado");
 			$this->load->view("admin", compact('datos', 'empleados'));

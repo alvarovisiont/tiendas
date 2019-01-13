@@ -25,6 +25,10 @@ class Empleados_Model extends CI_Model
    	 	}
    }
 
+   public function getById($id){
+      return $this->db->where('id',$id)->get('empleados')->row();
+   }
+
    public function insertar($array)
    {
    	 $this->db->insert('empleados', $array);

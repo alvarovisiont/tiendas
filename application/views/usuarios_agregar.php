@@ -6,6 +6,12 @@
 				<h3 class="text-center">Agregar Usuario</h3>
 				<br>
 				<div class="form-group">
+					<label for="" class="control-label col-md-2">Nombre y Apellido</label>
+					<div class="col-md-4">
+						<input type="text" class="form-control" name="nombre_apellido" required="" placeholder="Indique el nombre de usuario de esta cuenta">
+					</div>
+				</div>
+				<div class="form-group">
 					<label for="" class="control-label col-md-2">Usuario</label>
 					<div class="col-md-4">
 						<input type="text" class="form-control" name="usuario" required="" placeholder="Indique el nombre de usuario de esta cuenta">
@@ -22,8 +28,24 @@
 							<option value=""></option>
 							<option value="1">Administrador</option>
 							<option value="2">Contador</option>
-							<option value="3">Operador</option>
+							<option value="3">Trabajador</option>
 						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="" class="control-label col-md-2">Teléfono</label>
+					<div class="col-md-4">
+						<input type="number" class="form-control field_work" name="telefono" id="telefono" required="" disabled="">
+					</div>
+					<label for="" class="control-label col-md-2">Sueldo</label>
+					<div class="col-md-4">
+						<input type="number" class="form-control field_work" name="sueldo" id="sueldo" required="" disabled="">
+					</div>
+				</div>
+				<div class="form-group field_work">
+					<label for="" class="control-label col-md-2">Comisión</label>
+					<div class="col-md-4">
+						<input type="number" class="form-control field_work" name="comision" id="comision" required="" disabled="">
 					</div>
 				</div>
 				<div class="form-group">
@@ -39,7 +61,7 @@
 				</div>
 			</form>
 			<br><br>
-			<table class="table table-hover table-striped">
+			<table class="table table-hover table-striped" id="tabla">
 				<thead>
 					<th class="text-center">Usuario</th>
 					<th class="text-center">Nivel</th>
@@ -60,10 +82,10 @@
 								}
 								else
 								{
-									$nivel = "<span class='label label-warning letras'>Operador</span>";		
+									$nivel = "<span class='label label-warning letras'>Trabajador</span>";		
 								}
 								echo "<tr>
-											<td>$row->usuario</td>
+											<td><span style='font-size: 16px;'>$row->usuario<span></td>
 											<td>$nivel</td>
 										</tr>";
 							}

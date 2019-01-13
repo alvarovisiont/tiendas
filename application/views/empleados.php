@@ -34,6 +34,18 @@
 						<input type="number" class="form-control" name="sueldo" id="sueldo" required="">
 					</div>
 				</div>
+				<div class="form-group">
+					<label for="" class="control-label col-md-2">Comisión</label>
+					<div class="col-md-4">
+						<input type="number" class="form-control" name="comision" id="comision" required="">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="" class="control-label col-md-2">Usuario</label>
+					<div class="col-md-4">
+						<input type="text" class="form-control" name="usuario" id="usuario" required="">
+					</div>
+				</div>
 				<br>
 				<div class="form-group">
 					<div class="col-md-offset-4 col-md-4">
@@ -48,6 +60,7 @@
 					<th class="text-center">Cédula</th>
 					<th class="text-center">Teléfono</th>
 					<th class="text-center">Sueldo</th>
+					<th class="text-center">Comisión</th>
 					<th class="text-center"></th>
 				</thead>
 				<tbody class="text-center">
@@ -65,6 +78,7 @@
 									data-nombre= '$row->nombre'
 									data-cedula= '$row->cedula'
 									data-telefono= '$row->telefono'
+									data-comision= '$row->comision'
 									data-sueldo= '$row->sueldo'>Modifcar</button>
 									<button class='btn btn-danger btn-md eliminar' data-id='$row->id'>Eliminar</button>";
 								echo "<tr>
@@ -72,6 +86,7 @@
 										<td>$row->cedula</td>
 										<td>$row->telefono</td>
 										<td>".$sueldo." / <br/> ".$sueldo_dolares."</td>
+										<td>$row->comision</td>
 										<td>$botones</td>
 									</tr>";
 							}
@@ -85,6 +100,7 @@
 									<td></td>
 									<td></td>
 									<td></td>	
+									<td></td>
 								</tr>";
 						}
 					?>
@@ -93,7 +109,7 @@
 			<div class="modal fade" id="modal_editar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			  	<div class="modal-dialog" role="document">
 			    	<div class="modal-content">
-				      <div class="modal-header modal-header2" style="background-color: #FFF">
+				      <div class="modal-header">
 				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 				          <span aria-hidden="true">&times;</span>
 				        </button>
@@ -102,29 +118,33 @@
 				      <form action="<?php echo base_url().'Empleados/modificar'; ?>" class="form-horizontal" id="form_agregar" method="POST">
 				      <input type="hidden" id="id_modificar" name="id_modificar">
 				      <div class="modal-body">
-				      	<div class="row">
-			      			<div class="form-group">
-								<label for="" class="control-label col-md-2">Nombre</label>
-								<div class="col-md-4">
-									<input type="text" class="form-control" name="nombre_modi" id="nombre_modi" required="">
-								</div>
-								<label for="" class="control-label col-md-2">Cédula</label>
-								<div class="col-md-4">
-									<input type="number" class="form-control" name="cedula_modi" id="cedula_modi" required="">
-								</div>
+				      	
+		      			<div class="form-group row">
+							<label for="" class="control-label col-md-2">Nombre</label>
+							<div class="col-md-4">
+								<input type="text" class="form-control" name="nombre_modi" id="nombre_modi" required="">
 							</div>
-							<div class="form-group">
-								<label for="" class="control-label col-md-2">Teléfono</label>
-								<div class="col-md-4">
-									<input type="text" class="form-control" name="telefono_modi" id="telefono_modi" required="">
-								</div>
-								<label for="" class="control-label col-md-2">Sueldo</label>
-								<div class="col-md-4">
-									<input type="number" class="form-control" name="sueldo_modi" id="sueldo_modi" required="">
-								</div>
+							<label for="" class="control-label col-md-2">Cédula</label>
+							<div class="col-md-4">
+								<input type="number" class="form-control" name="cedula_modi" id="cedula_modi" required="">
 							</div>
-							<br>
-				      	</div>
+						</div>
+						<div class="form-group row">
+							<label for="" class="control-label col-md-2">Teléfono</label>
+							<div class="col-md-4">
+								<input type="text" class="form-control" name="telefono_modi" id="telefono_modi" required="">
+							</div>
+							<label for="" class="control-label col-md-2">Sueldo</label>
+							<div class="col-md-4">
+								<input type="number" class="form-control" name="sueldo_modi" id="sueldo_modi" required="">
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="" class="control-label col-md-2">Comisión</label>
+							<div class="col-md-4">
+								<input type="number" class="form-control" name="comision_modi" id="comision_modi" required="">
+							</div>
+						</div>
 				      </div>
 				      <div class="modal-footer">
 							<button type="submit" class="btn btn-success">Modificar&nbsp;<i class="fa fa-remove"></i></button>

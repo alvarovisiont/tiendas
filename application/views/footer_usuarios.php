@@ -26,7 +26,22 @@
 <script type="text/javascript">
     $(function(){
 
-        
+        $('#tabla').dataTable({
+            "language" : {"url" : "json/esp.json"},
+            order: [0, 'asc']
+        })
+
+        $('#perfil').change(function(e){
+          let val = parseInt(e.target.value)
+          if(val === 3){
+            $('.field_work').prop('disabled',false)
+          }else{
+            $('.field_work').prop('disabled',true)
+            $('#sueldo').val('')
+            $('#telefono').val('')
+            $('#comision').val('')
+          }
+        })
         
         $("#form_agregar").submit(function(event) {
             $.ajax({
@@ -69,6 +84,15 @@
                     $(e.currentTarget).find("#clave_modi").val(x);
             var x = $(e.relatedTarget).data().perfil;
                     $(e.currentTarget).find("#perfil_modi").val(x).prop('selected', true);
+            var x = $(e.relatedTarget).data().nombre_apellido;
+                    $(e.currentTarget).find("#nombre_apellido_modi").val(x);
+            var x = $(e.relatedTarget).data().telefono;
+                    $(e.currentTarget).find("#telefono_modi").val(x);
+            var x = $(e.relatedTarget).data().sueldo;
+                    $(e.currentTarget).find("#sueldo_modi").val(x);
+            var x = $(e.relatedTarget).data().comision;
+                    $(e.currentTarget).find("#comision_modi").val(x);
+
         });
 
         function pregunta()

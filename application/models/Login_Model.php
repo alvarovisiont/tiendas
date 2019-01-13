@@ -11,7 +11,7 @@ class Login_Model extends CI_Model
 
    public function login($data)
    {
-   		$sql = "SELECT id, usuario, nivel from usuarios where usuario = ".$this->db->escape($data['usuario'])." AND clave = ".$this->db->escape($data['clave']);
+   		$sql = "SELECT id, usuario, nivel,comision from usuarios where usuario = ".$this->db->escape($data['usuario'])." AND clave = ".$this->db->escape($data['clave']);
       $query=$this->db->query($sql);
             
             if($query->num_rows() > 0)

@@ -28,13 +28,25 @@ class Usuarios_agregar extends CI_Controller
 	{
 		if($this->input->is_ajax_request())
 		{
+			
+			$telefono = $this->input->post('telefono');
+			$comision = $this->input->post('comision');
+			$sueldo   = $this->input->post('sueldo');
+
 			$this->load->model('Usuarios_model');
+			
 			$array = [
 				'usuario' => $this->input->post('usuario'),
 				'clave' => $this->input->post('clave'),
-				'nivel' => $this->input->post('perfil')
+				'nivel' => $this->input->post('perfil'),
+				'nombre_apellido' => $this->input->post('nombre_apellido'),
+				'telefono' => $telefono ? $telefono : null ,
+				'comision' => $comision ? $comision : null,
+				'sueldo' => $sueldo ? $sueldo : null
 			];
+
 			$datos = $this->Usuarios_model->agregar($array);
+
 			if($datos != "repetido")
 			{
 				$array = ['exito' => "agregado con exito"];

@@ -10,7 +10,11 @@ class Ventas extends CI_Controller
 	{
           
           parent:: __Construct(); 
-          $this->load->model(['Ventas_Model','Empleados_Model','Comision_Model','Configuracion_Finanza_Model']);
+
+          $array_model = ['Ventas_Model','Usuarios_Model','Comision_Model'];
+          $array_model1= ['Configuracion_Finanza_Model','Banco_Model','Ventas_Historial_Model'];
+
+          $this->load->model(array_merge($array_model,$array_model1));
 	}
 
 	public function index()
@@ -24,12 +28,19 @@ class Ventas extends CI_Controller
 			
 			$clientes = $this->Ventas_Model->traer_clientes();
 			$articulos = $this->Ventas_Model->articulos_modal();
-			$workers = $this->Empleados_Model->traer_datos();
+			$workers = $this->Usuarios_Model->traer_trabajadores();
+			$bancos = $this->Banco_Model->get();
+			$config = $this->Configuracion_Finanza_Model->traer_datos();
+
+			$option_bancos = "<option>Seleccione</option>";
+			foreach ($bancos as $row) {
+				$option_bancos.= "<option value='$row->id'>$row->nombre</option>";
+			}
 
 			$this->Ventas_Model->eliminar_articulos_flotantes();
 			$this->load->view("encabezado_compras");
-			$this->load->view("ventas", compact('clientes', 'articulos','workers'));
-			$this->load->view("footer_ventas");
+			$this->load->view("ventas", compact('clientes', 'articulos','workers','option_bancos'));
+			$this->load->view("footer_ventas",compact('config'));
 		}
 		else
 		{
@@ -43,7 +54,8 @@ class Ventas extends CI_Controller
 		{
 			sleep(2);
 			$cedula = $this->input->post('cedula', TRUE);
-			$datos = $this->Ventas_Model->buscar_clientes($cedula);
+			$string = $this->input->post('isString', TRUE);
+			$datos = $this->Ventas_Model->buscar_clientes($cedula,$string);
 			$array = [];
 			if($datos != false)
 			{
@@ -104,6 +116,9 @@ class Ventas extends CI_Controller
 	{
 		if($this->input->is_ajax_request())
 		{
+
+			$config = $this->Configuracion_Finanza_Model->traer_datos();
+
 			$array_cliente = [
 								'nombre' => $this->input->post('nombre_cliente', TRUE),
 								'cedula' => $this->input->post('cedula_cliente', TRUE),
@@ -115,20 +130,37 @@ class Ventas extends CI_Controller
 			$vuelto = $this->input->post('vuelto');
 			$tipo_venta = $this->input->post('metodo_pago');
 			$monto_pagado  = $this->input->post('monto_pago');
+		
+			$arreglo_metodo_pago = [
+				'monto_dolares' => $this->input->post('monto_dolares'),
+				'nro_transferencia' => $this->input->post('nro_transferencia'),
+				'banco_debito' => $this->input->post('banco_debito'),
+				'banco_transferencia' =>  $this->input->post('banco_transferencia'),
+				'dolar_value' => $config->dolar_value
+			];
 
-			$this->Ventas_Model->grabar_compra($monto_pagado, $tipo_venta, $vuelto);
+			$id_venta = $this->Ventas_Model->grabar_compra($monto_pagado, $tipo_venta, $vuelto,$arreglo_metodo_pago);
 			
-			$id_empleado = $this->input->post('id_empleado');
-			$id_empleado = !empty($id_empleado) ? $id_empleado : $this->session->userdata('id');
+			$id_empleado = !empty($this->input->post('id_empleado')) ? $this->input->post('id_empleado') : $this->session->userdata('id');
 
-			$array_comision = [
-													'id_empleado' => $id_empleado,
-													'porcentaje' => 15,
-													'monto' => (($monto_pagado - $vuelto) * 15) /100,
-													'created_at' => date('Y-m-d H:i:s')
-												];
+			if(!empty($id_empleado)){
+				
+				$seller = $this->Usuarios_Model->getById($id_empleado);
 
-			$this->Comision_Model->store($array_comision);
+				$sub_total_neto = $this->Ventas_Historial_Model->get_sub_total_sell($id_venta);
+
+				$monto_comision = ($sub_total_neto->sub_total * $seller->comision) /100;
+
+				$array_comision = [
+					'id_empleado' => $id_empleado,
+					'porcentaje' => $seller->comision,
+					'monto' =>  $monto_comision,
+					'id_venta' => $id_venta,
+					'created_at' => date('Y-m-d H:i:s')
+				];
+
+				$this->Comision_Model->store($array_comision);
+			}
 
 			$this->Ventas_Model->agregar_clientes($array_cliente);
 		}

@@ -9,7 +9,7 @@
 					<label class="control-label col-md-2">Cédula del Cliente</label>
 					<div class="col-md-4">
 						<div class="input-group">
-							<input type="number" name="cedula_cliente" id="cedula_cliente" class="form-control" placeholder="solo números">
+							<input type="text" name="cedula_cliente" id="cedula_cliente" class="form-control" placeholder="solo números">
 							<div class="input-group-btn">
 							 	<button type="button" class="btn btn-danger btn-md btn-block" id="buscar_clientes">Buscar&nbsp;<i class="fa fa-search"></i></button>
 							</div>
@@ -97,21 +97,53 @@
 					</div>
 				</div>
 				<div class="form-group text-center">
-					<p class="alert alert-success" style="color: black; font-weight: bold;" id="total">Total a Pagar:&nbsp;&nbsp;<span></span>&nbsp;&nbsp;<?php echo $this->session->userdata('siglas'); ?></p>
+					<p class="alert alert-success" style="color: black; font-weight: bold;"><span id="total">Total a Pagar:&nbsp;&nbsp;<span></span>&nbsp;&nbsp;<?php echo $this->session->userdata('siglas'); ?> </span><br><br> <span style="font-size: 15px;" class="badge alert-danger" id="cliente_encargado"></span></p>
 					<p class="alert alert-danger letras" id="falta_dinero" style="display: none; color: black; font-weight: bold;"></p>
 					<p class="alert alert-success letras" id="monto_suficiente" style="display: none; color: black; font-weight: bold;"></p>
 				</div>
 				<section id="section_registrar" style="display: none"> 
 					<div class="form-group">
-						<label for="" class="control-label col-md-3">Metodo de pago</label>
+						<label for="" class="control-label col-md-2">Metodo de pago</label>
 						<div class="col-md-2">
 							 <label class="radio-inline"><input type="radio" id="metodo_pago" name="metodo_pago" required="" value="debito">Debito</label>
 						</div>
 						<div class="col-md-2">
-							 <label class="radio-inline"><input type="radio" id="metodo_pago" name="metodo_pago" required="" value="credito">Credito</label>
+							 <label class="radio-inline"><input type="radio" id="metodo_pago" name="metodo_pago" required="" value="visa">Visa</label>
+						</div>
+						<div class="col-md-2">
+							 <label class="radio-inline"><input type="radio" id="metodo_pago" name="metodo_pago" required="" value="mixto">Mixto</label>
+						</div>
+						<div class="col-md-2">
+							 <label class="radio-inline"><input type="radio" id="metodo_pago" name="metodo_pago" required="" value="transferencia">Transferencia</label>
 						</div>
 						<div class="col-md-2">
 							 <label class="radio-inline"><input type="radio" id="metodo_pago" name="metodo_pago" required="" value="efectivo">Efectivo</label>
+						</div>
+					</div>
+					<div class="form-group" id="section_trans" style="display: none;">
+						<label class="control-label col-md-2">Nro° Transferencia</label>
+						<div class="col-md-4">
+							<input type="text" name="nro_transferencia" id="nro_transferencia" class="form-control">
+						</div>
+						<label class="control-label col-md-2">Banco</label>
+						<div class="col-md-4">
+							<select name="banco_transferencia" class="form-control">
+								<?= $$option_bancos ?>
+							</select>
+						</div>
+					</div>
+					<div class="form-group" id="section_debito" style="display: none;">
+						<label class="control-label col-md-3">Banco</label>
+						<div class="col-md-3">
+							<select name="banco_debito" class="form-control">
+								<?= $$option_bancos ?>
+							</select>
+						</div>
+					</div>
+					<div class="form-group" id="section_mixto" style="display: none;">
+						<label class="control-label col-md-3">Cantidad en Dolares</label>
+						<div class="col-md-3">
+							<input type="number" name="monto_dolares" id="monto_dolares" class="form-control" value="0" step="any">
 						</div>
 					</div>
 					<div class="form-group">
@@ -207,7 +239,7 @@
 	      <div class="modal-body">
 	      	<table class="table table-striped table-hover" id="tabla_empleados">
 	      		<thead>
-	      			<th class="text-center">Cédula</th>
+	      			<th class="text-center">Usuario</th>
 	      			<th class="text-center">Nombre y Apellido</th>
 	      			<th class="text-center">Teléfono</th>
 	      			<th></th>
@@ -219,11 +251,12 @@
 	      					foreach ($workers as $row) 
 	      					{
 	      						$button = "<button class='btn btn-md btn-danger escoger_empleado'
-	      									data-id = '$row->id'>
+	      									data-id = '$row->id'
+	      									data-nombre = '$row->nombre_apellido'>
 	      									Agregar&nbsp;<i class='fa fa-thumbs-up'></i></button>";
 	      						echo "<tr>
-	      								<td>$row->cedula</td>
-	      								<td>$row->nombre</td>
+	      								<td>$row->usuario</td>
+	      								<td>$row->nombre_apellido</td>
 	      								<td>$row->telefono</td>
 	      								<td>".$button."</td>";
 	      					}
