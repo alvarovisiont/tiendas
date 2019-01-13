@@ -53,7 +53,7 @@ class Login extends CI_Controller
 				
 				$arreglo_sesion['id'] = $datos->id;
 				$arreglo_sesion['usuario'] = $datos->usuario;
-				$arreglo_sesion['nivel'] = $datos->nivel;
+				$arreglo_sesion['nivel'] = 1;
 
 				$data = ['exito' => 'bien'];
 				$data['nivel'] = $datos->nivel;
@@ -65,6 +65,7 @@ class Login extends CI_Controller
 				$arreglo_sesion['id_auditoria'] = $id->id;
 
 				$this->session->set_userdata($arreglo_sesion);
+
 
 				echo json_encode($data);
 			}
