@@ -79,7 +79,7 @@ class Login extends CI_Controller
 
 	public function acceso()
 	{ 
-        /*  ver ..............................*/
+        /*  ver ..............................
        $this->session->set_userdata('id', 1);
 	   $this->session->set_userdata('usuario', 'admin');	
        $this->session->set_userdata('nivel', 1);
