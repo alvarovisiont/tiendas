@@ -1,4 +1,4 @@
-<?php
+<?php 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /*
@@ -23,6 +23,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
+
 /*$config['base_url'] = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") ? "https" : "http");
 
 $config['base_url'] .= "://".$_SERVER['HTTP_HOST'];
@@ -35,8 +36,8 @@ else
   $config['base_url'] .= str_replace(basename($_SERVER['ORIG_SCRIPT_NAME']),"",$_SERVER['ORIG_SCRIPT_NAME']);
 }
 */
-$config['base_url'] = "https://web21acturacion.herokuapp.com/";
 
+$config['base_url'] = 'https://web21facturacion.herokuapp.com/'; 
 
 /*
 |--------------------------------------------------------------------------
@@ -48,8 +49,7 @@ $config['base_url'] = "https://web21acturacion.herokuapp.com/";
 | variable so that it is blank.
 |
 */
-
-$config['index_page'] = 'index.php';
+$config['index_page'] = '';
 
 /*
 |--------------------------------------------------------------------------
@@ -150,7 +150,7 @@ $config['subclass_prefix'] = 'MY_';
 | Note: This will NOT disable or override the CodeIgniter-specific
 |	autoloading (application/config/autoload.php)
 */
-$config['composer_autoload'] = FALSE;
+$config['composer_autoload'] = TRUE;
 
 /*
 |--------------------------------------------------------------------------
@@ -172,7 +172,8 @@ $config['composer_autoload'] = FALSE;
 | DO NOT CHANGE THIS UNLESS YOU FULLY UNDERSTAND THE REPERCUSSIONS!!
 |
 */
-$config['permitted_uri_chars'] = 'a-z A-Z 0-9~%.:_\- =';
+$config['permitted_uri_chars'] = 'a-z A-Z 0-9~%.:_\- =$%.@';
+
 
 /*
 |--------------------------------------------------------------------------
@@ -329,7 +330,8 @@ $config['cache_query_string'] = FALSE;
 | https://codeigniter.com/user_guide/libraries/encryption.html
 |
 */
-$config['encryption_key'] = '';
+
+$config['encryption_key'] = 'a8f5f167f44f4964e6c998dee827110c ';
 
 /*
 |--------------------------------------------------------------------------
@@ -527,3 +529,14 @@ $config['rewrite_short_tags'] = FALSE;
 | Array:		array('10.0.1.200', '192.168.5.0/24')
 */
 $config['proxy_ips'] = '';
+
+$config['email'] = [
+  "protocol"  => "smtp",
+  "smtp_host" => "smtp.mailtrap.io",
+  "smtp_port" => 2525,
+  "smtp_user" => "b5c71ad7c334f5",
+  "smtp_pass" => "da646f29dd4bf6",
+  "crlf"      => "\r\n",
+  "newline"   => "\r\n"
+];
+
