@@ -7,7 +7,7 @@ class Caja_chica_Model extends CI_Model
    function __Construct()
    {
 
-   	parent:: __Construct();
+   	//parent:: __Construct();
    }
 
    public function agregar($arreglo)
