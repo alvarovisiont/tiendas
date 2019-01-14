@@ -44,12 +44,12 @@ class Inventario extends CI_Controller
 		if ($this->input->is_ajax_request()) 
 		{
 			$data = ['nombre' => strtoupper($this->input->post('nombre', TRUE)),
-					'id_proveedor' => $this->input->post('proveedor', TRUE),
+					'id_proveedor' => 1,
 					'marca' => $this->input->post('marca', TRUE),
 					'grupo' => $this->input->post('grupo', TRUE),
 					'cantidad' => $this->input->post('cantidad', TRUE),
 					'precio_proveedor' => $this->input->post('costo', TRUE),
-					'iva' => $this->input->post('iva', TRUE),
+					'iva' => 16,
 					'precio' => $this->input->post('precio', TRUE),
 					'fecha_agregado' => date('Y-m-d', strtotime($this->input->post('fecha_registro', TRUE))),
 					'observacion' => $this->input->post('observacion', TRUE)
@@ -63,8 +63,10 @@ class Inventario extends CI_Controller
 
 	public function modificar()
 	{
+		//'id_proveedor' => $this->input->post('proveedor_modi', TRUE),
+
 		$data = ['nombre' => strtoupper($this->input->post('nombre_modi', TRUE)),
-					'id_proveedor' => $this->input->post('proveedor_modi', TRUE),
+					
 					'marca' => $this->input->post('marca_modi', TRUE),
 					'grupo' => $this->input->post('grupo_modi', TRUE),
 					'cantidad' => $this->input->post('cantidad_modi', TRUE),
@@ -80,10 +82,12 @@ class Inventario extends CI_Controller
 
 	public function exportar_pdf()
 	{
+		$config = $this->Configuracion_Finanza_Model->traer_datos();
 		$datos = $this->Inventario_Model->exportar_inventario();
+
 		if($datos != false)
 		{
-			$html = $this->load->view('imprimir_inventario_pdf', compact('datos'), TRUE);
+			$html = $this->load->view('imprimir_inventario_pdf', compact('datos', 'config'), TRUE);
 			
 			$mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8', 'format' => 'A4', [190, 236] ] );
 			$mpdf->WriteHTML($html);

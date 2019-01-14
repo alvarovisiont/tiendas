@@ -92,7 +92,7 @@ tr:nth-child(odd) {
    <table border="1" align="right" class="table2">
      <tr>
       <td align="left" width="50%" class="td3"><h1>Inventario </h1>
-      <B><?php $time = time(); echo date("d/m/Y", $time); ?></B></td>
+      <B><?php $time = time(); echo date("d/m/Y H:i:s", $time); ?></B></td>
       <td align="left" width="50%" class="td2"><h2>INVERSIONES BET- SUR AL, C.A </h2>   
      </tr>
    </table>
@@ -103,6 +103,7 @@ tr:nth-child(odd) {
 					<th style="text-align: center;">&nbsp;Referencia&nbsp;</th>
 					<th style="text-align: center;">&nbsp;Descripción del Artículo&nbsp;</th>
 					<th style="text-align: center;">&nbsp;Existencias&nbsp;</th>
+          <th style="text-align: center;">&nbsp;&nbsp;Físico&nbsp;&nbsp;</th>
 					<th style="text-align: center;">&nbsp;Coste Un.&nbsp;</th>
 					<th style="text-align: center;">&nbsp;P. M. Coste&nbsp;</th>
 					<th style="text-align: center;">&nbsp;Coste Total&nbsp;</th>
@@ -115,15 +116,20 @@ tr:nth-child(odd) {
 					{
 						foreach ($datos as $row) 
 						{
+               $variableprecio = 0;
+               $variableprecio = number_format($row->precio * $config->dolar_value);
+
+
 							echo '
 							<tr>
 								<td></td>
 								<td>'.$row->nombre.' '.$row->marca.'</td>
 								<td>'.$row->cantidad.'</td>
+                <td></td>
 								<td>'.$row->precio_proveedor.'</td>
 								<td></td>
 								<td></td>
-								<td>'.$row->precio.'</td>
+								<td>'.$variableprecio.' Bs.S</td>
 							</tr>';		
 						}
 					}

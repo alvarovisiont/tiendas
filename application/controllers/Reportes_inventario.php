@@ -176,10 +176,11 @@ class Reportes_inventario extends CI_Controller
 		{
 			$where["i.cantidad <"] = "$cantidad_menor_que";			
 		}
+		$config = $this->Configuracion_Finanza_Model->traer_datos();
 		$datos = $this->Inventario_Model->exportar_inventario_filtrado($where);
 		if($datos != false)
 		{
-			$html = $this->load->view('imprimir_inventario_pdf', compact('datos'), TRUE);
+			$html = $this->load->view('imprimir_inventario_pdf', compact('datos', 'config'), TRUE);
 			
 			$mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8', 'format' => 'A4', [190, 236] ] );
 			$mpdf->WriteHTML($html);

@@ -50,7 +50,7 @@ $(function(){
                 var filas = "";
                 $.each(data, function(i, e) 
                 {
-                    filas += "<tr><td>"+e.proveedor+"</td><td>"+e.nombre+"</td><td>"+e.marca+"</td><td>"+e.grupo+"</td><td>"+e.cantidad+"</td><td><img src='./img/dolar.jpg' class='img-responsive' width='100px'> "+formatNumber(e.precio_proveedor,2,',','.')+"<br> <img src='./img/bolivar.png' class='img-responsive' width='60px'> "+formatNumber(e.precio_proveedor * e.preciodolar,2,',','.')+"  </td><td> <img src='./img/dolar.jpg' class='img-responsive' width='100px'> "+formatNumber(e.precio,2,',','.')+" <img src='./img/bolivar.png' class='img-responsive' width='60px'> "+formatNumber(e.precio * e.preciodolar,2,',','.')+"</td><td>"+e.fecha_agregado+"</td></tr>";    
+                    filas += "<tr><td>"+e.proveedor+"</td><td>"+e.nombre+"</td><td>"+e.marca+"</td><td>"+e.grupo+"</td><td>"+e.cantidad+"</td><td>"+formatNumber(e.precio_proveedor,2,',','.')+"<br><br> <img src='./img/bolivar.png' class='img-responsive' width='30px'> "+formatNumber(e.precio_proveedor * e.preciodolar,2,',','.')+"  </td><td> "+formatNumber(e.precio,2,',','.')+" <br><br> <img src='./img/bolivar.png' class='img-responsive' width='30px'> "+formatNumber(e.precio * e.preciodolar,2,',','.')+"</td><td>"+e.fecha_agregado+"</td></tr>";    
                 });
                 $("#tabla_reporte tbody").html('');
                 $("#tabla_reporte tbody").html(filas);

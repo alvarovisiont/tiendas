@@ -43,7 +43,7 @@
 							<th class="text-center">Costo</th>
 							<th class="text-center">Precio Venta</th>
 							<th class="text-center">Cantidad</th>
-							<th class="text-center">Proveedor</th>
+							
 							<?php 
 								if($session == 1)
 								{
@@ -83,11 +83,11 @@
 													<td>$row->marca</td>
 													<td>$row->grupo</td>
 													
-													<td> <img src='./img/dolar.jpg' class='img-responsive' width='100px'> ".number_format($row->precio_proveedor,2,',','.')." ".$conf->siglas." <br> <img src='./img/bolivar.png' class='img-responsive' width='60px'>".number_format($row->precio_proveedor * $conf->dolar_value,2,',','.')." Bs.S</td>
+													<td> ".number_format($row->precio_proveedor,2,',','.')." ".$conf->siglas." <br> <img src='./img/bolivar.png' class='img-responsive' width='30px'>".number_format($row->precio_proveedor * $conf->dolar_value,2,',','.')." Bs.S</td>
 
-													<td> <img src='./img/dolar.jpg' class='img-responsive' width='100px'> ".number_format($row->precio,2,',','.')." ".$conf->siglas." <br> <img src='./img/bolivar.png' class='img-responsive' width='60px'> ".number_format($row->precio * $conf->dolar_value,2,',','.')." Bs.S</td>
+													<td> ".number_format($row->precio,2,',','.')." ".$conf->siglas." <br> <img src='./img/bolivar.png' class='img-responsive' width='30px'> ".number_format($row->precio * $conf->dolar_value,2,',','.')." Bs.S</td>
 													<td><span class='label label-info letras'>$row->cantidad</span></td>
-													<td>$row->proveedor_nombre</td>
+													
 													<td>
 														<button class='btn btn-warning btn-sm' data-toggle='modal' data-target='#modi_articulo'
 															data-id_modi = '$row->id'
@@ -118,7 +118,7 @@
 													<td>$row->precio_proveedor</td>
 													<td>$row->precio</td>
 													<td><span class='label label-info letras'>$row->cantidad</span></td>
-													<td>$row->proveedor_nombre</td>
+													
 												</tr>";	
 										}
 											
@@ -137,7 +137,7 @@
 												<td></td>
 												<td></td>
 												<td></td>
-												<td></td>
+												
 											</tr>";
 									}
 									else
@@ -149,7 +149,7 @@
 												<td></td>
 												<td></td>
 												<td></td>
-												<td></td>
+												
 											</tr>";	
 									}
 								}
@@ -183,6 +183,8 @@
 	          					</div>
 	          				</div>
 	          			</div>
+
+	          			<?php /*
 	          			<div class="form-group">
 	          				<label for="marca" class="control-label col-md-3">Proveedor</label>
 	          				<div class="col-md-8">
@@ -200,6 +202,8 @@
 	          					</select>
 	          				</div>
 	          			</div>
+
+	          			*/?>
 	          			<div class="form-group">
 	          				<label for="nombre_modi" class="control-label col-md-3">Nombre</label>
 	          				<div class="col-md-8">
@@ -247,6 +251,7 @@
 	          					</div>
 	          				</div>
 	          			</div>
+	          			<?php /*
 	          			<div class="form-group">
 	          				<label for="marca" class="control-label col-md-3">Iva</label>
 	          				<div class="col-md-8">
@@ -269,6 +274,7 @@
 	          					</select>
 	          				</div>
 	          			</div>
+	          			*/ ?>
 	          			<div class="form-group">
 	          				<label for="cantidad" class="control-label col-md-3">Cantidad</label>
 	          				<div class="col-md-8">
@@ -327,7 +333,8 @@
 	          					</div>
 	          				</div>
 	          			</div>
-	          			<div class="form-group">
+	          			
+	          			<?php /*<div class="form-group">
 	          				<label for="marca" class="control-label col-md-3">Proveedor</label>
 	          				<div class="col-md-8">
 	          					<select class="form-control" id="proveedor" name="proveedor">
@@ -344,6 +351,7 @@
 	          					</select>
 	          				</div>
 	          			</div>
+	          			*/ ?>
 	          			<div class="form-group">
 	          				<label for="nombre" class="control-label col-md-3">Nombre Producto</label>
 	          				<div class="col-md-8">
@@ -391,6 +399,7 @@
 	          					</div>
 	          				</div>
 	          			</div>
+	          			<?php /*
 	          			<div class="form-group">
 	          				<label for="marca" class="control-label col-md-3">Iva</label>
 	          				<div class="col-md-8">
@@ -407,12 +416,14 @@
 	          							{
 	          								echo "<option value='0'>Excento de Iva</option>
 	          								<option value='14'>14%";
-	          								/*echo "<option>Debe Completar los datos en el modulo de configuración</option>";*/
+	          								echo "<option>Debe Completar los datos en el modulo de configuración</option>";
 	          							}
 	          						 ?>
 	          					</select>
 	          				</div>
 	          			</div>
+	          			*/ ?>
+
 	          			<div class="form-group">
 	          				<label for="cantidad" class="control-label col-md-3">Cantidad</label>
 	          				<div class="col-md-8">

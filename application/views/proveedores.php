@@ -41,8 +41,11 @@
 															Ver&nbsp;&nbsp;<i class='fa fa-search'></i>
 															</button>
 															
-													</td>
-													<td>
+													</td>";
+
+													if ($row->id <> 1){
+
+													echo "<td>
 															<button class='btn btn-warning btn-md' data-toggle='modal' title='Modificar' data-target='#modi_provee'
 															data-id = '$row->id'
 															data-nombre = '$row->nombre'
@@ -53,8 +56,15 @@
 															data-rif = '$row->rif'>
 															<i class='fa fa-edit'></i></button>
 															<button class='btn btn-danger btn-md eliminar_provee' title='Eliminar' data-ruta ='".base_url()."Proveedores/eliminar' data-id = '$row->id'><i class='fa fa-trash'></i></button>
-													</td>
-												</tr>";
+													</td>";
+													}	
+													else
+													{
+
+													 echo "<td>	</td>";
+													} 
+										
+												   echo "</tr>";
 										}
 									}
 									else
