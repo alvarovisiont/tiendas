@@ -122,7 +122,7 @@ tr:nth-child(odd) {
 
 							echo '
 							<tr>
-								<td></td>
+								<td>'.$row->ref.'</td>
 								<td>'.$row->nombre.' '.$row->marca.'</td>
 								<td>'.$row->cantidad.'</td>
                 <td></td>

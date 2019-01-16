@@ -6,10 +6,6 @@
 	<div class="container-fluid">
 		<div class="col-md-12">
 			<br>
-			 
-			
-
-
 			<div class="col-md-12">
 				<div class="col-md-offset-6 col-md-3">
 					<button type="button" class="btn btn-danger btn-md btn-block btn-outline" data-ruta="<?php echo base_url().'Inventario/exportar_pdf';?>" id="exportar_pdf">Exportar a PDF&nbsp;<i class="fa fa-file-pdf-o"></i></button>
@@ -37,6 +33,7 @@
 				<div class="panel-body">
 					<table class="table table-bordered table-hover table-condensed">
 						<thead>
+							<th class="text-center">Referencia</th>
 							<th class="text-center">Artículo</th>
 							<th class="text-center">Marca</th>
 							<th class="text-center">Grupo</th>
@@ -79,6 +76,7 @@
 										{
 
 											echo "<tr class='".$class."'>
+													<td>$row->ref</td>
 													<td>$row->nombre</td>
 													<td>$row->marca</td>
 													<td>$row->grupo</td>
@@ -92,6 +90,7 @@
 														<button class='btn btn-warning btn-sm' data-toggle='modal' data-target='#modi_articulo'
 															data-id_modi = '$row->id'
 															data-nombre_modi = '$row->nombre'
+															data-ref_modi = '$row->ref'
 															data-marca_modi = '$row->marca'
 															data-costo_modi = '$row->precio_proveedor'
 															data-precio_modi = '$row->precio'
@@ -204,6 +203,17 @@
 	          			</div>
 
 	          			*/?>
+
+	          			<div class="form-group">
+	          				<label for="ref_modi" class="control-label col-md-3">Referencia Producto</label>
+	          				<div class="col-md-8">
+	          					<div class="input-group">
+	              					<span class="input-group-addon"><i class="fa fa-cart-plus" aria-hidden="true"></i></span> 
+	              					<input type="text" class="form-control" name="ref_modi" id="ref_modi" required="">
+	          					</div>
+	          				</div>
+	          			</div>
+
 	          			<div class="form-group">
 	          				<label for="nombre_modi" class="control-label col-md-3">Nombre</label>
 	          				<div class="col-md-8">
@@ -352,6 +362,17 @@
 	          				</div>
 	          			</div>
 	          			*/ ?>
+
+	          			<div class="form-group">
+	          				<label for="ref" class="control-label col-md-3">Referencia Producto</label>
+	          				<div class="col-md-8">
+	          					<div class="input-group">
+	              					<span class="input-group-addon"><i class="fa fa-cart-plus" aria-hidden="true"></i></span> 
+	              					<input type="text" class="form-control" name="ref" id="ref" required="">
+	          					</div>
+	          				</div>
+	          			</div>
+
 	          			<div class="form-group">
 	          				<label for="nombre" class="control-label col-md-3">Nombre Producto</label>
 	          				<div class="col-md-8">

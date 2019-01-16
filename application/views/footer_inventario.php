@@ -68,6 +68,10 @@
                     $(e.currentTarget).find("#id_modificar").val(x);
             var x = $(e.relatedTarget).data().nombre_modi;
                     $(e.currentTarget).find("#nombre_modi").val(x);
+
+            var x = $(e.relatedTarget).data().ref_modi;
+                    $(e.currentTarget).find("#ref_modi").val(x);
+                            
             var x = $(e.relatedTarget).data().marca_modi;
                     $(e.currentTarget).find("#marca_modi").val(x);
             var x = $(e.relatedTarget).data().precio_modi;

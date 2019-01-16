@@ -49,6 +49,7 @@ class Inventario extends CI_Controller
 					'grupo' => $this->input->post('grupo', TRUE),
 					'cantidad' => $this->input->post('cantidad', TRUE),
 					'precio_proveedor' => $this->input->post('costo', TRUE),
+					'ref' => $this->input->post('ref', TRUE),
 					'iva' => 16,
 					'precio' => $this->input->post('precio', TRUE),
 					'fecha_agregado' => date('Y-m-d', strtotime($this->input->post('fecha_registro', TRUE))),
@@ -68,6 +69,7 @@ class Inventario extends CI_Controller
 		$data = ['nombre' => strtoupper($this->input->post('nombre_modi', TRUE)),
 					
 					'marca' => $this->input->post('marca_modi', TRUE),
+					'ref' => $this->input->post('ref_modi', TRUE),
 					'grupo' => $this->input->post('grupo_modi', TRUE),
 					'cantidad' => $this->input->post('cantidad_modi', TRUE),
 					'precio_proveedor' => $this->input->post('costo_modi', TRUE),

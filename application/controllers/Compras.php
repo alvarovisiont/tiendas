@@ -31,7 +31,7 @@ class Compras extends CI_Controller
 			 $this->Compras_Model->eliminar_articulos_flotantes();
 
 			 $this->load->view('encabezado_compras');
-			 $this->load->view('compras', compact('proveedores', 'moneda'));
+			 $this->load->view('compras', compact('proveedores'));
 			 $this->load->view('footer_compras');
 		}
 	}
