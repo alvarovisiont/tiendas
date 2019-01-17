@@ -67,7 +67,7 @@
 			<br><br>
 			<table class="table table-striped table-hover" id="tabla_reporte">
 				<thead>
-					<th>Proveedor</th>
+					<th>Referencia</th>
 					<th>Nombre</th>
 					<th>Marca</th>
 					<th>Grupo</th>

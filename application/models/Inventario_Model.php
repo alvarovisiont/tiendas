@@ -83,7 +83,7 @@ class Inventario_Model extends CI_Model
 
    public function exportar_inventario_filtrado($where)
    {
-      $this->db->select('i.nombre, i.marca, i.grupo, i.cantidad, i.precio, i.precio_proveedor, i.fecha_agregado, p.nombre as proveedor');
+      $this->db->select('i.ref, i.nombre, i.marca, i.grupo, i.cantidad, i.precio, i.precio_proveedor, i.fecha_agregado, p.nombre as proveedor');
       $this->db->from('inventario i');
       $this->db->join('proveedores p' , 'p.id = i.id_proveedor');
       $this->db->where($where);

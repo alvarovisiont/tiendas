@@ -18,9 +18,7 @@
 					<div class="col-md-2" id="div_btn_buscar_usuario">
 						<button type="button" class="btn btn-info btn-block" title="Buscar Usuario" data-toggle="modal" data-target="#mod_buscar_clientes"><i class="fa fa-user fa-1x"></i>&nbsp;<i class="fa fa-search fa-1x"></i></button>
 					</div>
-					<div class="col-md-2">
-						<button type="button" class="btn btn-success btn-block" title="Buscar Articulos" data-toggle="modal" data-target="#mod_buscar_articulos"><i class="fa fa-shopping-cart fa-1x"></i>&nbsp;<i class="fa fa-search fa-1x"></i></button>
-					</div>
+	
 				</div>
 				<div class="form-group">
 					<div class="col-md-4 col-md-offset-1" id="barra_oculta" style="display:none">
@@ -53,11 +51,14 @@
 				<hr>
 				<div class="form-group">
 					<label class="control-label col-md-1">Artículos</label>
-					<div class="col-md-5">
+					<div class="col-md-4">
 						<input type="text" name="nombre_articulo" id="nombre_articulo" class="form-control">
 					</div>
+					<div class="col-md-2">
+						<button type="button" class="btn btn-success btn-block" title="Buscar Articulos" data-toggle="modal" data-target="#mod_buscar_articulos"><i class="fa fa-shopping-cart fa-1x"></i>&nbsp;<i class="fa fa-search fa-1x"></i></button>
+					</div>
 					<label class="control-label col-md-1">Cantidad</label>
-					<div class="col-md-4">
+					<div class="col-md-3">
 						<input type="number" name="cantidad" id="cantidad" class="form-control">
 					</div>
 				</div>

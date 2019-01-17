@@ -76,6 +76,7 @@ class Reportes_inventario extends CI_Controller
 			foreach ($datos as $row) 
 			{
 				$array[] = ['proveedor' => $row->proveedor,
+							'ref' => $row->ref,
 							'nombre' => $row->nombre,
 							'marca' => $row->marca,
 							'grupo' => $row->grupo,
