@@ -306,46 +306,36 @@ $(function(){
             $('#falta_dinero').hide()
     });
 
-    $("#monto_pago").keyup(function()
-    {
+    $("#monto_pago").keyup(function(){
         $("#grabar_compra").prop('disabled', false);
     });
 
+    $('#aplicar_descuento').click(function(e){
+      
+      var validate = false
+      var metodo   = ""
+
+      $("input[name='metodo_pago']").each(function(e){
+        if($(this).is(':checked')){
+          validate = true
+          metodo = $(this).val()
+        }
+      })  
+
+      if($(this).is(':checked')){
+        if(validate){
+          calculate_discount(metodo,null)
+        }
+      }else{
+        console.log('aquii4444')
+        calculate_discount(metodo,null)
+      }
+        
+
+    })
+
     $("input[name='metodo_pago']").click(function(){
         val = $(this).val();
-
-        /*if(val != "efectivo")
-        {
-            var total_span,
-                porcentaje = 0;
-            porcentaje = (total_total * 2) / 100;
-            total_span = parseFloat(total_total) - parseFloat(porcentaje);
-            total_span = formatNumber(total_span,2,',','.');
-            $("#total span").text(total_span);
-
-            tipo_venta = true;
-        }
-        else
-        {
-            if(tipo_venta == true)
-            {
-                if(total_formateado == true)
-                {
-                    
-                    
-                    total_span = formatNumber(total_total,2,',','.');
-
-                    $("#total span").text(total_span);
-
-                 }
-                 else
-                 {
-                    total_span = formatNumber(total_total,2,',','.');
-                    $("#total span").text(total_span);  
-                    total_formateado = true;
-                 }                    
-            }
-        }*/
 
       if(val === "efectivo"){
         hide_sections_payment_method(1)
@@ -400,56 +390,87 @@ $(function(){
     }
 
     function calculate_discount(type,validate){
+      let isDiscountActive = $('#aplicar_descuento').is(':checked')
+      console.log(isDiscountActive,'aqui la mamaguebada')
       if(type === "efectivo"){
         
-        var total_span,
-            porcentaje = 0;
-        porcentaje = (total_total * porcentaje_efectivo) / 100;
-        total_span = parseFloat(total_total) - parseFloat(porcentaje);
+        if(isDiscountActive){
 
-        if(!validate){
-          total_span = formatNumber(total_span,2,',','.');
-          $("#total span").text(total_span);
+          var total_span,
+              porcentaje = 0;
+          porcentaje = (total_total * porcentaje_efectivo) / 100;
+          total_span = parseFloat(total_total) - parseFloat(porcentaje);
+
+          if(!validate){
+            total_span = formatNumber(total_span,2,',','.');
+            $("#total span").text(total_span);
+          }else{
+            return [total_span,porcentaje,id_descuento_efectivo];
+          }
+
         }else{
           return [total_span,porcentaje,id_descuento_efectivo];
         }
 
       }else if(type === "visa"){
 
-        var total_span,
-            porcentaje = 0,
-            total_dolar = 0
-        porcentaje = (total_total * porcentaje_visa) / 100;
-        total_span = parseFloat(total_total) - parseFloat(porcentaje);
-        
-        total_dolar  = parseFloat(total_span) / dolar_value
+        if(isDiscountActive){
+          var total_span,
+              porcentaje = 0,
+              total_dolar = 0
+          porcentaje = (total_total * porcentaje_visa) / 100;
+          total_span = parseFloat(total_total) - parseFloat(porcentaje);
+          
+          total_dolar  = parseFloat(total_span) / dolar_value
 
-        if(!validate){
-          $('#dolares_cancelar').val(total_dolar)
-          $('#monto_pago').val('')
+          if(!validate){
+            $('#dolares_cancelar').val(total_dolar)
+            $('#monto_pago').val('')
 
-          total_span = formatNumber(total_span,2,',','.');
-          $("#total span").text(total_span);
+            total_span = formatNumber(total_span,2,',','.');
+            $("#total span").text(total_span);
+          }else{
+            return [total_total,null,id_descuento_visa];
+          }
         }else{
-          return [total_span,porcentaje,id_descuento_visa];
+          let total_dolar = parseFloat(total_total) / dolar_value
+          if(!validate){
+            $('#dolares_cancelar').val(total_dolar)
+            $('#monto_pago').val('')
+          }else{
+            return [total_total,null,id_descuento_visa];
+          }
         }
+          
 
       }else if(type === "debito"){
-        var total_span,
-            porcentaje = 0;
-        porcentaje = (total_total * porcentaje_debito) / 100;
-        total_span = parseFloat(total_total) - parseFloat(porcentaje);
-        if(!validate){
-          $('#monto_pago').val(total_span)
-          total_span = formatNumber(total_span,2,',','.');
-          $("#total span").text(total_span);
+        if(isDiscountActive){
+
+          var total_span,
+              porcentaje = 0;
+          porcentaje = (total_total * porcentaje_debito) / 100;
+          total_span = parseFloat(total_total) - parseFloat(porcentaje);
+          if(!validate){
+            $('#monto_pago').val(total_span)
+            total_span = formatNumber(total_span,2,',','.');
+            $("#total span").text(total_span);
+          }else{
+            return [total_span,porcentaje,id_descuento_debito];
+          }
+
         }else{
-          return [total_span,porcentaje,id_descuento_debito];
+          if(!validate){
+            $('#monto_pago').val(total_total)
+            $("#total span").text(formatNumber(total_span,2,',','.'));
+          }else{
+           return [total_total,null,id_descuento_debito]; 
+          }
         }
+          
 
       }else{
         $("#total span").text(formatNumber(total_total,2,',','.'));
-        return [total_span,porcentaje,null];
+        return [total_total,porcentaje,null];
       }
         
     }
