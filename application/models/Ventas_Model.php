@@ -213,7 +213,9 @@ class Ventas_Model extends CI_Model
                'fecha_venta' => date('Y-m-d'),  
                'monto_pagado' => $monto,
                'vuelto' => $vuelto,
-               'tipo_venta' => $tipo
+               'tipo_venta' => $tipo,
+               'id_descuento' => $arreglo_pago['id_descuento'],
+               'monto_descuento' => $arreglo_pago['monto_descuento']
             ];      
 
             if($tipo === "mixto"){

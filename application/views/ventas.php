@@ -2,8 +2,12 @@
 	<div class="container-fixed">
 		<div class="col-md-12">
 			<form class="form-horizontal" id="form_agregar_compra" action="<?php echo base_url().'Ventas/grabar_compra';?>" method="POST">
+			
 			<input type="hidden" name="vuelto" id="vuelto" value="0">
 			<input type="hidden" id="id_empleado" name="id_empleado">
+			<input type="hidden" id="id_descuento" name="id_descuento">
+			<input type="hidden" id="descuento_value" name="descuento_value">
+
 			<br>
 				<div class="form-group">
 					<label class="control-label col-md-2">Cédula del Cliente</label>
@@ -98,6 +102,12 @@
 					<p class="alert alert-success letras" id="monto_suficiente" style="display: none; color: black; font-weight: bold;"></p>
 				</div>
 				<section id="section_registrar" style="display: none"> 
+					<div class="form-group">
+						<label class="control-label col-md-2" for="aplicar_descuento">Aplicar Descuento</label>
+						<div class="col-md-2">
+							<input type="checkbox" name="aplicar_descuento" id="aplicar_descuento">
+						</div>
+					</div>
 					<div class="form-group">
 						<label for="" class="control-label col-md-2">Metodo de pago</label>
 						<div class="col-md-2">

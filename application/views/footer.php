@@ -26,7 +26,8 @@
 <script>
     $(function(){
         $("table").dataTable({
-            "language" : {"url" : "./json/esp.json"}
+            "language" : {"url" : "./json/esp.json"},
+            "order": []
         });
     });
 </script>

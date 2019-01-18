@@ -33,7 +33,36 @@ $(function(){
         iva_limpio = 0,
         sub_total_limpio = 0,
         dolar_value = parseFloat(<?= $config->dolar_value ?>),
-        iva_conf = parseInt(<?= $config->iva ?>)
+        iva_conf = parseInt(<?= $config->iva ?>),
+        porcentaje_efectivo = 0,
+        porcentaje_debito = 0,
+        porcentaje_visa = 0,
+        id_descuento_debito = null,
+        id_descuento_efectivo = null,
+        id_descuento_visa = null
+
+    
+
+    <?php
+      foreach ($descuentos as $row) {
+        if($row->nombre === "Descuento Debito"){
+          ?> 
+            porcentaje_debito = parseFloat(<?php echo $row->cantidad; ?>)
+            id_descuento_debito = parseFloat(<?php echo $row->id; ?>)
+          <?php
+        }else if($row->nombre === "Descuento Efectivo"){
+          ?> 
+            porcentaje_efectivo = parseFloat(<?php echo $row->cantidad; ?>)
+            id_descuento_efectivo = parseFloat(<?php echo $row->id; ?>)
+          <?php
+        }else if($row->nombre === "Descuento Visa"){
+          ?> 
+          porcentaje_visa = parseFloat(<?php echo $row->cantidad; ?>)
+          id_descuento_visa = parseFloat(<?php echo $row->id; ?>)
+          <?php
+        }
+      }
+    ?>
 
 
     $("#tabla_clientes").dataTable({
@@ -269,6 +298,9 @@ $(function(){
             if(total_filas == 0)
             {
                 $("#section_registrar").hide('slow');
+                $("#monto_pago").val('')
+                hide_sections_payment_method(1)
+                $("input[name='metodo_pago']").prop('checked',false)
             }
 
             $('#falta_dinero').hide()
@@ -317,21 +349,23 @@ $(function(){
 
       if(val === "efectivo"){
         hide_sections_payment_method(1)
+        calculate_discount("efectivo",null)
       }else if(val === "debito"){
         $('#section_debito').show()
-        $('#monto_pago').val(total_total)
         hide_sections_payment_method(2)
+        calculate_discount("debito",null)
       }else if(val === "visa"){
-        let total_dolar = parseFloat(total_total) / dolar_value
-        $('#dolares_cancelar').val(total_dolar)
         hide_sections_payment_method(5)
+        calculate_discount("visa",null)
       }else if(val === "mixto"){
         $('#section_mixto').show()
         hide_sections_payment_method(3)
+        calculate_discount("mixto",null)
       }else{
         $('#section_trans').show()
         $('#monto_pago').val(total_total)
         hide_sections_payment_method(4)
+        calculate_discount("transferencia",null)
       }
 
     });
@@ -347,6 +381,7 @@ $(function(){
         $('#section_trans').hide()
         $('#section_mixto').hide()
         $('#section_dolar_cancelar').hide()
+        $("#grabar_compra").prop('disabled', false);
       }else if(type === 3){
         $('#section_debito').hide()
         $('#section_trans').hide()
@@ -355,12 +390,68 @@ $(function(){
         $('#section_debito').hide()
         $('#section_mixto').hide()
         $('#section_dolar_cancelar').hide()
+        $("#grabar_compra").prop('disabled', false);
       }else if(type === 5){
         $('#section_trans').hide()
         $('#section_debito').hide()
         $('#section_mixto').hide()
         $('#section_dolar_cancelar').show()
       }
+    }
+
+    function calculate_discount(type,validate){
+      if(type === "efectivo"){
+        
+        var total_span,
+            porcentaje = 0;
+        porcentaje = (total_total * porcentaje_efectivo) / 100;
+        total_span = parseFloat(total_total) - parseFloat(porcentaje);
+
+        if(!validate){
+          total_span = formatNumber(total_span,2,',','.');
+          $("#total span").text(total_span);
+        }else{
+          return [total_span,porcentaje,id_descuento_efectivo];
+        }
+
+      }else if(type === "visa"){
+
+        var total_span,
+            porcentaje = 0,
+            total_dolar = 0
+        porcentaje = (total_total * porcentaje_visa) / 100;
+        total_span = parseFloat(total_total) - parseFloat(porcentaje);
+        
+        total_dolar  = parseFloat(total_span) / dolar_value
+
+        if(!validate){
+          $('#dolares_cancelar').val(total_dolar)
+          $('#monto_pago').val('')
+
+          total_span = formatNumber(total_span,2,',','.');
+          $("#total span").text(total_span);
+        }else{
+          return [total_span,porcentaje,id_descuento_visa];
+        }
+
+      }else if(type === "debito"){
+        var total_span,
+            porcentaje = 0;
+        porcentaje = (total_total * porcentaje_debito) / 100;
+        total_span = parseFloat(total_total) - parseFloat(porcentaje);
+        if(!validate){
+          $('#monto_pago').val(total_span)
+          total_span = formatNumber(total_span,2,',','.');
+          $("#total span").text(total_span);
+        }else{
+          return [total_span,porcentaje,id_descuento_debito];
+        }
+
+      }else{
+        $("#total span").text(formatNumber(total_total,2,',','.'));
+        return [total_span,porcentaje,null];
+      }
+        
     }
 
     $("#form_agregar_compra").submit(function(e)
@@ -372,7 +463,8 @@ $(function(){
         monto_pagado_limpio = monto_pagado,
         metodo_pago  = '',
         monto_pagado_dolares = parseFloat($('#monto_dolares').val()),
-        siglas = " Bs.S"
+        siglas = " Bs.S",
+        descuento = 0
 
         $("input[name='metodo_pago']").each(function(e){
           if($(this).is(':checked')){
@@ -385,11 +477,18 @@ $(function(){
           siglas = " $";
 
         }else if(metodo_pago === "mixto"){
-
           let dolar_to_bs = monto_pagado_dolares * dolar_value
           monto_pagado = parseFloat(monto_pagado) + dolar_to_bs
         }
 
+        var total_pagar_descuento = calculate_discount(metodo_pago,true),
+            id_descuento = total_pagar_descuento[2]
+
+        total_pagar = total_pagar_descuento[0]
+        descuento = total_pagar_descuento[1]
+
+        $('#descuento_value').val(descuento)
+        $('#id_descuento').val(id_descuento)
 
         if(parseFloat(monto_pagado) < parseFloat(total_pagar))
         {

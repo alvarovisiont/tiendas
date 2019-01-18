@@ -24,4 +24,8 @@ class Descuentos_Model extends CI_Model
          return false;
       }
 	}
+
+   public function descuentos_activos(){
+      return $this->db->where('status',1)->order_by('id','asc')->get('descuentos')->result();
+   }
 }
