@@ -11,7 +11,7 @@ $autoload['libraries'] = array('calendar', 'form_validation', 'database', 'sessi
 $autoload['drivers'] = array();
 
 
-$autoload['helper'] = array('url', 'form', 'html', 'security', 'array');
+$autoload['helper'] = array('url', 'form', 'html', 'security', 'array','date_helper');
 
 
 $autoload['config'] = array();

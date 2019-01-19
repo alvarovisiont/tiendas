@@ -11,7 +11,7 @@ class Ventas extends CI_Controller
           
           parent:: __Construct(); 
 
-          $array_model = ['Ventas_Model','Usuarios_Model','Comision_Model'];
+          $array_model = ['Ventas_Model','Usuarios_Model','Comision_Model','Descuentos_Model'];
           $array_model1= ['Configuracion_Finanza_Model','Banco_Model','Ventas_Historial_Model'];
 
           $this->load->model(array_merge($array_model,$array_model1));
@@ -32,6 +32,7 @@ class Ventas extends CI_Controller
 			$bancos = $this->Banco_Model->get();
 			$config = $this->Configuracion_Finanza_Model->traer_datos();
 			$seller = $this->Usuarios_Model->getById($this->session->userdata('id'));
+			$descuentos = $this->Descuentos_Model->descuentos_activos();
 
 			$option_bancos = "<option>Seleccione</option>";
 			foreach ($bancos as $row) {
@@ -41,7 +42,7 @@ class Ventas extends CI_Controller
 			$this->Ventas_Model->eliminar_articulos_flotantes();
 			$this->load->view("encabezado_compras");
 			$this->load->view("ventas", compact('clientes', 'articulos','workers','option_bancos','seller','config'));
-			$this->load->view("footer_ventas",compact('config'));
+			$this->load->view("footer_ventas",compact('config','descuentos'));
 		}
 		else
 		{
@@ -139,7 +140,9 @@ class Ventas extends CI_Controller
 				'nro_transferencia' => $this->input->post('nro_transferencia'),
 				'banco_debito' => $this->input->post('banco_debito'),
 				'banco_transferencia' =>  $this->input->post('banco_transferencia'),
-				'dolar_value' => $config->dolar_value
+				'dolar_value' => $config->dolar_value,
+				'id_descuento' => $this->input->post('id_descuento'),
+				'monto_descuento' => $this->input->post('descuento_value')
 			];
 
 			$id_venta = $this->Ventas_Model->grabar_compra($monto_pagado, $tipo_venta, $vuelto,$arreglo_metodo_pago);
