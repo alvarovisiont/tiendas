@@ -179,6 +179,9 @@
                                 <li>
                                     <a href="<?php echo base_url().'Configuracion_finanza'; ?>">Configuración de moneda</a>
                                 </li>
+                                <li>
+                                    <a href="<?php echo base_url().'Configuracion_descuento'; ?>">Configuración de Descuento</a>
+                                </li>
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
