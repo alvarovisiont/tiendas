@@ -240,22 +240,35 @@ class Ventas_Model extends CI_Model
                $id_venta = $row->id;
                $query->free_result();
 
-               $this->db->select('cantidad, nombre_articulo');
-               $this->db->where('id_venta', $row->id);
-               $query = $this->db->get('ventas_detalle');
-               if($query->num_rows() > 0)
-               {
-                  foreach ($query->result() as $row1) 
-                  {
-                     $sql = "UPDATE inventario SET cantidad = cantidad - $row1->cantidad where nombre LIKE '%$row1->nombre_articulo%'";
-                     $this->db->query($sql);
-                  }
-                  $query->free_result();
-               }
+               $this->set_cantidad_inventario("resta",$id_venta);
             }
 
          return $id_venta;
       }
+   }
+
+   private function set_cantidad_inventario($type,$id_venta){
+      $this->db->select('cantidad, nombre_articulo');
+      $this->db->where('id_venta', $id_venta);
+      $query = $this->db->get('ventas_detalle');
+
+      if($query->num_rows() > 0){
+         if($type == "resta"){
+            foreach ($query->result() as $row1) {
+               $sql = "UPDATE inventario SET cantidad = cantidad - $row1->cantidad where nombre LIKE '%$row1->nombre_articulo%'";
+               $this->db->query($sql);
+            }
+            $query->free_result();
+         }else{
+
+            foreach ($query->result() as $row1) {
+               $sql = "UPDATE inventario SET cantidad = cantidad + $row1->cantidad where nombre LIKE '%$row1->nombre_articulo%'";
+               $this->db->query($sql);
+            }
+            $query->free_result();
+         }
+      }
+
    }
 
    public function agregar_clientes($array)
@@ -351,6 +364,15 @@ class Ventas_Model extends CI_Model
       {
          return false;
       }
+   }
+
+   public function rollback_sell($id){
+
+      $this->set_cantidad_inventario("suma",$id);
+      $this->db->where('id_venta',$id)->delete('ventas_detalle');
+      $this->db->where('id_venta',$id)->delete('comision');
+      $this->db->where('id',$id)->delete('ventas');
+
    }
 
 }

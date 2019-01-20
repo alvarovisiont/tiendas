@@ -1,7 +1,13 @@
 <div class="row">
 	<div class="container-fluid">
 		<div class="col-md-12">
+			<?php
+				if($this->session->flashdata('message')){
+					echo "<br></br><p class='alert alert-info alert-dismissible'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>".$this->session->flashdata('message')."</p>";
+				}
+			?>
 		<br><br>
+
 			<div class="panel panel-yellow">
 				<div class="panel-heading">
 					<h3 style="color: white; display: inline-block;">Historial de ventas</h3>
@@ -16,40 +22,33 @@
 							<th class="text-center">Tipo de Venta</th>
 							<th>Detalle Venta</th>
 							<th>Imprimir</th>
+							<th>Deshacer</th>
 						</thead>
 						<tbody class="text-center">
 							<?php
-								if(!empty($datos))
-								{
+								
 									foreach ($datos as $row) 
 									{
 										$detalle = "<button class='btn btn-info btn-sm' data-toggle='modal' data-target='#modal_detalle'
 										data-id_venta = '$row->id'><i class='fa fa-search'></i></button>";
+										
 										$imprimir = "<button class='btn btn-danger btn-sm imprimir'
-										data-ruta = '".base_url().'Ventas_historial/imprimir_factura/'.$row->id."'><i class='fa fa-share'></i></button>";
+										data-ruta = '".base_url().'Ventas_historial/imprimir_factura/'.$row->id."'><i class='fa fa-download'></i></button>";
+										
+										$deshacer = "<button class='btn btn-warning btn-sm devolver'
+										data-ruta = '".base_url().'Ventas/rollback/'.$row->id."'><i class='fa fa-refresh'></i></button>";
+
 										echo "<tr>
 												<td>$row->factura</td>
 												<td>".date('d-m-Y' ,strtotime($row->fecha_venta))."</td>
-												<td>$row->monto_pagado</td>
-												<td>$row->vuelto</td>
+												<td>".number_format($row->monto_pagado,2,',','.')."</td>
+												<td>".number_format($row->vuelto,2,',','.')."</td>
 												<td>$row->tipo_venta</td>
 												<td>".$detalle."</td>
 												<td>".$imprimir."</td>
+												<td>".$deshacer."</td>
 											</tr>";
 									}
-								}
-								else
-								{
-									echo "<tr>
-											<td></td>
-											<td></td>
-											<td></td>
-											<td></td>
-											<td></td>
-											<td></td>
-											<td></td>
-										</tr>";
-								}
 							?>
 						</tbody>
 					</table>	
@@ -118,6 +117,26 @@
 	      	</div>
 	      	<div class="modal-footer">
 	          	<button type='button' class='btn btn-default' data-dismiss='modal'>cerrar&nbsp;&nbsp;<i class='fa fa-remove'></i></button>
+	        </div>
+	    </div>
+	</div>
+</div>
+
+<div class="modal fade" id="modal_aviso" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      	<div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+	        	<h3 class="text-center">Aviso&nbsp;<i class="fa fa-exclamation"></i></h3>
+	      </div>
+	      	<div class="modal-body">
+	      		<h3 class="text-center">Esta seguro de querer deshacer esta venta?</h3>
+	      	</div>
+	      	<div class="modal-footer">
+	      			<button type='button' class='btn btn-primary' id="dismiss_sell">Aceptar&nbsp;&nbsp;<i class='fa fa-thumbs-up'></i></button>
+	          	<button type='button' class='btn btn-danger' data-dismiss='modal'>cerrar&nbsp;&nbsp;<i class='fa fa-remove'></i></button>
 	        </div>
 	    </div>
 	</div>

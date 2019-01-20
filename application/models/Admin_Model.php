@@ -28,31 +28,57 @@ class Admin_Model extends CI_Model
    		}
    	}
 
-      public function traer_compras_ventas()
-      {
-         $mes = date('m');
-         $año = date('Y');
+    public function graficas_compra_ventas(){
 
-        /* $sql = "SELECT SUM(monto_pagado) as total_ventas, MONTH(fecha_venta) as mes,
-                (SELECT SUM(monto_pagado) from compras where YEAR(fecha_compra) = $año and MONTH(fecha_compra) = mes) as total_compras 
-                from ventas 
-                where YEAR(fecha_venta) = $año GROUP BY mes asc";
-          */
+      $mes = date('m');
+       $año = date('Y');
 
-          $sql = "SELECT * from ventas";       
-         
-         $query = $this->db->query($sql);
-         if($query->num_rows() > 0)
-         {
-            $filas = $query->result();
+        $sql = "SELECT SUM(monto_pagado) as total_ventas, EXTRACT(MONTH FROM fecha_venta) as mes,
+          (SELECT SUM(monto_pagado) from compras where EXTRACT(YEAR FROM fecha_compra) = $año and EXTRACT( MONTH FROM fecha_compra) = $mes) as total_compras 
+          from ventas 
+          where EXTRACT(YEAR FROM fecha_venta) = $año GROUP BY mes";
 
-            $query->free_result();
-            
-            return $filas;
-         }
-         else
-         {
-            return false;
-         }
-      }
+        $query = $this->db->query($sql);
+       if($query->num_rows() > 0)
+       {
+          $filas = $query->result();
+
+          $query->free_result();
+          
+          return $filas;
+       }
+       else
+       {
+          return [];
+       }
+
+    }
+
+    public function traer_compras_ventas()
+    {
+       $mes = date('m');
+       $año = date('Y');
+
+      /* $sql = "SELECT SUM(monto_pagado) as total_ventas, MONTH(fecha_venta) as mes,
+              (SELECT SUM(monto_pagado) from compras where YEAR(fecha_compra) = $año and MONTH(fecha_compra) = mes) as total_compras 
+              from ventas 
+              where YEAR(fecha_venta) = $año GROUP BY mes asc";
+        */
+
+        $sql = "SELECT * from ventas";       
+       
+       $query = $this->db->query($sql);
+       if($query->num_rows() > 0)
+       {
+          $filas = $query->result();
+
+          $query->free_result();
+          
+          return $filas;
+       }
+       else
+       {
+          return false;
+       }
+    }
 }

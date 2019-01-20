@@ -39,15 +39,16 @@
                 {
                 ?>
                     relleno.push({
-                        "mes": "<?php echo $mes[$row->mes -1]; ?>",
-                        "compras": "<?php echo $row->total_compras; ?>",
-                        "ventas": "<?php echo $row->total_ventas; ?>"
+                        mes: "<?php echo $mes[$row->mes -1]; ?>",
+                        compras: "<?php echo $row->total_compras; ?>",
+                        ventas: "<?php echo $row->total_ventas; ?>"
                     });
                 <?php
                 }
             }
             ?>
 
+        
         var chartData = relleno;
 
 

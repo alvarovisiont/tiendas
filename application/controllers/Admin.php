@@ -22,8 +22,9 @@ class Admin extends CI_Controller
 			$this->Auditoria_Model->grabar_ultima_conexion();
 
 			$datos = $this->Admin_Model->traer_datos();
-			$data = $this->Admin_Model->traer_compras_ventas();
+			$data = $this->Admin_Model->graficas_compra_ventas();
 			$empleados = $this->Usuarios_Model->traer_trabajadores();
+
 
 			$this->load->view("encabezado");
 			$this->load->view("admin", compact('datos', 'empleados'));

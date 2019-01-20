@@ -27,6 +27,7 @@
         
         var dolar_value = parseFloat(<?= $conf->dolar_value ?>)
         var siglas = "<?= $conf->siglas ?>"
+        var ruta_redirect = ""
 
         $("#tabla").dataTable({
             "language" : {"url" : "json/esp.json"},
@@ -75,5 +76,15 @@
             var ruta = $(this).data('ruta');
             window.open(ruta, '_blank');
         });
+
+        $('#tabla tbody').on('click','tr > td > .devolver',function(e){
+          
+          ruta_redirect = $(this).data('ruta')
+          $('#modal_aviso').modal('show')
+        })
+
+        $('#dismiss_sell').click(function(e){
+          window.location.href = ruta_redirect
+        })
     });
 </script>

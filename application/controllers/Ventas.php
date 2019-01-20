@@ -198,4 +198,26 @@ class Ventas extends CI_Controller
 		$nombre = $this->input->post('nombre');
 		$this->Ventas_Model->eliminar_articulo($nombre);
 	}
+
+	public function rollback($id){
+		if($this->session->has_userdata('nivel') && $this->session->userdata('nivel') == 1){	
+			
+			$this->db->trans_begin();
+				
+				$this->Ventas_Model->rollback_sell($id);
+
+			if($this->db->trans_status() === FALSE){
+
+				$this->db->trans_rollback();
+				$this->session->set_flashdata('message','Error el proceso,contacte a soporte');
+			}else{
+				$this->db->trans_commit();
+				$this->session->set_flashdata('message','Proceso Completado');
+			}
+
+			redirect(base_url()."Ventas_historial");	
+		}else{
+			redirect(base_url()."Login");	
+		}
+	}
 }

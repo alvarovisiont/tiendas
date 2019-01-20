@@ -182,6 +182,9 @@
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
+
+                        <li><a href="<?php echo base_url().'Comisiones'; ?>"><i class='fa fa-money'></i>&nbsp;Comisiones</a></li>
+                        
                         <li><a href="<?php echo base_url().'Auditoria'; ?>"><i class='fa fa-book'></i>&nbsp;Auditoria del Sistema</a></li>
                 <?php
                     }
