@@ -52,7 +52,7 @@ class Configuracion_descuento extends CI_Controller
 		$this->load->model('Configuracion_Model');
 		$empresa = $this->Configuracion_Model->traer_datos_empresa();
 
-		$empresa->rif = 406621870;
+		$empresa->rif = 1234;
 
 		if ($pass = $this->input->post('pass') == $empresa->rif)
 		{

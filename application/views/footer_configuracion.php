@@ -110,6 +110,10 @@
         $("#modi_datos_empresa").on('show.bs.modal', function(e){
             var x = $(e.relatedTarget).data().id;
                     $(e.currentTarget).find('#id_modificar_empresa').val(x)
+            var x = $(e.relatedTarget).data().factura;
+                    $(e.currentTarget).find('#factura_modificar_empresa').val(x)
+            var x = $(e.relatedTarget).data().prefactura;
+                    $(e.currentTarget).find('#prefactura_modificar_empresa').val(x)                
             var x = $(e.relatedTarget).data().nombre;
                     $(e.currentTarget).find('#nombre_empresa_modi').val(x)
             var x = $(e.relatedTarget).data().direccion;
