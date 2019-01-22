@@ -25,6 +25,8 @@
 									data-telefono = "<?php echo $datos->telefono; ?>"
 									data-rif = "<?php echo $datos->rif; ?>"
 									data-fax = "<?php echo $datos->fax; ?>"
+									data-factura = "<?php echo $datos->factura; ?>"
+									data-prefactura = "<?php echo $datos->prefactura; ?>"
 									data-email = "<?php echo $datos->email; ?>"
 									data-logo = "<?php echo $datos->logo; ?>">Modificar Datos&nbsp;&nbsp;<i class="fa fa-building"></i>&nbsp;&nbsp;<i class="fa fa-pencil"></i></button>
 					</div>
@@ -35,6 +37,12 @@
 			<br><br><br><br><br>
 				<table class="table table-striped table-responsive">
 					<tbody class="text-center">
+						<tr>
+							<td><label class="control-label col-md-2">Factura</label><span class="control-label col-md-10" id="factura"><?php if(!empty($datos)){ echo $datos->factura; } ?></span></td>
+							<td><label class="control-label col-md-2">PreFactura</label><span class="control-label col-md-10" id="prefactura">
+							<?php if(!empty($datos)){ echo $datos->prefactura;} ?></span></td>
+						</tr>
+
 						<tr>
 							<td><label class="control-label col-md-2">Nombre</label><span class="control-label col-md-10" id="nombre"><?php if(!empty($datos)){ echo $datos->nombre; } ?></span></td>
 							<td><label class="control-label col-md-2">Dirección</label><span class="control-label col-md-10" id="direccion"><?php if(!empty($datos)){ echo $datos->direccion;} ?></span></td>
@@ -321,6 +329,27 @@
 		      <input type="hidden" id="id_modificar_empresa" name="id_modificar_empresa">ç
 		      <input type="hidden" id="nombre_logo" name="nombre_logo">
 		      	<div class="modal-body">
+
+		      		<div class="form-group">
+		      			<label for="" class="control-label col-md-3">Factura</label>
+		      			<div class="col-md-8">
+		      				<div class="input-group">
+		      					<span class="input-group-addon"><i class="fa fa-picture" aria-hidden="true"></i></span>
+		      					
+		      				</div>
+		      			</div>
+		      		</div>
+
+		      		<div class="form-group">
+		      			<label for="" class="control-label col-md-3">Factura</label>
+		      			<div class="col-md-8">
+		      				<div class="input-group">
+		      					<span class="input-group-addon"><i class="fa fa-picture" aria-hidden="true"></i></span>
+		      					
+		      				</div>
+		      			</div>
+		      		</div>
+
 		      		<div class="form-group">
 		      			<label for="" class="control-label col-md-3">Nombre</label>
 		      			<div class="col-md-8">
@@ -389,6 +418,9 @@
 		      			 	
 		      			 </div>
 		      		</div>
+
+
+
 			    <div class="modal-footer">
 			      	<button class="btn btn-success btn-md" type="submit" id="boton_agregar_grupo">Modificar&nbsp;<i class="fa fa-thumbs-up"></i></button>
 			      	<button class="btn btn-default btn-md" type="button" data-dismiss="modal">cerrar&nbsp;<i class="fa fa-remove"></i></button>

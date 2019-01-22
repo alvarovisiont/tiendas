@@ -28,12 +28,15 @@
 		<div class="container-fluid">
 	    <div class="row" align="center">
 
+	   <table width="100%" cellpadding="" border="0" cellspacing=""> 	
+	   	<tr>
 	  <?php
-
 		foreach ($datos as $row) 
 		{ ?>
 
-		<div class="col-md-4" align="center">
+		
+
+		<td>	
 			<h3>
 				<?php echo $row->nombre; ?>
 			</h3>
@@ -41,34 +44,47 @@
 		<?php if ($row->status == 0){ $sw = 1;?>
 
 			<button class="btn btn-default btn-md" style="float: center" data-toggle="modal" data-target="#agg_activar" data-id_modi = "<?php echo $row->id;?>" data-sw_modi = "<?php echo $sw;?>"><img src='./img/apagar.png' class='img-responsive' width='100px'  class="rounded-circle"></button>
-
 		<?php }
 
          if ($row->status == 1){ $sw = 2; ?>
 
          	<button class="btn btn-default btn-md" style="float: center" data-toggle="modal" data-target="#agg_activar" data-id_modi = "<?php echo $row->id;?>"  data-sw_modi = "<?php echo $sw;?>"><img src='./img/encender.png' class='img-responsive' width='100px'  class="rounded-circle"></button>
 
-
-         	<div class="container-fluid">
-				<div class="row">
-					<div class="col-md-12">
+         	<br><br>
 						<div class="alert alert-success alert-dismissable">
 							 
 							<h3>
 								Activo
 							</h3> <strong>Porcentaje <?php echo $row->cantidad?> %</strong> <br>
 
-							<strong>Fecha de Activación <?php echo date('d/m/Y', strtotime($row->activacion))?>
+							<strong>Fecha de Activación <?php echo date('d/m/Y', strtotime($row->activacion))?></strong>
 						</div>
-					</div>
-				</div>
-			</div>
+			
+		<?php	}else { ?>
 
-         			
-		<?php	} ?>
-		</div>
+			<br><br>
+
+			<div class="alert alert-danger alert-dismissable">
+							 
+							 <h3>
+								Desactivado
+							</h3> <strong>Puede activarlo con la clave maestra del sistema</strong> <br>
+							<strong>Active colocando un porcentaje de descuento</strong>
+						</div>
+
+		<?php } ?>
+
+		</td>
+		<td>
+			 &nbsp; &nbsp;
+		</td>	
+
 		
 	<?php	} ?>
+
+      </tr>
+
+  </table>
 
 	</div>
 	
@@ -82,6 +98,13 @@
 
  <div class="container">
   
+  <div class="alert alert-info alert-dismissable">
+							 
+							 <h3>
+								Clave maestra
+							</h3> <strong>Para realizar las pruebas la clave es 1234</strong> <br>
+							<strong>Luego se cambiara a una clave que el administrador pueda manejar</strong>
+						</div>
 </div>
 
 
