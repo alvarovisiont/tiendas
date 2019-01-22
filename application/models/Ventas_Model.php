@@ -215,7 +215,7 @@ class Ventas_Model extends CI_Model
                'vuelto' => $vuelto,
                'tipo_venta' => $tipo,
                'id_descuento' => $arreglo_pago['id_descuento'],
-               'monto_descuento' => $arreglo_pago['monto_descuento']
+               'monto_descuento' => empty($arreglo_pago['monto_descuento']) ? 0 :  $arreglo_pago['monto_descuento']
             ];      
 
             if($tipo === "mixto"){
