@@ -50,7 +50,7 @@
 
          	<button class="btn btn-default btn-md" style="float: center" data-toggle="modal" data-target="#agg_activar" data-id_modi = "<?php echo $row->id;?>"  data-sw_modi = "<?php echo $sw;?>"><img src='./img/encender.png' class='img-responsive' width='100px'  class="rounded-circle"></button>
 
-         	<br>
+         	<br><br>
 						<div class="alert alert-success alert-dismissable">
 							 
 							<h3>
@@ -61,6 +61,8 @@
 						</div>
 			
 		<?php	}else { ?>
+
+			<br><br>
 
 			<div class="alert alert-danger alert-dismissable">
 							 
