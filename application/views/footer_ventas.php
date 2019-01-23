@@ -327,7 +327,6 @@ $(function(){
           calculate_discount(metodo,null)
         }
       }else{
-        console.log('aquii4444')
         calculate_discount(metodo,null)
       }
         
@@ -391,7 +390,7 @@ $(function(){
 
     function calculate_discount(type,validate){
       let isDiscountActive = $('#aplicar_descuento').is(':checked')
-      console.log(isDiscountActive,'aqui la mamaguebada')
+      
       if(type === "efectivo"){
         
         if(isDiscountActive){
@@ -409,6 +408,10 @@ $(function(){
           }
 
         }else{
+          
+          let total_span = formatNumber(total_total,2,',','.');
+          $("#total span").text(total_span);
+
           return [total_span,porcentaje,id_descuento_efectivo];
         }
 
@@ -418,6 +421,7 @@ $(function(){
           var total_span,
               porcentaje = 0,
               total_dolar = 0
+
           porcentaje = (total_total * porcentaje_visa) / 100;
           total_span = parseFloat(total_total) - parseFloat(porcentaje);
           
@@ -433,9 +437,13 @@ $(function(){
             return [total_total,null,id_descuento_visa];
           }
         }else{
+
+          let total_span = formatNumber(total_total,2,',','.');
           let total_dolar = parseFloat(total_total) / dolar_value
+
           if(!validate){
             $('#dolares_cancelar').val(total_dolar)
+            $("#total span").text(total_span);
             $('#monto_pago').val('')
           }else{
             return [total_total,null,id_descuento_visa];
@@ -461,7 +469,7 @@ $(function(){
         }else{
           if(!validate){
             $('#monto_pago').val(total_total)
-            $("#total span").text(formatNumber(total_span,2,',','.'));
+            $("#total span").text(formatNumber(total_total,2,',','.'));
           }else{
            return [total_total,null,id_descuento_debito]; 
           }
