@@ -2,6 +2,46 @@
 	$session = 1;
 	//$this->session->userdata('nivel');
 ?>
+
+<script language="javascript">
+
+  function sumar(para)
+  { 
+      var total = 0
+
+      para = parseFloat(para)
+
+      var valor1 = document.getElementById("costo").value
+      valor1 =  parseFloat(valor1)
+
+      total = valor1 / 100;
+      total = total * para;
+
+      total = parseFloat(total) + parseFloat(valor1)
+
+      document.getElementById("precio").value = total
+  }
+
+
+   function sumarmodi(para)
+  { 
+      var total = 0
+
+      para = parseFloat(para)
+
+      var valor1 = document.getElementById("costo_modi").value
+      valor1 =  parseFloat(valor1)
+
+      total = valor1 / 100;
+      total = total * para;
+
+      total = parseFloat(total) + parseFloat(valor1)
+
+      document.getElementById("precio_modi").value = total
+  }
+  </script>
+
+
 <div class="row">
 	<div class="container-fluid">
 		<div class="col-md-12">
@@ -248,16 +288,16 @@
 	          				<div class="col-md-8">
 	          					<div class="input-group">
 	              					<span class="input-group-addon"><i class="fa fa-money" aria-hidden="true"></i></span> 
-	              					<input type="number" class="form-control" name="costo_modi" id="costo_modi" required="">
+	              					<input type="text" class="form-control" name="costo_modi" id="costo_modi" required="" onkeyup="sumarmodi(<?php echo $conf->retencion;?>)">
 	          					</div>
 	          				</div>
 	          			</div>
 	          			<div class="form-group">
-	          				<label for="precio" class="control-label col-md-3">Precio de venta</label>
+	          				<label for="precio" class="control-label col-md-3">Precio de venta % <?php echo $conf->retencion;?></label>
 	          				<div class="col-md-8">
 	          					<div class="input-group">
 	              					<span class="input-group-addon"><i class="fa fa-money" aria-hidden="true"></i></span> 
-	              					<input type="number" class="form-control" name="precio_modi" id="precio_modi" required="">
+	              					<input type="text" class="form-control" name="precio_modi" id="precio_modi" required="">
 	          					</div>
 	          				</div>
 	          			</div>
@@ -407,16 +447,16 @@
 	          				<div class="col-md-8">
 	          					<div class="input-group">
 	              					<span class="input-group-addon"><i class="fa fa-money" aria-hidden="true"></i></span> 
-	              					<input type="number" class="form-control" name="costo" id="costo" required="">
+	              					<input type="text" class="form-control" name="costo" id="costo" required="" onkeyup="sumar(<?php echo $conf->retencion;?>)">
 	          					</div>
 	          				</div>
 	          			</div>
 	          			<div class="form-group">
-	          				<label for="precio" class="control-label col-md-3">Precio de venta</label>
+	          				<label for="precio" class="control-label col-md-3">Precio de venta % <?php echo $conf->retencion;?></label>
 	          				<div class="col-md-8">
 	          					<div class="input-group">
 	              					<span class="input-group-addon"><i class="fa fa-money" aria-hidden="true"></i></span> 
-	              					<input type="number" class="form-control" name="precio" id="precio" required="">
+	              					<input type="text" class="form-control" name="precio" id="precio" required="">
 	          					</div>
 	          				</div>
 	          			</div>
