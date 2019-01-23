@@ -207,7 +207,7 @@ class Ventas_Model extends CI_Model
       }
       else
       {
-         
+       
             $array = [ 
                'factura' => $codigo,
                'fecha_venta' => date('Y-m-d'),  
@@ -215,7 +215,7 @@ class Ventas_Model extends CI_Model
                'vuelto' => $vuelto,
                'tipo_venta' => $tipo,
                'id_descuento' => $arreglo_pago['id_descuento'],
-               'monto_descuento' => $arreglo_pago['monto_descuento']
+               'monto_descuento' => $arreglo_pago['monto_descuento'],
             ];      
 
             if($tipo === "mixto"){
