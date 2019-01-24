@@ -102,12 +102,13 @@
 					<p class="alert alert-success letras" id="monto_suficiente" style="display: none; color: black; font-weight: bold;"></p>
 				</div>
 				<section id="section_registrar" style="display: none"> 
+					<!--
 					<div class="form-group">
 						<label class="control-label col-md-2" for="aplicar_descuento">Aplicar Descuento</label>
 						<div class="col-md-2">
 							<input type="checkbox" name="aplicar_descuento" id="aplicar_descuento">
 						</div>
-					</div>
+					</div>-->
 					<div class="form-group">
 						<label for="" class="control-label col-md-2">Metodo de pago</label>
 						<div class="col-md-2">
