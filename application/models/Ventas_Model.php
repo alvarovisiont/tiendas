@@ -207,7 +207,7 @@ class Ventas_Model extends CI_Model
       }
       else
       {
-         
+       
             $array = [ 
                'factura' => $codigo,
                'fecha_venta' => date('Y-m-d'),  

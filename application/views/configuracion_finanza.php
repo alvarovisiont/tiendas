@@ -36,7 +36,7 @@
 						<td><label class="control-label col-md-2">Iva Impuesto: </label><span class="col-md-10 text-center"><h4><?php if(!empty($datos->iva)){echo $datos->iva."%";}?></h4></span></td>									
 					</tr>
 					<tr>
-						<td><label for="" class="control-label col-md-2">% de Retención</label><span class="col-md-10 text-center"><h4><?php if(!empty($datos->retencion)){echo $datos->retencion."%";}?></h4></span></td>
+						<td><label for="" class="control-label col-md-2">% de Ganancias</label><span class="col-md-10 text-center"><h4><?php if(!empty($datos->retencion)){echo $datos->retencion."%";}?></h4></span></td>
 						<td><label class="control-label col-md-2">Valor Dolar en Bs.S </label>
 							<span class="col-md-10 text-center">
 								<h4>
@@ -74,7 +74,7 @@
 	      		</div>
 	      	</div>
 	      	<div class="form-group">
-	      		<label for="" class="control-label col-md-3">Retención Monetaria</label>
+	      		<label for="" class="control-label col-md-3">Porcentaje de ganancia</label>
 	      		<div class="col-md-7">
 	      			<input type="number" id="retencion" name="retencion" pattern="[0-9]" class="form-control" required="" placeholder="Expresión en números enteros">
 	      		</div>
@@ -119,7 +119,7 @@
 	      		</div>
 	      	</div>
 	      	<div class="form-group">
-	      		<label for="" class="control-label col-md-3">Retención Monetaria</label>
+	      		<label for="" class="control-label col-md-3">Porcentaje de ganancia</label>
 	      		<div class="col-md-7">
 	      			<input type="number" id="retencion_modi" name="retencion_modi" pattern="[0-9]" class="form-control" required="" placeholder="Expresión en números enteros">
 	      		</div>
