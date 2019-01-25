@@ -53,7 +53,8 @@ class Configuracion_finanza extends CI_Controller
 					'siglas' => $this->input->post('siglas_modi', TRUE),
 					'iva' => $this->input->post('iva_modi', TRUE),
 					'retencion' => $this->input->post('retencion_modi', TRUE),
-					'dolar_value' => $this->input->post('dolar_value_modi', TRUE)
+					'dolar_value' => $this->input->post('dolar_value_modi', TRUE),
+					'dolar_today' => $this->input->post('dolar_today_modi', TRUE)
 				];
 		$this->load->model('Configuracion_Finanza_Model');
 

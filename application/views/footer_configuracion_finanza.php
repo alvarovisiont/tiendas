@@ -31,6 +31,8 @@
                      $("#retencion_modi").val(x);
             var  x = $(e.relatedTarget).data().dolar_modi;
                      $("#dolar_value_modi").val(x);
+            var  x = $(e.relatedTarget).data().dolar_today;
+                     $("#dolar_today_modi").val(x);         
 
         });
     });

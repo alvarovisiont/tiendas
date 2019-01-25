@@ -85,8 +85,10 @@ class Ventas_Historial_Model extends CI_Model
 
    public function detalles_compra_factura($id_venta)
    {
-      $this->db->where('id_venta', $id_venta);
-      $query = $this->db->get('ventas_detalle');
+       $sql = "SELECT v.id_descuento, v.monto_descuento, v.factura, v.fecha_venta, v.monto_pagado, v.tipo_venta, vd.* FROM ventas v 
+       INNER JOIN ventas_detalle vd on vd.id_venta = v.id 
+       WHERE v.id = $id_venta";
+      $query = $this->db->query($sql);
       if($query->num_rows() > 0)
       {
          $filas = $query->result();
@@ -97,6 +99,20 @@ class Ventas_Historial_Model extends CI_Model
       {
          return false;
       }
+
+
+      /*$this->db->where('id_venta', $id_venta);
+      $query = $this->db->get('ventas_detalle');
+      if($query->num_rows() > 0)
+      {
+         $filas = $query->result();
+         $query->free_result();
+         return $filas;
+      }
+      else
+      {
+         return false;
+      }*/
    }
 
    public function datos_empresa()
