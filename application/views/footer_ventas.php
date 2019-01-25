@@ -32,7 +32,7 @@ $(function(){
         total_formateado = false,
         iva_limpio = 0,
         sub_total_limpio = 0,
-        dolar_value = parseFloat(<?= $config->dolar_value ?>),
+        dolar_value = parseFloat(<?= $config->dolar_today ?>),
         iva_conf = parseInt(<?= $config->iva ?>),
         porcentaje_efectivo = 0,
         porcentaje_debito = 0,
