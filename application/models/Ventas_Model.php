@@ -333,7 +333,7 @@ class Ventas_Model extends CI_Model
 
    public function imprimir_factura()
    {
-      $sql = "SELECT v.factura, v.fecha_venta, v.monto_pagado, v.tipo_venta, vd.* FROM ventas v INNER JOIN ventas_detalle vd on vd.id_venta = v.id WHERE v.id = (SELECT MAX(id) from ventas)";
+      $sql = "SELECT v.id_descuento, v.monto_descuento, v.factura, v.fecha_venta, v.monto_pagado, v.tipo_venta, vd.* FROM ventas v INNER JOIN ventas_detalle vd on vd.id_venta = v.id WHERE v.id = (SELECT MAX(id) from ventas)";
       $query = $this->db->query($sql);
       if($query->num_rows() > 0)
       {

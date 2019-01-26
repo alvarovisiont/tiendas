@@ -18,9 +18,6 @@ class Admin extends CI_Controller
 
 			$this->load->model('Empleados_Model');
 
-			$this->load->model('Auditoria_Model');
-			$this->Auditoria_Model->grabar_ultima_conexion();
-
 			$datos = $this->Admin_Model->traer_datos();
 			$data = $this->Admin_Model->graficas_compra_ventas();
 			$empleados = $this->Usuarios_Model->traer_trabajadores();
@@ -35,9 +32,6 @@ class Admin extends CI_Controller
 		{
 
 			$this->load->model('Empleados_Model');
-
-			$this->load->model('Auditoria_Model');
-			$this->Auditoria_Model->grabar_ultima_conexion();
 
 			$datos = $this->Admin_Model->traer_datos();
 			$data = $this->Admin_Model->traer_compras_ventas();

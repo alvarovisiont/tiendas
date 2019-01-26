@@ -15,6 +15,7 @@
 							data-iva_modi = '$datos->iva'
 							data-retencion_modi = '$datos->retencion'
 							data-dolar_modi = '$datos->dolar_value'
+							data-dolar_today = '$datos->dolar_today'
 							>Modificar Configuración&nbsp;<i class='fa fa-cog'></i></button>";	
 					}
 				 ?>
@@ -45,6 +46,16 @@
 							</span>
 						</td>		
 					</tr>
+
+					<tr>
+						<td><label class="control-label col-md-2">Valor Dolar Visa Actual Bs.S </label>
+							<span class="col-md-10 text-center">
+								<h4>
+									<?= number_format($datos->dolar_today,2,',','.'); ?>
+								</h4>
+							</span>
+						</td>		
+					</tr>
 				</tbody>
 			</table>
 		</div>
@@ -62,7 +73,7 @@
 	      <form action="<?php echo base_url().'Configuracion_finanza/grabar'; ?>" id='form_agregar' class='form-horizontal' method='POST'>
 	      <div class="modal-body">
 	      	<div class="form-group">
-	      		<label for="" class="control-label col-md-3">Siglas de la moneda</label>
+	      		<label for="" class="control-label col-md-3">Siglas 2222 de la moneda</label>
 	      		<div class="col-md-7">
 	      			<input type="text" id="siglas" name="siglas" pattern="[a-zA-Z]{2,}" class="form-control" placeholder="Ejemplo: Moneda: Bolivares Siglas(BSF)" required="">
 	      		</div>
@@ -127,9 +138,18 @@
 	      	<div class="form-group">
 	      		<label for="" class="control-label col-md-3">Dolar en <?= !isset($datos->siglas) ? 'BSS' : $datos->siglas ?></label>
 	      		<div class="col-md-7">
-	      			<input type="number" id="dolar_value_modi" name="dolar_value_modi" step="any" class="form-control" required="" placeholder="">
+	      			<input type="text" id="dolar_value_modi" name="dolar_value_modi" step="any" class="form-control" required="" placeholder="">
 	      		</div>
 	      	</div>
+
+	      	<div class="form-group">
+	      		<label for="" class="control-label col-md-3">Dolar Visa actual en <?= !isset($datos->siglas) ? 'BSS' : $datos->siglas ?></label>
+	      		<div class="col-md-7">
+	      			<input type="text" id="dolar_today_modi" name="dolar_today_modi" step="any" class="form-control" required="" placeholder="">
+	      		</div>
+	      	</div>
+
+
 	      </div>
 	      <div class="modal-footer">
 	      	<button class="btn btn-primary" type="submit" id="boton_agregar_grupo">Modificar&nbsp;<i class="fa fa-thumbs-up"></i></button>

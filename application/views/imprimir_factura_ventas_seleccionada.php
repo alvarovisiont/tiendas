@@ -119,6 +119,7 @@ body {
               $iva = $iva + $row->iva;
 
          ?>
+
           <tr>
                  <td align="center" width="50%" class="td1"> <?php echo $row->nombre_articulo." Marca: ".$row->marca; ?></td>
                  <td align="center" width="10%" class="td1"><?php echo $row->cantidad; ?></td>
@@ -128,6 +129,8 @@ body {
                </tr>
 
         <?php }   
+
+        $total = $total - $row->monto_descuento;
         
      ?>   
 
@@ -162,7 +165,7 @@ body {
      </tr>
       <tr>
       <th align="center" width="20%"><?php echo $sub1 = number_format($sub_total,2,",","."); ?></th>
-      <th align="center" width="20%">&nbsp;</th>
+      <th align="center" width="20%"><?php echo $sub2 = number_format($row->monto_descuento,2,",","."); ?></th>
       <th align="center" width="20%">&nbsp;</th>
       <th align="center" width="30%"><?php echo "Iva 16% = ".$iva1 = number_format($iva,2,",","."); ?></th>
       <th align="center" width="30%"><?php echo $total1 = number_format($total,2,",","."); ?> </th> 

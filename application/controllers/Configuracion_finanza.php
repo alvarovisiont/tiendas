@@ -53,11 +53,22 @@ class Configuracion_finanza extends CI_Controller
 					'siglas' => $this->input->post('siglas_modi', TRUE),
 					'iva' => $this->input->post('iva_modi', TRUE),
 					'retencion' => $this->input->post('retencion_modi', TRUE),
-					'dolar_value' => $this->input->post('dolar_value_modi', TRUE)
+					'dolar_value' => $this->input->post('dolar_value_modi', TRUE),
+					'dolar_today' => $this->input->post('dolar_today_modi', TRUE)
 				];
 		$this->load->model('Configuracion_Finanza_Model');
 
 		$this->Configuracion_Finanza_Model->modificar($array, $id);
+
+		$this->load->model('Auditoria_Model');
+
+				$accion_var =  "Configuración de Moneda ";
+
+				$arreglito = ["accion" => $accion_var,
+						      "motivo" => "Cambio de moneda",
+						     ];
+				
+				$id = $this->Auditoria_Model->grabar_conexion_all($arreglito);
 
 		redirect(base_url().'Configuracion_finanza');	
 	}

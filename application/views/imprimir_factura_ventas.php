@@ -114,7 +114,7 @@ body {
 				}
 				foreach ($data as $row) 
 				 {
-				 	        $sub_total = $sub_total + $row->sub_total;
+				 	    $sub_total = $sub_total + $row->sub_total;
 							$total = $total + $row->total;
 							$iva = $iva + $row->iva;
 
@@ -128,6 +128,9 @@ body {
 						   </tr>
 
 				<?php }		
+
+
+              $total = $total - $row->monto_descuento;
 				
 	   ?>		
 
@@ -162,7 +165,7 @@ body {
      </tr>
       <tr>
      	<th align="center" width="20%"><?php echo $sub1 = number_format($sub_total,2,",","."); ?></th>
-     	<th align="center" width="20%">&nbsp;</th>
+     	 <th align="center" width="20%"><?php echo $sub2 = number_format($row->monto_descuento,2,",","."); ?></th>
      	<th align="center" width="20%">&nbsp;</th>
      	<th align="center" width="30%"><?php echo "Iva 16% = ".$iva1 = number_format($iva,2,",","."); ?></th>
      	<th align="center" width="30%"><?php echo $total1 = number_format($total,2,",","."); ?> </th>	

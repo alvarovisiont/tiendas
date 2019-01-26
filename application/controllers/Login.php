@@ -59,13 +59,16 @@ class Login extends CI_Controller
 				$data['nivel'] = $datos->nivel;
 				
 				$this->load->model('Auditoria_Model');
+
+				$arreglito = ["accion" => "Entro al sistema",
+						      "motivo" => "Login",
+						      "usuario" => $datos->id];
 				
-				$id = $this->Auditoria_Model->grabar_conexion();
+				$id = $this->Auditoria_Model->grabar_conexion($arreglito);
 				
 				$arreglo_sesion['id_auditoria'] = $id->id;
 
 				$this->session->set_userdata($arreglo_sesion);
-				
 
 				echo json_encode($data);
 			}
@@ -87,12 +90,6 @@ class Login extends CI_Controller
 
    		if($this->session->userdata('nivel') != NULL)
 		{
-			$this->load->model('Auditoria_Model');
-			$ahora = date('Y-n-j H:i:s', strtotime('-5 hour'));
-			$array = ['usuario' => $this->session->userdata('id'), 'hora_conexion' => $ahora];
-			
-
-			
 			switch ($this->session->userdata('nivel')) {
 				case 1:
 					redirect(base_url()."Admin");	
