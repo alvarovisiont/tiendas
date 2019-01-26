@@ -105,6 +105,13 @@
                 dataType: "JSON",
                 success: function(data)
                 {
+
+                     if(typeof(data.refere) != "undefined")
+                    {
+                        swal("Referencia Duplicada", "Por favor verifique", "warning")
+                    }
+
+
                     if(typeof(data.exito) != "undefined")
                     {
                         swal({

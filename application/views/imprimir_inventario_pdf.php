@@ -104,9 +104,8 @@ tr:nth-child(odd) {
 					<th style="text-align: center;">&nbsp;Descripción del Artículo&nbsp;</th>
 					<th style="text-align: center;">&nbsp;Existencias&nbsp;</th>
           <th style="text-align: center;">&nbsp;&nbsp;Físico&nbsp;&nbsp;</th>
-					<th style="text-align: center;">&nbsp;Coste Un.&nbsp;</th>
-					<th style="text-align: center;">&nbsp;P. M. Coste&nbsp;</th>
-					<th style="text-align: center;">&nbsp;Coste Total&nbsp;</th>
+					<th style="text-align: center;">&nbsp;Costo Unitario.&nbsp;</th>
+					<th style="text-align: center;">&nbsp;Costo Subtotal&nbsp;</th>
 					<th style="text-align: center;">&nbsp;Precio Venta&nbsp;</th>
 				</tr>
 			</thead>
@@ -114,25 +113,46 @@ tr:nth-child(odd) {
 				<?php 
 					if(!empty($datos))
 					{
+            $total = 0;
+            $total_total = 0;
+            $total_total_sub = 0;
+
 						foreach ($datos as $row) 
 						{
                $variableprecio = 0;
-               $variableprecio = number_format($row->precio * $config->dolar_value);
-
-
+               $costo_total = 0;
+          
+               $variableprecio = number_format($row->precio * $config->dolar_value,2,',','.');
+               $variablecosto = number_format($row->cantidad * $row->precio,2,',','.');
+               $total = $total + $row->cantidad;
+               $total_total = $row->cantidad * $row->precio;
+               $total_total_sub = $total_total_sub + $total_total;
+      
 							echo '
 							<tr>
 								<td>'.$row->ref.'</td>
 								<td>'.$row->nombre.' '.$row->marca.'</td>
 								<td>'.$row->cantidad.'</td>
                 <td></td>
-								<td>'.$row->precio_proveedor.'</td>
-								<td></td>
-								<td></td>
+								<td>'.$row->precio.'</td>
+								<td>'.$variablecosto.'</td>
 								<td>'.$variableprecio.' Bs.S</td>
 							</tr>';		
 						}
-					}
+
+          ?>
+
+          <tr>
+          <th style="text-align: center;"></th>
+          <th style="text-align: center;">&nbsp;Existencia de piezas&nbsp;</th>
+          <th style="text-align: center;">&nbsp;<?php echo $total;?>&nbsp;</th>
+          <th style="text-align: center;">&nbsp;&nbsp;</th>
+          <th style="text-align: center;">&nbsp;Costo Total Inventario&nbsp;</th>
+          <th style="text-align: center;">&nbsp;<?php echo $total_total_sub = number_format($total_total_sub,2,',','.');?>&nbsp;</th>
+          <th style="text-align: center;">&nbsp;&nbsp;</th>
+        </tr>
+
+				<?php	}
 				?>	
 			</tbody>
 		</table>

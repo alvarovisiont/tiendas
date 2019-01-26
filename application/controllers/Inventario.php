@@ -55,6 +55,13 @@ class Inventario extends CI_Controller
 					'fecha_agregado' => date('Y-m-d', strtotime($this->input->post('fecha_registro', TRUE))),
 					'observacion' => $this->input->post('observacion', TRUE)
 					];
+
+
+			 $variableref = $this->Inventario_Model->verificarRef($this->input->post('ref', TRUE));
+
+			if ($variableref == 0)
+			{ 	
+
 			$this->Inventario_Model->agregar($data);
 			$datos = ['exito' => 'Agregado con éxito'];
 
@@ -70,6 +77,11 @@ class Inventario extends CI_Controller
 				
 				$id = $this->Auditoria_Model->grabar_conexion_all($arreglito);
 
+			}else
+			{
+				$datos = ['refere' => 'Referencia Duplicada'];
+
+			}		
 
 			echo json_encode($datos);
 		}

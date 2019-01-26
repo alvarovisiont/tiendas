@@ -10,6 +10,20 @@ class Inventario_Model extends CI_Model
    	//parent:: __Construct();
    }
 
+   public function verificarRef($ref)
+   {
+      $this->db->where('ref', $ref);
+      $query = $this->db->get('inventario');
+      if($query->num_rows() > 0)
+      {
+         return 1;
+      }
+      else
+      {
+         return 0;  
+      }
+    }     
+
    public function agregar($datos)
    {
    		$this->db->insert("inventario", $datos);
