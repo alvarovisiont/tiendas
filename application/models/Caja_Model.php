@@ -16,7 +16,7 @@ class Caja_Model extends CI_Model
          {
             $mes = date('m');
          }
-        // $this->db->where('MONTH(fecha_venta)', $mes);
+         $this->db->where('EXTRACT(MONTH FROM fecha_venta) = '.$mes.' and status = 1');
    	
          $this->db->select('*');
 
@@ -37,10 +37,8 @@ class Caja_Model extends CI_Model
 
    public function saldo($mes)
    {
-        // $this->db->where('MONTH(fecha_venta)', $mes);
-        
-
-         $this->db->select('monto_pagado as total_monto','vuelto as total_vuelto');
+        $this->db->where('EXTRACT(MONTH FROM fecha_venta) = '.$mes.' and status = 1');
+        $this->db->select('monto_pagado as total_monto','vuelto as total_vuelto');
         
        // $this->db->select('*');
          $query = $this->db->get('ventas');
@@ -60,11 +58,8 @@ class Caja_Model extends CI_Model
 
    public function saldo_estadistica_dia($mes, $año)
    {
-      /*$sql = "SELECT SUM(monto_pagado) as total_monto, SUM(vuelto) as total_vuelto, DAY(fecha_venta) as dia from ventas where MONTH(fecha_venta) = $mes and YEAR(fecha_venta) = $año GROUP BY dia asc";
-      */
-
-      $sql = "SELECT monto_pagado as total_monto, vuelto as total_vuelto, fecha_venta as dia from ventas";
-     
+      $sql = "SELECT SUM(monto_pagado) as total_monto, SUM(vuelto) as total_vuelto, EXTRACT(DAY FROM fecha_venta) as dia from ventas where EXTRACT( MONTH FROM fecha_venta) = $mes and EXTRACT(YEAR FROM fecha_venta) = $año GROUP BY dia";
+      
 
       $query = $this->db->query($sql);
          if($query->num_rows() > 0)
@@ -82,10 +77,7 @@ class Caja_Model extends CI_Model
    public function saldo_estadistica_mes($año)
    {
       
-     /* $sql = "SELECT SUM(monto_pagado) as total_monto, SUM(vuelto) as total_vuelto, MONTH(fecha_venta) as mes from ventas where YEAR(fecha_venta) = $año GROUP BY  mes asc";
-     */
-     $sql = "SELECT monto_pagado as total_monto, vuelto as total_vuelto, fecha_venta as mes from ventas";
-     
+     $sql = "SELECT SUM(monto_pagado) as total_monto, SUM(vuelto) as total_vuelto, EXTRACT(MONTH FROM fecha_venta) as mes from ventas where EXTRACT(YEAR FROM fecha_venta) = $año GROUP BY  mes";
 
       $query = $this->db->query($sql);
          if($query->num_rows() > 0)
@@ -103,10 +95,8 @@ class Caja_Model extends CI_Model
    public function saldo_estadistica_año($año)
    {
       
-      /*$sql = "SELECT SUM(monto_pagado) as total_monto, SUM(vuelto) as total_vuelto, YEAR(fecha_venta) as año from ventas where YEAR(fecha_venta) = $año GROUP BY  año asc";
-      */
-
-      $sql = "SELECT monto_pagado as total_monto, vuelto as total_vuelto, fecha_venta as año from ventas";
+      $sql = "SELECT SUM(monto_pagado) as total_monto, SUM(vuelto) as total_vuelto, EXTRACT(YEAR FROM fecha_venta) as año from ventas where EXTRACT(YEAR FROM fecha_venta) = $año GROUP BY  año";
+      
 
       $query = $this->db->query($sql);
       if($query->num_rows() > 0)

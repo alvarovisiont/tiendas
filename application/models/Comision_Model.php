@@ -20,6 +20,7 @@ class Comision_Model extends CI_Model
           ->join('usuarios','usuarios.id = comision.id_empleado','join')
           ->join('ventas','ventas.id = comision.id_venta','join')
           ->order_by('created_at','desc')
+          ->where('ventas.status = 1')
           ->get()
           ->result();
     }
@@ -33,6 +34,7 @@ class Comision_Model extends CI_Model
                 SUM(monto) as total, usuarios.nombre_apellido
                 FROM comision
                 INNER JOIN usuarios ON usuarios.id = comision.id_empleado
+                WHERE comision.id_venta IN (SELECT id from ventas where status = 1)
                 GROUP BY mes,año,nombre_apellido
               ) as t1 order by año desc ,mes desc";
 

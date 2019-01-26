@@ -50,8 +50,8 @@ $(function(){
                 $monto = $row->total_monto - $row->total_vuelto;
                 ?>
                     relleno.push({
-                    "category": "<?php echo $mes[$row->mes -1]; ?>",
-                    "total": <?php echo $monto; ?>
+                    category: "<?php echo $mes[$row->mes -1]; ?>",
+                    total: <?php echo $monto; ?>
                     });
                 <?php
 

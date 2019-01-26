@@ -22,7 +22,9 @@
 					<div class="col-md-2" id="div_btn_buscar_usuario">
 						<button type="button" class="btn btn-info btn-block" title="Buscar Usuario" data-toggle="modal" data-target="#mod_buscar_clientes"><i class="fa fa-user fa-1x"></i>&nbsp;<i class="fa fa-search fa-1x"></i></button>
 					</div>
-	
+					<div class="col-md-2" id="">
+						<button type="button" class="btn btn-info btn-block" title="Ver descuentos activos" data-toggle="modal" data-target="#mod_descuentos_activos">%&nbsp;<i class="fa fa-search fa-1x"></i></button>
+					</div>
 				</div>
 				<div class="form-group">
 					<div class="col-md-4 col-md-offset-1" id="barra_oculta" style="display:none">
@@ -102,13 +104,13 @@
 					<p class="alert alert-success letras" id="monto_suficiente" style="display: none; color: black; font-weight: bold;"></p>
 				</div>
 				<section id="section_registrar" style="display: none"> 
-					<!--
+					
 					<div class="form-group">
 						<label class="control-label col-md-2" for="aplicar_descuento">Aplicar Descuento</label>
 						<div class="col-md-2">
 							<input type="checkbox" name="aplicar_descuento" id="aplicar_descuento">
 						</div>
-					</div>-->
+					</div>
 					<div class="form-group">
 						<label for="" class="control-label col-md-2">Metodo de pago</label>
 						<div class="col-md-2">
@@ -294,6 +296,46 @@
 	      							</tr>";
 	      				}
 
+	      			?>
+	      		</tbody>
+	      	</table>
+	      </div>
+	      <div class="modal-footer">
+	      	<button class="btn btn-primary btn-md" type="button" data-dismiss="modal">Cerrar&nbsp;<i class="fa fa-remove"></i></button>
+	      </div>
+    	</div>
+	</div>
+</div>
+
+<div class="modal fade" id="mod_descuentos_activos" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  	<div class="modal-dialog modal-lg" role="document">
+    	<div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	        <h3 class="text-center">Descuentos y Status</h3>
+	      </div>
+	      <div class="modal-body">
+	      	<table class="table table-striped table-hover" id="tabla_articulos">
+	      		<thead>
+	      			<th class="text-center">Tipo</th>
+	      			<th class="text-center">Porcentaje</th>
+	      			<th class="text-center">Activo</th>
+	      		</thead>
+	      		<tbody class="text-center">
+	      			<?php
+      					foreach ($all_discounts as $row) {
+
+      						$activo = $row->status == 1 ? "Activo" : "Inactivo";
+
+      						echo "<tr>
+      								<td>$row->nombre</td>
+      								<td><span class='badge alert-danger'>$row->cantidad %</span></td>
+      								<td>$activo</td>
+      								</tr>";
+      					}
+	      				
 	      			?>
 	      		</tbody>
 	      	</table>

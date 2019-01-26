@@ -6,15 +6,16 @@
 		<h2 class="text-center alert alert-warning">Monto de la caja mensual:&nbsp;&nbsp;
 					<span class="badge" style="background-color: darkred; color: white; font-size: 16px;"> 
 						<?php 
+							$siglas = "";
 							if ($monto < 0) 
 							{
-								$monto = "- ".$monto;
+								$siglas = "- ";
 							}
 							else
 							{
-								$monto = "+ ".$monto;	
+								$siglas = "+ ";	
 							}
-							echo $monto;
+							echo $siglas.number_format($monto,2,',','.');
 						?>
 					</span>
 				</h2>
@@ -36,36 +37,22 @@
 							</thead>
 							<tbody class="text-center">
 								<?php
-									if(!empty($datos))
+									
+									foreach ($datos as $row) 
 									{
-										foreach ($datos as $row) 
-										{
-											$detalle = "<button class='btn btn-info btn-sm' data-toggle='modal' data-target='#modal_detalle'
-											data-id_venta = '$row->id'><i class='fa fa-search'></i></button>";
-											$cliente = "<button class='btn btn-danger btn-sm' data-toggle='modal' data-target='#modal_cliente'
-											data-id_venta = '$row->id'><i class='fa fa-user'></i></button>";
+										$detalle = "<button class='btn btn-info btn-sm' data-toggle='modal' data-target='#modal_detalle'
+										data-id_venta = '$row->id'><i class='fa fa-search'></i></button>";
+										$cliente = "<button class='btn btn-danger btn-sm' data-toggle='modal' data-target='#modal_cliente'
+										data-id_venta = '$row->id'><i class='fa fa-user'></i></button>";
 
-											echo "<tr>
-													<td>$row->factura</td>
-													<td>".date('d-m-Y' ,strtotime($row->fecha_venta))."</td>
-													<td>".number_format($row->monto_pagado,2,",",".")."</td>
-													<td>".number_format($row->vuelto,2,",",".")."</td>
-													<td>$row->tipo_venta</td>
-													<td>".$detalle."</td>
-													<td>".$cliente."</td>
-												</tr>";
-										}
-									}
-									else
-									{
 										echo "<tr>
-												<td></td>
-												<td></td>
-												<td></td>
-												<td></td>
-												<td></td>
-												<td></td>
-												<td></td>
+												<td>$row->factura</td>
+												<td>".date('d-m-Y' ,strtotime($row->fecha_venta))."</td>
+												<td>".number_format($row->monto_pagado,2,",",".")."</td>
+												<td>".number_format($row->vuelto,2,",",".")."</td>
+												<td>$row->tipo_venta</td>
+												<td>".$detalle."</td>
+												<td>".$cliente."</td>
 											</tr>";
 									}
 								?>

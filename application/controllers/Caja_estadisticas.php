@@ -29,6 +29,7 @@ class Caja_estadisticas extends CI_Controller
 			$estadistica_dia = $this->Caja_Model->saldo_estadistica_dia($mes, $año);
 			$estadistica_mes = $this->Caja_Model->saldo_estadistica_mes($año);
 			$estadistica_año = $this->Caja_Model->saldo_estadistica_año($año);
+			
 			$this->load->view("encabezado");
 			$this->load->view("caja_estadisticas");
 			$this->load->view("footer_caja_estadistica", compact('estadistica_mes', 'estadistica_año', 'estadistica_dia'));
