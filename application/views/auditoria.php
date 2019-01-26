@@ -7,6 +7,9 @@
 			<table class="table table-bordered table-hover">
 				<thead>
 					<th class="text-center">Usuario</th>
+					<th class="text-center">Hora Evento</th>
+					<th class="text-center">Módulo</th>
+					<th class="text-center">Acción</th>
 					<th class="text-center">Hora de Conexión</th>
 					<th class="text-center">Hora final de Conexión</th>
 					<th class="text-center">Tiempo de Conexión</th>
@@ -162,7 +165,11 @@
 					            }
             
 								echo "<tr>
-										<td>$row->usuario</td>
+								        <td>$row->usuario</td>
+								        <td>".date('d-m-Y H:i:s A', strtotime($row->hora))."</td>
+										<td>".$row->motivo."</td>
+										<td>".$row->accion."</td>
+										
 										<td>".date('d-m-Y H:i:s A', strtotime($row->hora_conexion))."</td>
 										<td>".date('d-m-Y H:i:s A', strtotime($row->hora_desconexion))."</td>
 										<td>".$imprimir_hora."</td>

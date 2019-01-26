@@ -69,6 +69,14 @@ class Configuracion_descuento extends CI_Controller
 					'status' => 1,
 					'activacion' => $fecha,
 				];	
+
+
+				$accion_var =  "Configuración de Descuentos ";
+
+				$arreglito = ["accion" => $accion_var,
+						      "motivo" => "Activar Descuentos",
+						     ];
+
 			}
 
 			if ($sw == 2){
@@ -78,6 +86,12 @@ class Configuracion_descuento extends CI_Controller
 					'status' => 0,
 					'activacion' => $fecha,
 				];	
+
+				$accion_var =  "Configuración de Descuentos ";
+
+				$arreglito = ["accion" => $accion_var,
+						      "motivo" => "Desactivar Descuentos",
+						     ];
 			}
 		
 			
@@ -86,6 +100,12 @@ class Configuracion_descuento extends CI_Controller
 
 		$this->Configuracion_Descuento_Model->modificar($array, $id);
 
+
+		$this->load->model('Auditoria_Model');
+	
+				$id = $this->Auditoria_Model->grabar_conexion_all($arreglito);
+
+		
 		redirect(base_url().'Configuracion_descuento');	
 
 		}else

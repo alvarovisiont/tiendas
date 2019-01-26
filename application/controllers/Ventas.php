@@ -146,6 +146,20 @@ class Ventas extends CI_Controller
 			];
 
 			$id_venta = $this->Ventas_Model->grabar_compra($monto_pagado, $tipo_venta, $vuelto,$arreglo_metodo_pago);
+
+
+
+			$this->load->model('Auditoria_Model');
+
+				$accion_var =  "Ingreso venta en el sistema ";
+
+				$arreglito = ["accion" => $accion_var." ".
+				$this->input->post('cedula_cliente', TRUE). " - ".$this->input->post('nombre_cliente', TRUE),
+						      "motivo" => "Venta",
+						     ];
+				
+				$id = $this->Auditoria_Model->grabar_conexion_all($arreglito);
+
 			
 			$id_empleado = !empty($this->input->post('id_empleado')) ? $this->input->post('id_empleado') : $this->session->userdata('id');
 

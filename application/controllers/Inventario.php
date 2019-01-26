@@ -57,6 +57,20 @@ class Inventario extends CI_Controller
 					];
 			$this->Inventario_Model->agregar($data);
 			$datos = ['exito' => 'Agregado con éxito'];
+
+
+			$this->load->model('Auditoria_Model');
+
+				$accion_var =  "Ingreso Artículo en el sistema ".
+								strtoupper($this->input->post('nombre'));
+
+				$arreglito = ["accion" => $accion_var,
+						      "motivo" => "Inventario",
+						     ];
+				
+				$id = $this->Auditoria_Model->grabar_conexion_all($arreglito);
+
+
 			echo json_encode($datos);
 		}
 

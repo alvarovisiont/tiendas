@@ -70,6 +70,19 @@ class Compras extends CI_Controller
 			{
 				$arreglo = $datos;
 			}
+
+
+			$this->load->model('Auditoria_Model');
+
+				$accion_var =  "Ingreso Compra en el sistema ";
+
+				$arreglito = ["accion" => $accion_var,
+						      "motivo" => "Compras",
+						     ];
+				
+				$id = $this->Auditoria_Model->grabar_conexion_all($arreglito);
+
+
 			echo json_encode($arreglo);
 		}
 		else if ($datos == "Repetido")

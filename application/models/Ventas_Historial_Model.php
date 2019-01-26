@@ -13,6 +13,7 @@ class Ventas_Historial_Model extends CI_Model
 
    public function traer_datos()
    {
+         $this->db->order_by("id","desc");
    		$query = $this->db->get('ventas');
    		if($query->num_rows() > 0)
    		{

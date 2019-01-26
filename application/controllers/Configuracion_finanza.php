@@ -60,6 +60,16 @@ class Configuracion_finanza extends CI_Controller
 
 		$this->Configuracion_Finanza_Model->modificar($array, $id);
 
+		$this->load->model('Auditoria_Model');
+
+				$accion_var =  "Configuración de Moneda ";
+
+				$arreglito = ["accion" => $accion_var,
+						      "motivo" => "Cambio de moneda",
+						     ];
+				
+				$id = $this->Auditoria_Model->grabar_conexion_all($arreglito);
+
 		redirect(base_url().'Configuracion_finanza');	
 	}
 
