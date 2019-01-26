@@ -215,7 +215,8 @@ class Ventas_Model extends CI_Model
                'vuelto' => $vuelto,
                'tipo_venta' => $tipo,
                'id_descuento' => $arreglo_pago['id_descuento'],
-               'monto_descuento' => empty($arreglo_pago['monto_descuento']) ? 0 :  $arreglo_pago['monto_descuento']
+               'monto_descuento' => empty($arreglo_pago['monto_descuento']) ? 0 :  $arreglo_pago['monto_descuento'],
+               'status' => 1
             ];      
 
             if($tipo === "mixto"){
@@ -369,9 +370,9 @@ class Ventas_Model extends CI_Model
    public function rollback_sell($id){
 
       $this->set_cantidad_inventario("suma",$id);
-      $this->db->where('id_venta',$id)->delete('ventas_detalle');
-      $this->db->where('id_venta',$id)->delete('comision');
-      $this->db->where('id',$id)->delete('ventas');
+      //$this->db->where('id_venta',$id)->delete('ventas_detalle');
+      //$this->db->where('id_venta',$id)->delete('comision');
+      $this->db->where('id',$id)->update('ventas',['status' => 0]);
 
    }
 

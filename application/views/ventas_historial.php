@@ -22,7 +22,7 @@
 							<th class="text-center">Tipo de Venta</th>
 							<th>Detalle Venta</th>
 							<th>Imprimir</th>
-							<th>Deshacer</th>
+							<th>Anular</th>
 						</thead>
 						<tbody class="text-center">
 							<?php
@@ -34,11 +34,16 @@
 										
 										$imprimir = "<button class='btn btn-danger btn-sm imprimir'
 										data-ruta = '".base_url().'Ventas_historial/imprimir_factura/'.$row->id."'><i class='fa fa-download'></i></button>";
-										
-										$deshacer = "<button class='btn btn-warning btn-sm devolver'
-										data-ruta = '".base_url().'Ventas/rollback/'.$row->id."'><i class='fa fa-refresh'></i></button>";
+										$deshacer = "";
+										if($row->status == 1){
 
-										echo "<tr>
+											$deshacer = "<button class='btn btn-warning btn-sm devolver'
+											data-ruta = '".base_url().'Ventas/rollback/'.$row->id."'><i class='fa fa-refresh'></i></button>";
+										}
+										
+										$anulado = $row->status == 1 ? "" : "#F28D62";
+
+										echo "<tr style='background-color:".$anulado.";'>
 												<td>$row->factura</td>
 												<td>".date('d-m-Y' ,strtotime($row->fecha_venta))."</td>
 												<td>".number_format($row->monto_pagado,2,',','.')."</td>
@@ -58,7 +63,7 @@
 	</div>
 </div>
 <div class="modal fade" id="modal_detalle" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	<div class="modal-dialog tabla_modal" role="document" class="tabla_modal">
+	<div class="modal-dialog modal-lg" role="document">
 	    <div class="modal-content">
 	      	<div class="modal-header">
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -132,7 +137,7 @@
 	        	<h3 class="text-center">Aviso&nbsp;<i class="fa fa-exclamation"></i></h3>
 	      </div>
 	      	<div class="modal-body">
-	      		<h3 class="text-center">Esta seguro de querer deshacer esta venta?</h3>
+	      		<h3 class="text-center">Esta seguro de querer Anular esta venta?</h3>
 	      	</div>
 	      	<div class="modal-footer">
 	      			<button type='button' class='btn btn-primary' id="dismiss_sell">Aceptar&nbsp;&nbsp;<i class='fa fa-thumbs-up'></i></button>

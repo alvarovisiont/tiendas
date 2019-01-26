@@ -33,6 +33,7 @@ class Ventas extends CI_Controller
 			$config = $this->Configuracion_Finanza_Model->traer_datos();
 			$seller = $this->Usuarios_Model->getById($this->session->userdata('id'));
 			$descuentos = $this->Descuentos_Model->descuentos_activos();
+			$all_discounts = $this->Descuentos_Model->traer_descuentos();
 
 			$option_bancos = "<option>Seleccione</option>";
 			foreach ($bancos as $row) {
@@ -41,12 +42,12 @@ class Ventas extends CI_Controller
 
 			$this->Ventas_Model->eliminar_articulos_flotantes();
 			$this->load->view("encabezado_compras");
-			$this->load->view("ventas", compact('clientes', 'articulos','workers','option_bancos','seller','config'));
+			$this->load->view("ventas", compact('clientes', 'articulos','workers','option_bancos','seller','config','all_discounts'));
 			$this->load->view("footer_ventas",compact('config','descuentos'));
 		}
 		else
 		{
-			$this->load->view("login");
+			redirect(base_url()."Login");	
 		}
 	}
 

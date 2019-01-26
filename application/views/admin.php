@@ -183,8 +183,6 @@
                                 </thead>
                                 <tbody class="text-center">
                                     <?php 
-                                        if(!empty($empleados))
-                                        {
                                             foreach ($empleados as $row)
                                             {
                                                 echo "<tr>
@@ -194,16 +192,7 @@
                                                             <td>$row->comision %</td>
                                                         </tr>";
                                             }
-                                        }
-                                        else
-                                        {
-                                            echo "<tr>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                </tr>";
-                                        }
+                                        
                                      ?>
                                 </tbody>
                             </table>

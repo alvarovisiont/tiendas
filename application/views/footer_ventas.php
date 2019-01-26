@@ -405,11 +405,34 @@ $(function(){
         porcentaje = (total_total * porcentaje_efectivo) / 100;
         total_span = parseFloat(total_total) - parseFloat(porcentaje);
 
-        if(!validate){
-          total_span = formatNumber(total_span,2,',','.');
-          $("#total span").text(total_span);
+        if(isDiscountActive){
+
+
+          if(!validate){
+            
+            total_span = formatNumber(total_span,2,',','.');
+            $('#monto_pago').val(0)
+            $("#total span").text(total_span);
+
+          }else{
+            return [total_span,porcentaje,id_descuento_efectivo];
+          }
+
         }else{
-          return [total_span,porcentaje,id_descuento_efectivo];
+
+          total_span = total_total
+
+          if(!validate){
+            
+            total_span = formatNumber(total_span,2,',','.');
+            $("#total span").text(total_span);
+            $('#monto_pago').val(0)
+
+          }else{
+            return [total_span,null,id_descuento_efectivo];
+          }
+          
+
         }
 
       }else if(type === "visa"){
@@ -422,16 +445,35 @@ $(function(){
         total_span = parseFloat(total_total) - parseFloat(porcentaje);
         
         total_dolar  = parseFloat(total_span) / dolar_value
+        
+        if(isDiscountActive){
 
-        if(!validate){
-          $('#dolares_cancelar').val(total_dolar)
-          $('#monto_pago').val('')
+          if(!validate){
+            $('#dolares_cancelar').val(formatNumber(total_dolar,2,',','.'))
+            $('#monto_pago').val('')
 
-          total_span = formatNumber(total_span,2,',','.');
-          $("#total span").text(total_span);
+            total_span = formatNumber(total_span,2,',','.');
+            $("#total span").text(total_span);
+          }else{
+            return [total_total,porcentaje,id_descuento_visa];
+          }
         }else{
-          return [total_total,null,id_descuento_visa];
+
+          total_span = parseFloat(total_total);
+          total_dolar  = parseFloat(total_span) / dolar_value
+
+          if(!validate){
+            $('#dolares_cancelar').val(formatNumber(total_dolar,2,',','.'))
+            $('#monto_pago').val('')
+
+            total_span = formatNumber(total_span,2,',','.');
+            $("#total span").text(total_span);
+          }else{
+            return [total_total,null,id_descuento_visa];
+          }
+
         }
+          
           
       }else if(type === "debito"){
 
@@ -439,12 +481,29 @@ $(function(){
             porcentaje = 0;
         porcentaje = (total_total * porcentaje_debito) / 100;
         total_span = parseFloat(total_total) - parseFloat(porcentaje);
-        if(!validate){
-          $('#monto_pago').val(total_span)
-          total_span = formatNumber(total_span,2,',','.');
-          $("#total span").text(total_span);
+
+        if(isDiscountActive){
+
+          if(!validate){
+            $('#monto_pago').val(total_span)
+            total_span = formatNumber(total_span,2,',','.');
+            $("#total span").text(total_span);
+          }else{
+            return [total_span,porcentaje,id_descuento_debito];
+          }
+
         }else{
-          return [total_span,porcentaje,id_descuento_debito];
+
+          total_span = parseFloat(total_total)
+
+          if(!validate){
+            $('#monto_pago').val(total_span)
+            total_span = formatNumber(total_span,2,',','.');
+            $("#total span").text(total_span);
+          }else{
+            return [total_span,null,id_descuento_debito];
+          }
+
         }
           
       }else if(type === "transferencia"){
@@ -453,13 +512,29 @@ $(function(){
               porcentaje = 0;
           porcentaje = (total_total * porcentaje_transferencia) / 100;
           total_span = parseFloat(total_total) - parseFloat(porcentaje);
+
+        if(isDiscountActive){
+
           if(!validate){
             $('#monto_pago').val(total_span)
             total_span = formatNumber(total_span,2,',','.');
             $("#total span").text(total_span);
           }else{
-            return [total_span,porcentaje,id_descuento_debito];
+            return [total_span,porcentaje,id_descuento_transferencia];
           }        
+
+        }else{
+          total_span = parseFloat(total_total)
+          
+          if(!validate){
+            $('#monto_pago').val(total_span)
+            total_span = formatNumber(total_span,2,',','.');
+            $("#total span").text(total_span);
+          }else{
+            return [total_span,null,id_descuento_transferencia];
+          }                  
+
+        }
 
       }else{
         $("#total span").text(formatNumber(total_total,2,',','.'));

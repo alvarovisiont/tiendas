@@ -36,7 +36,7 @@ class Admin_Model extends CI_Model
         $sql = "SELECT SUM(monto_pagado) as total_ventas, EXTRACT(MONTH FROM fecha_venta) as mes,
           (SELECT SUM(monto_pagado) from compras where EXTRACT(YEAR FROM fecha_compra) = $año and EXTRACT( MONTH FROM fecha_compra) = $mes) as total_compras 
           from ventas 
-          where EXTRACT(YEAR FROM fecha_venta) = $año GROUP BY mes";
+          where EXTRACT(YEAR FROM fecha_venta) = $año and status = 1 GROUP BY mes";
 
         $query = $this->db->query($sql);
        if($query->num_rows() > 0)
