@@ -29,7 +29,8 @@ class Ventas extends CI_Controller
 			$clientes = $this->Ventas_Model->traer_clientes();
 			$articulos = $this->Ventas_Model->articulos_modal();
 			$workers = $this->Usuarios_Model->traer_trabajadores();
-			$bancos = $this->Banco_Model->get();
+			$bancos = $this->Banco_Model->get_all(1);
+			$bancos_debito = $this->Banco_Model->get_all(2);
 			$config = $this->Configuracion_Finanza_Model->traer_datos();
 			$seller = $this->Usuarios_Model->getById($this->session->userdata('id'));
 			$descuentos = $this->Descuentos_Model->descuentos_activos();
@@ -40,9 +41,15 @@ class Ventas extends CI_Controller
 				$option_bancos.= "<option value='$row->id'>$row->nombre</option>";
 			}
 
+
+			$option_bancos_debito = "<option>Seleccione</option>";
+			foreach ($bancos_debito as $row) {
+				$option_bancos_debito.= "<option value='$row->id'>$row->nombre</option>";
+			}
+
 			$this->Ventas_Model->eliminar_articulos_flotantes();
 			$this->load->view("encabezado_compras");
-			$this->load->view("ventas", compact('clientes', 'articulos','workers','option_bancos','seller','config','all_discounts'));
+			$this->load->view("ventas", compact('clientes', 'articulos','workers','option_bancos','seller','config','all_discounts','option_bancos_debito'));
 			$this->load->view("footer_ventas",compact('config','descuentos'));
 		}
 		else

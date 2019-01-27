@@ -145,12 +145,12 @@
 						<label class="control-label col-md-3">Banco</label>
 						<div class="col-md-3">
 							<select name="banco_debito" class="form-control">
-								<?= $$option_bancos ?>
+								<?= $$option_bancos_debito ?>
 							</select>
 						</div>
 					</div>
 					<div class="form-group" id="section_mixto" style="display: none;">
-						<label class="control-label col-md-3">Cantidad en Dolares</label>
+						<label class="control-label col-md-3">Cantidad en Visa</label>
 						<div class="col-md-3">
 							<input type="number" name="monto_dolares" id="monto_dolares" class="form-control" value="0" step="any">
 						</div>

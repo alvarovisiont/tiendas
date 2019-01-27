@@ -120,7 +120,7 @@ body {
 
 				 ?>
 				 	<tr>
-						     <td align="center" width="50%" class="td1"> <?php echo $row->nombre_articulo." Marca: ".$row->marca; ?></td>
+						     <td align="center" width="50%" class="td1"> <?php echo $row->nombre_articulo; ?></td>
 						     <td align="center" width="10%" class="td1"><?php echo $row->cantidad; ?></td>
 						     <td align="center" width="15%" class="td1"><?php echo $pre = number_format($row->precio,2,",","."); ?></td>
 						     <td align="center" width="10%" class="td1"> &nbsp;</td>
