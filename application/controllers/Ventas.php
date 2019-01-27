@@ -142,15 +142,25 @@ class Ventas extends CI_Controller
 			$vuelto = $this->input->post('vuelto');
 			$tipo_venta = $this->input->post('metodo_pago');
 			$monto_pagado  = $this->input->post('monto_pago');
-		
+
+			if ($this->input->post('descuento_value') > 0 )
+			{
+				$montodescuento = $this->input->post('descuento_value');
+				$iddescuento = $this->input->post('id_descuento');	
+			}else
+			{
+				$montodescuento = 0;
+				$iddescuento = 0;	
+			} 
+	
 			$arreglo_metodo_pago = [
 				'monto_dolares' => $this->input->post('monto_dolares'),
 				'nro_transferencia' => $this->input->post('nro_transferencia'),
 				'banco_debito' => $this->input->post('banco_debito'),
 				'banco_transferencia' =>  $this->input->post('banco_transferencia'),
 				'dolar_value' => $config->dolar_value,
-				'id_descuento' => $this->input->post('id_descuento'),
-				'monto_descuento' => $this->input->post('descuento_value')
+				'id_descuento' => $iddescuento,
+				'monto_descuento' => $montodescuento
 			];
 
 			$id_venta = $this->Ventas_Model->grabar_compra($monto_pagado, $tipo_venta, $vuelto,$arreglo_metodo_pago);
