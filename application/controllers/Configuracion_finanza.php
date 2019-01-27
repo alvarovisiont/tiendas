@@ -8,6 +8,7 @@ class Configuracion_finanza extends CI_Controller
 	{
           
           parent:: __Construct(); 
+          $this->load->model(["Inventario_Model",'Configuracion_Finanza_Model']); 
 	}
 
 	public function index()
@@ -49,6 +50,9 @@ class Configuracion_finanza extends CI_Controller
 	{
 		$id = $this->input->post('id_modificar');
 
+		$this->load->model('Configuracion_Finanza_Model');
+		$datos = $this->Configuracion_Finanza_Model->traer_datos();
+
 		$array = [
 					'siglas' => $this->input->post('siglas_modi', TRUE),
 					'iva' => $this->input->post('iva_modi', TRUE),
@@ -59,6 +63,43 @@ class Configuracion_finanza extends CI_Controller
 		$this->load->model('Configuracion_Finanza_Model');
 
 		$this->Configuracion_Finanza_Model->modificar($array, $id);
+
+
+		if ($datos->retencion <>  $this->input->post('retencion_modi', TRUE))
+		   {
+		   	//cambiar el precio de venta de el inventario
+
+		   	echo $this->input->post('retencion_modi', TRUE)."ssss";
+
+		   	$inventario = $this->Inventario_Model->traer_datos();
+
+		   	foreach ($inventario as $row){
+
+		   		$valor_nuevo = 0;
+		   		$valor_nuevo = $row->precio_proveedor * $this->input->post('retencion_modi', TRUE);
+		   		$valor_nuevo = $valor_nuevo / 100;
+		   		$valor_nuevo = $valor_nuevo + $row->precio_proveedor;
+
+			    $dataInventario = ['precio' => $valor_nuevo];
+		
+				$id = $row->id;
+				$this->Inventario_Model->modificar($id, $dataInventario);
+
+
+		   	} 
+
+		   	$this->load->model('Auditoria_Model');
+
+				$accion_var =  "Configuración de Moneda ";
+
+				$arreglito = ["accion" => $accion_var,
+						      "motivo" => "Se cambio el porcentaje de ganancia de --> ". $datos->retencion." al monto nuevo --> ".$this->input->post('retencion_modi', TRUE),
+						     ];
+				
+				$id = $this->Auditoria_Model->grabar_conexion_all($arreglito);
+
+		 }  	
+	
 
 		$this->load->model('Auditoria_Model');
 
