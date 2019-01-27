@@ -376,4 +376,21 @@ class Ventas_Model extends CI_Model
 
    }
 
+    public function factura_auditoria($id)
+   {
+      $this->db->select('*');
+       $this->db->where('id', $id);
+      $query = $this->db->get('ventas');
+      if($query->num_rows() > 0)
+      {
+         $filas = $query->row();
+         $query->free_result();
+         return $filas;
+      }
+      else
+      {
+         return false;
+      }
+   }
+
 }

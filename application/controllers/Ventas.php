@@ -235,6 +235,22 @@ class Ventas extends CI_Controller
 			}else{
 				$this->db->trans_commit();
 				$this->session->set_flashdata('message','Proceso Completado');
+
+
+				
+
+				$audi = $this->Ventas_Model->factura_auditoria($id);
+
+
+				$this->load->model('Auditoria_Model');
+
+				$accion_var =  "Anulación de venta en el sistema ";
+
+				$arreglito = ["accion" => $accion_var,
+						      "motivo" => "Anulación de Venta Nro ".$audi->factura,
+						     ];
+				
+				$id = $this->Auditoria_Model->grabar_conexion_all($arreglito);
 			}
 
 			redirect(base_url()."Ventas_historial");	

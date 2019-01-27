@@ -15,7 +15,7 @@ class Auditoria_Model extends CI_Model
          $this->db->select('u.usuario, a.hora_conexion, a.hora_desconexion, a.motivo, a.accion, a.hora ');
          $this->db->from('auditoria a');
          $this->db->join('usuarios u', 'u.id = a.usuario');
-         $this->db->order_by("a.id","ASC");
+         $this->db->order_by("a.id","desc");
    		$query = $this->db->get();
          
    		if($query->num_rows() > 0)
