@@ -100,6 +100,9 @@
                                 <li>
                                     <a href="<?php echo base_url()?>Inventario">Inventario</a>
                                 </li>
+                                 <li>
+                                    <a href="<?php echo base_url()?>lista">Lista de Precio</a>
+                                </li>
                                 <li>
                                     <a href="<?php echo base_url()?>Reportes_inventario">Reportes detallados</a>
                                 </li>
@@ -194,6 +197,9 @@
                             <ul class="nav nav-second-level">
                                 <li>
                                     <a href="<?php echo base_url()?>Inventario">Inventario</a>
+                                </li>
+                                <li>
+                                    <a href="<?php echo base_url()?>lista">Lista de Precio</a>
                                 </li>
                                 <li>
                                     <a href="<?php echo base_url()?>Reportes_inventario">Reportes detallados</a>

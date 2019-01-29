@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 require_once __DIR__ . '/../../vendor/autoload.php';
 
-class Inventario extends CI_Controller 
+class Lista extends CI_Controller 
 {
 	function __Construct()
 	{
@@ -20,17 +20,24 @@ class Inventario extends CI_Controller
 		if($this->session->has_userdata('nivel'))
 		{	
 
-			$this->load->model('Auditoria_Model');
-			$this->Auditoria_Model->grabar_ultima_conexion();
-			
+			$grupo_aux = $this->Inventario_Model->traer_grupo_aux();
+
+			//ingresar grupos en la tabla grupos
+			foreach ($grupo_aux as $row) {
+				$this->Inventario_Model->verificargrupo($row->grupo);
+			}	
+
 			$conf  = $this->Configuracion_Finanza_Model->traer_datos();
 
-			$datos = $this->Inventario_Model->traer_datos();
+			$datos = $this->Inventario_Model->traer_datos_orden();
 			$proveedores = $this->Inventario_Model->traer_proveedores();
+			
+
 			$grupo = $this->Inventario_Model->traer_grupo();
 
+
 			$this->load->view("encabezado_inventario");
-			$this->load->view("inventario", compact('datos', 'proveedores', 'grupo','conf'));
+			$this->load->view("lista", compact('datos', 'proveedores', 'grupo','conf'));
 			$this->load->view("footer_inventario");
 		}
 		else
@@ -53,8 +60,7 @@ class Inventario extends CI_Controller
 					'iva' => 16,
 					'precio' => $this->input->post('precio', TRUE),
 					'fecha_agregado' => date('Y-m-d', strtotime($this->input->post('fecha_registro', TRUE))),
-					'observacion' => $this->input->post('observacion', TRUE),
-					'mostrar' => 0,
+					'observacion' => $this->input->post('observacion', TRUE)
 					];
 
 
@@ -109,14 +115,29 @@ class Inventario extends CI_Controller
 		redirect(base_url()."Inventario");
 	}
 
-	public function exportar_pdf()
+	public function exportar_pdf_bss()
 	{
 		$config = $this->Configuracion_Finanza_Model->traer_datos();
-		$datos = $this->Inventario_Model->exportar_inventario();
+		$datos = $this->Inventario_Model->traer_datos_orden_mostrar();
 
 		if($datos != false)
 		{
-			$html = $this->load->view('imprimir_inventario_pdf', compact('datos', 'config'), TRUE);
+			$html = $this->load->view('imprimir_inventario_pdf_bss', compact('datos', 'config'), TRUE);
+			
+			$mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8', 'format' => 'A4', [190, 236] ] );
+			$mpdf->WriteHTML($html);
+			$mpdf->Output('Inventario.pdf', "I");
+		}
+	}
+
+	public function exportar_pdf_visa()
+	{
+		$config = $this->Configuracion_Finanza_Model->traer_datos();
+		$datos = $this->Inventario_Model->traer_datos_orden_mostrar();
+
+		if($datos != false)
+		{
+			$html = $this->load->view('imprimir_inventario_pdf_visa', compact('datos', 'config'), TRUE);
 			
 			$mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8', 'format' => 'A4', [190, 236] ] );
 			$mpdf->WriteHTML($html);
@@ -138,5 +159,29 @@ class Inventario extends CI_Controller
 		$id = $this->uri->segment(3);
 		$this->Inventario_Model->eliminar($id);
 		redirect(base_url()."Inventario");
+	}
+
+	public function filtro()
+	{
+
+		$datos = $this->input->post('grupo', TRUE); 
+
+		$datos = $this->input->post('grupo', TRUE); 
+
+		$this->Inventario_Model->inicializar();
+
+
+		foreach ($datos as $row) {
+			$this->Inventario_Model->marcar($row);
+		}
+
+		redirect(base_url()."Lista");
+	}
+
+
+	public function cambio($id, $mostrar)
+	{
+		$this->Inventario_Model->mostrar($id, $mostrar);
+		redirect(base_url()."Lista");
 	}
 }

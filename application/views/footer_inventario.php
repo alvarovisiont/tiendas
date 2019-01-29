@@ -167,9 +167,21 @@
             window.open(ruta, "_blank");
         });
 
+        $("#exportar_pdf_bss").click(function(){
+            var ruta = $(this).data('ruta');
+            window.open(ruta, "_blank");
+        });
+
+        $("#exportar_pdf_visa").click(function(){
+            var ruta = $(this).data('ruta');
+            window.open(ruta, "_blank");
+        });
+
         $("#exportar_excel").click(function(){
             var ruta = $(this).data('ruta');
             window.open(ruta);
         });
+
+
     });
 </script>
