@@ -197,55 +197,64 @@ class Ventas_Model extends CI_Model
 
    private function verificar($monto, $tipo, $vuelto,$arreglo_pago)
    {
-      $codigo = "fac-".rand(10000, 100000000);
-      $this->db->where('factura', $codigo);
+      $max_id = $this->db->query("SELECT factura,prefactura from configuracion_empresa")->row();
+      
+      $max_id = $arreglo_pago['tipo_factura'] == 1 ? $max_id->factura + 1 : $max_id->prefactura  + 1;
+
+      $codigo = $arreglo_pago['tipo_factura'] == 1 ? "Fac-" : "Pre-";
+
+      $right_part_code = str_pad($max_id,8,'0',STR_PAD_LEFT);
+
+      $codigo = $codigo.$right_part_code;
+
+      $array = [ 
+         'factura' => $codigo,
+         'fecha_venta' => date('Y-m-d'),  
+         'monto_pagado' => $monto,
+         'vuelto' => $vuelto,
+         'tipo_venta' => $tipo,
+         'id_descuento' => $arreglo_pago['id_descuento'],
+         'monto_descuento' => empty($arreglo_pago['monto_descuento']) ? 0 :  $arreglo_pago['monto_descuento'],
+         'status' => 1
+      ];      
+
+      if($tipo === "mixto"){
+         $array['monto_dolares'] = $arreglo_pago['monto_dolares'];
+      }elseif($tipo === "transferencia"){
+         $array['nro_transferencia'] = $arreglo_pago['nro_transferencia'];
+         $array['id_banco'] = $arreglo_pago['banco_transferencia'];
+      }elseif($tipo === "debito"){
+         $array['id_banco'] = $arreglo_pago['banco_debito'];
+      }elseif($tipo === "visa"){
+         $array['monto_dolares'] = $monto;
+         $array['monto_pagado'] = $monto * $arreglo_pago['dolar_value'];
+      }
+            
+      $this->db->insert('ventas', $array);
+      $this->db->select_max('id');
       $query = $this->db->get('ventas');
+      $id_venta = 0;
       if($query->num_rows() > 0)
       {
+         $row = $query->row();
+         $id_venta = $row->id;
          $query->free_result();
-         $this->verificar();
+
+         $this->set_cantidad_inventario("resta",$id_venta);
+
+         $sql = "";
+
+         if($arreglo_pago['tipo_factura'] == 1){
+            $sql = "UPDATE configuracion_empresa SET factura = factura + 1";
+         }else{
+            $sql = "UPDATE configuracion_empresa SET prefactura = prefactura + 1";
+         }
+
+         $this->db->query($sql);
       }
-      else
-      {
-       
-            $array = [ 
-               'factura' => $codigo,
-               'fecha_venta' => date('Y-m-d'),  
-               'monto_pagado' => $monto,
-               'vuelto' => $vuelto,
-               'tipo_venta' => $tipo,
-               'id_descuento' => $arreglo_pago['id_descuento'],
-               'monto_descuento' => empty($arreglo_pago['monto_descuento']) ? 0 :  $arreglo_pago['monto_descuento'],
-               'status' => 1
-            ];      
 
-            if($tipo === "mixto"){
-               $array['monto_dolares'] = $arreglo_pago['monto_dolares'];
-            }elseif($tipo === "transferencia"){
-               $array['nro_transferencia'] = $arreglo_pago['nro_transferencia'];
-               $array['id_banco'] = $arreglo_pago['banco_transferencia'];
-            }elseif($tipo === "debito"){
-               $array['id_banco'] = $arreglo_pago['banco_debito'];
-            }elseif($tipo === "visa"){
-               $array['monto_dolares'] = $monto;
-               $array['monto_pagado'] = $monto * $arreglo_pago['dolar_value'];
-            }
-                  
-            $this->db->insert('ventas', $array);
-            $this->db->select_max('id');
-            $query = $this->db->get('ventas');
-            $id_venta = 0;
-            if($query->num_rows() > 0)
-            {
-               $row = $query->row();
-               $id_venta = $row->id;
-               $query->free_result();
-
-               $this->set_cantidad_inventario("resta",$id_venta);
-            }
-
-         return $id_venta;
-      }
+   return $id_venta;
+      
    }
 
    private function set_cantidad_inventario($type,$id_venta){
@@ -373,7 +382,10 @@ class Ventas_Model extends CI_Model
       //$this->db->where('id_venta',$id)->delete('ventas_detalle');
       //$this->db->where('id_venta',$id)->delete('comision');
       $this->db->where('id',$id)->update('ventas',['status' => 0]);
+   }
 
+   public function verificar_transferencia($nro,$id_banco){
+      return $this->db->where('id_banco',$id_banco)->like('nro_transferencia',$nro)->from('ventas')->count_all_results();
    }
 
     public function factura_auditoria($id)

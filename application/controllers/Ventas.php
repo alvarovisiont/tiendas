@@ -158,10 +158,22 @@ class Ventas extends CI_Controller
 				'nro_transferencia' => $this->input->post('nro_transferencia'),
 				'banco_debito' => $this->input->post('banco_debito'),
 				'banco_transferencia' =>  $this->input->post('banco_transferencia'),
+				'tipo_factura' =>  $this->input->post('tipo_factura'),
 				'dolar_value' => $config->dolar_value,
 				'id_descuento' => $iddescuento,
-				'monto_descuento' => $montodescuento
+				'monto_descuento' => $montodescuento,
+
 			];
+
+			if($tipo_venta === "transferencia"){
+				// verificar si la transferencia ya había sido hecha antes
+				$trans = $this->Ventas_Model->verificar_transferencia($arreglo_metodo_pago['nro_transferencia'],$arreglo_metodo_pago['banco_transferencia']);
+
+				if($trans > 0){
+					echo json_encode(['r' => false, 'motivo'=> "Nro de transferencia repetido"]);
+					exit();
+				}
+			}
 
 			$id_venta = $this->Ventas_Model->grabar_compra($monto_pagado, $tipo_venta, $vuelto,$arreglo_metodo_pago);
 
@@ -201,6 +213,8 @@ class Ventas extends CI_Controller
 			}
 
 			$this->Ventas_Model->agregar_clientes($array_cliente);
+
+			echo json_encode(['r' => true, 'motivo'=> ""]);
 		}
 	}
 

@@ -161,8 +161,11 @@
 							<input type="number" class="form-control" name="monto_pago" id="monto_pago" required="" step="any">
 						</div>
 						<label for="" class="control-label col-md-2">Tipo Documento</label>
-						<div class="col-md-4">
-							<input type="text" readonly="" id="factura" name="factura" value="Factura" class="form-control" style="text-align: center; font-size: 14px; font-weight: bold;">
+						<div class="col-md-2">
+							 <label class="radio-inline"><input type="radio" id="tipo_factura" name="tipo_factura" required="" value="1">Factura</label>
+						</div>
+						<div class="col-md-2">
+							 <label class="radio-inline"><input type="radio" id="tipo_factura1" name="tipo_factura" required="" value="2">Pre-Factura</label>
 						</div>
 					</div>
 					<div class="form-group" id="section_dolar_cancelar" style="display: none;">

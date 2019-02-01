@@ -23,9 +23,6 @@
 <script type="text/javascript">
 $(function(){
 
-    function format2(n) {
-        return n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
-    }
 
     var tipo_venta = false,
         total_total = 0,
@@ -460,7 +457,7 @@ $(function(){
         }else{
 
           total_span = parseFloat(total_total);
-          total_dolar  = parseFloat(total_span) / dolar_value
+          total_dolar  = parseFloat(total_span) / parseFloat(dolar_value)
 
           if(!validate){
             $('#dolares_cancelar').val(formatNumber(total_dolar,2,',','.'))
@@ -562,7 +559,10 @@ $(function(){
         })
 
         if(metodo_pago === "visa"){
-          monto_pagado = parseFloat(monto_pagado) * parseFloat(dolar_value)
+          
+          console.log(monto_pagado,dolar_value,'aquiii visaaaaa')
+
+          monto_pagado = parseFloat(monto_pagado) * dolar_value
           siglas = " $";
 
         }else if(metodo_pago === "mixto"){
@@ -579,8 +579,11 @@ $(function(){
         $('#descuento_value').val(descuento)
         $('#id_descuento').val(id_descuento)
 
+
         if(parseFloat(monto_pagado) < parseFloat(total_pagar))
         {
+          console.log(total_pagar_descuento,'aquiiii descuento')
+          
           let monto = 0
 
           if(metodo_pago === "visa"){
@@ -608,53 +611,64 @@ $(function(){
                 url: $(this).attr('action'),
                 type: "POST",
                 data: $(this).serialize(),
-                success: function()
-                {
+                dataType: "JSON",
+                success: function(dataJson){
+                  if(dataJson.r){
                     swal({
-                        title: "¡Venta Registrada con Éxito!",
-                        type: "success",
-                        showButtonCancel: false,
-                        confirmButtonClass: "btn btn-primary",
-                        confirmButtonText: "confirmar",
-                        closeOnConfirm: true
-                    },function(confirmar)
-                    {
-                        $("#form_agregar_compra").keypress(function(e){
-                            if(e.keyCode == 13)
-                            {
-                                return false;
-                            }
-                        });
-                        if(monto_pagado == total_pagar)
-                        {
-                            $("#falta_dinero").hide();
-                            $("#monto_suficiente").html('');
-                            $("#monto_suficiente").show('slow/400/fast');
-                            $("#monto_suficiente").text('total vuelto: ' + 0); 
-                            $("#grabar_compra").prop('disabled', true);  
-                        }
-                        else
-                        {
-                            $("#falta_dinero").hide();
-                            var monto = parseFloat(monto_pagado) - parseFloat(total_pagar);
+                          title: "¡Venta Registrada con Éxito!",
+                          type: "success",
+                          showButtonCancel: false,
+                          confirmButtonClass: "btn btn-primary",
+                          confirmButtonText: "confirmar",
+                          closeOnConfirm: true
+                      },function(confirmar)
+                      {
+                          $("#form_agregar_compra").keypress(function(e){
+                              if(e.keyCode == 13)
+                              {
+                                  return false;
+                              }
+                          });
+                          if(monto_pagado == total_pagar)
+                          {
+                              $("#falta_dinero").hide();
+                              $("#monto_suficiente").html('');
+                              $("#monto_suficiente").show('slow/400/fast');
+                              $("#monto_suficiente").text('total vuelto: ' + 0); 
+                              $("#grabar_compra").prop('disabled', true);  
+                          }
+                          else
+                          {
+                              $("#falta_dinero").hide();
+                              var monto = parseFloat(monto_pagado) - parseFloat(total_pagar);
 
-                            if(metodo_pago === "visa"){
-                                monto = monto / dolar_value
-                            }
+                              if(metodo_pago === "visa"){
+                                  monto = monto / dolar_value
+                              }
 
-                            monto = formatNumber(monto,2,',','.');
-                            $("#monto_suficiente").html('');
-                            $("#monto_suficiente").show('slow/400/fast');
-                            $("#monto_suficiente").html('total vuelto: ' + monto+siglas);    
-                            $("#grabar_compra").prop('disabled', true);
-                        }
+                              monto = formatNumber(monto,2,',','.');
+                              $("#monto_suficiente").html('');
+                              $("#monto_suficiente").show('slow/400/fast');
+                              $("#monto_suficiente").html('total vuelto: ' + monto+siglas);    
+                              $("#grabar_compra").prop('disabled', true);
+                          }
 
-                        $("#imprimir_factura").show('slow/400/fast');
+                          $("#imprimir_factura").show('slow/400/fast');
 
-                        $("#tabla_productos").children("tbody").children("tr").children("td").children(".eliminar_articulo").prop('disabled', true);
-                        $("#grabar_compra").prop('disabled', true);
-                        $("#boton_agregar_tabla").prop('disabled', true)
-                    });
+                          $("#tabla_productos").children("tbody").children("tr").children("td").children(".eliminar_articulo").prop('disabled', true);
+                          $("#grabar_compra").prop('disabled', true);
+                          $("#boton_agregar_tabla").prop('disabled', true)
+                      });
+                  }else{
+                    swal({
+                      title: dataJson.motivo,
+                      type: "warning",
+                      showButtonCancel: false,
+                      showButtonConfirm: false,
+                      timer: 2000
+                    })
+                  }
+                      
                 }
             });
             return false;
