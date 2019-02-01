@@ -215,7 +215,8 @@ class Ventas_Model extends CI_Model
          'tipo_venta' => $tipo,
          'id_descuento' => $arreglo_pago['id_descuento'],
          'monto_descuento' => empty($arreglo_pago['monto_descuento']) ? 0 :  $arreglo_pago['monto_descuento'],
-         'status' => 1
+         'status' => 1,
+         'tipo_factura' => $arreglo_pago['tipo_factura']
       ];      
 
       if($tipo === "mixto"){
