@@ -86,7 +86,7 @@ class Ventas_Historial_Model extends CI_Model
 
    public function detalles_compra_factura($id_venta)
    {
-       $sql = "SELECT v.id_descuento, v.monto_descuento, v.factura, v.fecha_venta, v.monto_pagado, v.tipo_venta, vd.* FROM ventas v 
+       $sql = "SELECT vd.ref, v.id_descuento, v.monto_descuento, v.factura, v.fecha_venta, v.monto_pagado, v.tipo_venta, vd.* FROM ventas v 
        INNER JOIN ventas_detalle vd on vd.id_venta = v.id 
        WHERE v.id = $id_venta";
       $query = $this->db->query($sql);

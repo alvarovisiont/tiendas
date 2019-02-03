@@ -113,6 +113,7 @@ tr:nth-child(odd) {
             $total = 0;
             $total_total = 0;
             $total_total_sub = 0;
+            $aux = "";
 
 						foreach ($datos as $row) 
 						{
@@ -124,6 +125,18 @@ tr:nth-child(odd) {
                $total = $total + $row->cantidad;
                $total_total = $row->cantidad * $row->precio;
                $total_total_sub = $total_total_sub + $total_total;
+
+               if ($aux <> $row->grupo)
+               {
+
+                echo '
+              <tr>
+                <td colspan="4" align="left">'.$row->grupo.'</td>
+              </tr>';  
+
+               }
+
+               $aux = $row->grupo;
       
 							echo '
 							<tr>

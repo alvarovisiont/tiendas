@@ -92,7 +92,7 @@ class Ventas_Model extends CI_Model
    {     
    		$this->db->where('nombre', $art);
          $this->db->where('cantidad >=', $cantidad);
-   		$this->db->select('nombre, precio, marca, iva');
+   		$this->db->select('nombre, precio, marca, iva, ref');
    		$query = $this->db->get('inventario');
          
    		if($query->num_rows() > 0)
@@ -132,6 +132,7 @@ class Ventas_Model extends CI_Model
                         $array = [  
                                  'id_venta' => $id,
                                  'nombre_articulo' => $fila->nombre,
+                                 'ref' => $fila->ref,
                                  'marca' => $fila->marca,   
                                  'precio' => $fila->precio,
                                  'cantidad' => $cantidad,
@@ -153,7 +154,8 @@ class Ventas_Model extends CI_Model
                   $array = [  
                            'id_venta' => $id,
                            'nombre_articulo' => $fila->nombre,
-                           'marca' => $fila->marca,   
+                           'marca' => $fila->marca,
+                            'ref' => $fila->ref,   
                            'precio' => $fila->precio,
                            'cantidad' => $cantidad,
                            'sub_total' => $sub_total,
@@ -173,6 +175,7 @@ class Ventas_Model extends CI_Model
                   $array = [  
                            'id_venta' => $id,
                            'nombre_articulo' => $fila->nombre,
+                            'ref' => $fila->ref,
                            'marca' => $fila->marca,   
                            'precio' => $fila->precio,
                            'cantidad' => $cantidad,
@@ -343,7 +346,7 @@ class Ventas_Model extends CI_Model
 
    public function imprimir_factura()
    {
-      $sql = "SELECT v.id_descuento, v.monto_descuento, v.factura, v.fecha_venta, v.monto_pagado, v.tipo_venta, vd.* FROM ventas v INNER JOIN ventas_detalle vd on vd.id_venta = v.id WHERE v.id = (SELECT MAX(id) from ventas)";
+      $sql = "SELECT vd.ref, v.id_descuento, v.monto_descuento, v.factura, v.fecha_venta, v.monto_pagado, v.tipo_venta, vd.* FROM ventas v INNER JOIN ventas_detalle vd on vd.id_venta = v.id WHERE v.id = (SELECT MAX(id) from ventas)";
       $query = $this->db->query($sql);
       if($query->num_rows() > 0)
       {
