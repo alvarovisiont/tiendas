@@ -19,7 +19,7 @@ class Ventas_historial extends CI_Controller
 		
 		if($this->session->has_userdata('nivel'))
 		{
-			$datos = $this->Ventas_Historial_Model->traer_datos();
+			$datos = $this->Ventas_Historial_Model->traer_datos_cliente();
 			
 			$this->load->model('Auditoria_Model');
 			$this->Auditoria_Model->grabar_ultima_conexion();

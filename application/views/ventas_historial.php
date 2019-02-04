@@ -18,9 +18,11 @@
 							<th class="text-center">Tipo Factura</th>
 							<th class="text-center">Factura</th>
 							<th class="text-center">Fecha Venta</th>
+							<th class="text-center">Cliente</th>
 							<th class="text-center">monto_pagado</th>
 							<th class="text-center">Vuelto</th>
 							<th class="text-center">Tipo de Venta</th>
+							<th class="text-center">Vendedor</th>
 							<th>Detalle Venta</th>
 							<th>Imprimir</th>
 							<th>Anular</th>
@@ -50,9 +52,11 @@
 										        <td>$tipofact</td>
 												<td>$row->factura</td>
 												<td>".date('d-m-Y' ,strtotime($row->fecha_venta))."</td>
+												<td>$row->cedula - $row->nombre</td>
 												<td>".number_format($row->monto_pagado,2,',','.')."</td>
 												<td>".number_format($row->vuelto,2,',','.')."</td>
 												<td>$row->tipo_venta</td>
+												<td>$row->login - $row->usuario</td>
 												<td>".$detalle."</td>
 												<td>".$imprimir."</td>
 												<td>".$deshacer."</td>
