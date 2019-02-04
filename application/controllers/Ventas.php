@@ -223,11 +223,12 @@ class Ventas extends CI_Controller
 	{
 		$datos = $this->Ventas_Model->buscar_cliente_factura();
 		$data = $this->Ventas_Model->imprimir_factura();
+		$config = $this->Configuracion_Finanza_Model->traer_datos();
 
 		if($datos != false && $data != false)
 		{
 
-			$html = $this->load->view('imprimir_factura_ventas', compact('datos', 'data'), TRUE);
+			$html = $this->load->view('imprimir_factura_ventas', compact('datos', 'data', 'config'), TRUE);
 			
 			$mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8', 'format' => 'A4', [190, 236] ] );
 			$mpdf->WriteHTML($html);

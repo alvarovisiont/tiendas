@@ -19,7 +19,7 @@ class Ventas_historial extends CI_Controller
 		
 		if($this->session->has_userdata('nivel'))
 		{
-			$datos = $this->Ventas_Historial_Model->traer_datos();
+			$datos = $this->Ventas_Historial_Model->traer_datos_cliente();
 			
 			$this->load->model('Auditoria_Model');
 			$this->Auditoria_Model->grabar_ultima_conexion();
@@ -72,11 +72,12 @@ class Ventas_historial extends CI_Controller
 		$id_venta = $this->uri->segment(3);
 		$datos = $this->Ventas_Historial_Model->buscar_cliente_factura($id_venta);
 		$data = $this->Ventas_Historial_Model->detalles_compra_factura($id_venta);
+		$config = $this->Configuracion_Finanza_Model->traer_datos();
 
 		if($datos != false && $data != false)
 		{
 
-			$html = $this->load->view('imprimir_factura_ventas_seleccionada', compact('datos', 'data'), TRUE);
+			$html = $this->load->view('imprimir_factura_ventas_seleccionada', compact('datos', 'data', 'config'), TRUE);
 			
 			$mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8', 'format' => 'A4', [190, 236] ] );
 			$mpdf->WriteHTML($html);

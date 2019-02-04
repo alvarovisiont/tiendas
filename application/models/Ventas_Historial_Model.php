@@ -27,6 +27,31 @@ class Ventas_Historial_Model extends CI_Model
    		}
    }
 
+
+   public function traer_datos_cliente()
+   {
+      $this->db->select('v.*, c.cedula as cedula, c.nombre as nombre, usu.nombre_apellido as usuario, usu.usuario as login');  
+      $this->db->from('ventas as v');
+      $this->db->join('clientes as c', 'c.id_venta = v.id');
+      $this->db->join('comision as comi', 'comi.id_venta = v.id');
+      $this->db->join('usuarios as usu', 'comi.id_empleado = usu.id');
+
+      $this->db->order_by("v.id","desc");
+
+       $query = $this->db->get();
+
+         if($query->num_rows() > 0)
+         {
+            $filas = $query->result();
+            $query->free_result();
+            return $filas;
+         }
+         else
+         {
+            return false;
+         }
+   }
+
    public function get_sub_total_sell($id_venta){
       $sql = "SELECT SUM(sub_total) as sub_total from ventas_detalle where id_venta = $id_venta";
       return $this->db->query($sql)->row();
@@ -86,7 +111,7 @@ class Ventas_Historial_Model extends CI_Model
 
    public function detalles_compra_factura($id_venta)
    {
-       $sql = "SELECT v.id_descuento, v.monto_descuento, v.factura, v.fecha_venta, v.monto_pagado, v.tipo_venta, vd.* FROM ventas v 
+       $sql = "SELECT vd.ref, v.id_descuento, v.monto_descuento, v.factura, v.fecha_venta, v.monto_pagado, v.tipo_venta, vd.* FROM ventas v 
        INNER JOIN ventas_detalle vd on vd.id_venta = v.id 
        WHERE v.id = $id_venta";
       $query = $this->db->query($sql);

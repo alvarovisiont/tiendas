@@ -27,13 +27,13 @@ body {
   .table3 {  
     font-family: "Arial", "Lucida Grande", 
     Sans-Serif;
-    font-size: 12px;     
+    font-size: 11px;     
     width: 100%; 
      border-collapse: collapse; } 
 
 
    .td1{
-  padding: 8px;
+  padding: 3px;
   text-align: left;
    border-bottom: 0px;
    border-top: 0px;
@@ -73,18 +73,18 @@ body {
 
    <table border="1" align="right" class="table2">
      <tr>
-     	<td align="left" width="70%">Nombre o Razón Social <br><br> <B><?php echo $datos->nombre; ?><B> </td>
-     	<td align="left"  width="30%" >C.I / R.I.F <br><br> <B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $datos->cedula; ?><B> </td>
+     	<td align="left" width="70%">Nombre o Razón Social <br> <B><?php echo $datos->nombre; ?><B> </td>
+     	<td align="left"  width="30%" >C.I / R.I.F <br> <B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $datos->cedula; ?><B> </td>
      </tr>
    </table>
   <table border="1" align="right" class="table2">
      <tr>
-     	<td align="left" width="70%">Dirección Físcal <br><br> <B><?php echo $datos->direccion; ?><B> </td>	
+     	<td align="left" width="70%">Dirección Físcal <br> <B><?php echo $datos->direccion; ?><B> </td>	
      </tr>
    </table>
   <table border="1" align="right" class="table2">
      <tr>
-     	<td align="left" width="70%">Teléfonos <br><br> <B><?php echo $datos->telefono; ?><B> </td>	
+     	<td align="left" width="70%">Teléfono <br> <B><?php echo $datos->telefono; ?><B> </td>	
      </tr>
    </table>
    <br>
@@ -93,10 +93,10 @@ body {
    <table border="1" class="table3" >
   
      <tr>
-     	<th align="center" width="50%">DESCRIPCIÓN</th>
-     	<th align="center" width="10%">CANT</th>
+      <th align="center" width="20%">CODIGO</th>
+     	<th align="center" width="45%">DESCRIPCIÓN</th>
+     	<th align="center" width="5%">CANT</th>
      	<th align="center" width="15%">PRECIO</th>
-     	<th align="center" width="10%">% Dto.</th>
      	<th align="center" width="15%">IMPORTE</th>	
      </tr>
     
@@ -120,11 +120,12 @@ body {
 
 				 ?>
 				 	<tr>
-						     <td align="center" width="50%" class="td1"> <?php echo $row->nombre_articulo; ?></td>
-						     <td align="center" width="10%" class="td1"><?php echo $row->cantidad; ?></td>
-						     <td align="center" width="15%" class="td1"><?php echo $pre = number_format($row->precio,2,",","."); ?></td>
-						     <td align="center" width="10%" class="td1"> &nbsp;</td>
-						     <td align="center" width="15%" class="td1"><?php echo $sub = number_format($row->sub_total,2,",","."); ?></td>	
+              <td align="center"  height="4" width="20%" class="td1"> <?php echo $row->ref; ?></td>
+						     <td align="center" height="4" width="45%" class="td1"> <?php echo $row->nombre_articulo; ?></td>
+						     <td align="center" height="4" width="5%" class="td1"><?php echo $row->cantidad; ?></td>
+						     <td align="center" height="4" width="15%" class="td1"><?php echo $pre = number_format($row->precio,2,",","."); ?></td>
+						     
+						     <td align="center" height="4" width="15%" class="td1"><?php echo $sub = number_format($row->sub_total,2,",","."); ?></td>	
 						   </tr>
 
 				<?php }		
@@ -135,21 +136,31 @@ body {
 	   ?>		
 
  <tr>
-     	<td align="center" width="50%" class="td1"> &nbsp;</td>
-     	<td align="center" width="10%" class="td1" > &nbsp;</td>
+    <td align="center" width="20%" class="td1" > &nbsp;</td>
+     	<td align="center" width="45%" class="td1"> &nbsp;</td>
+     	<td align="center" width="5%" class="td1" > &nbsp;</td>
      	<td align="center" width="15%"  class="td1"> &nbsp;</td>
-     	<td align="center" width="10%" class="td1"> &nbsp;</td>
+   
      	<td align="center" width="15%"  class="td1"> &nbsp;</td>	
      </tr>
 
-    
-     <tr class="tr1">
-     	<td align="center" width="50%" class="td1"> &nbsp;</td>
-     	<td align="center" width="10%" class="td1" > &nbsp;</td>
-     	<td align="center" width="15%"  class="td1"> &nbsp;</td>
-     	<td align="center" width="10%" class="td1"> &nbsp;</td>
-     	<td align="center" width="15%"  class="td1"> &nbsp;</td>	
-     </tr>			     
+ <tr>
+    <td align="center" width="20%" class="td1" > &nbsp;</td>
+      <td align="center" width="45%" class="td1"> &nbsp;</td>
+      <td align="center" width="5%" class="td1" > &nbsp;</td>
+      <td align="center" width="15%"  class="td1"> &nbsp;</td>
+   
+      <td align="center" width="15%"  class="td1"> &nbsp;</td>  
+     </tr>
+
+<tr>
+    <td align="center" width="20%" class="td1" > &nbsp;</td>
+      <td align="center" width="45%" class="td1"> &nbsp;</td>
+      <td align="center" width="5%" class="td1" > &nbsp;</td>
+      <td align="center" width="15%"  class="td1"> &nbsp;</td>
+   
+      <td align="center" width="15%"  class="td1"> &nbsp;</td>  
+     </tr>     
 
 
  </table>	
@@ -165,13 +176,31 @@ body {
      </tr>
       <tr>
      	<th align="center" width="20%"><?php echo $sub1 = number_format($sub_total,2,",","."); ?></th>
-     	 <th align="center" width="20%"><?php echo $sub2 = number_format($row->monto_descuento,2,",","."); ?></th>
-     	<th align="center" width="20%">&nbsp;</th>
-     	<th align="center" width="30%"><?php echo "Iva 16% = ".$iva1 = number_format($iva,2,",","."); ?></th>
+     	 <th align="center" width="20%"><?php 
+        $variporce = $row->monto_descuento * 100;
+        $variporce = $variporce / $sub_total;
+
+        $variporce = number_format($variporce);
+
+       echo $variporce." % ---->".$sub2 = number_format($row->monto_descuento,2,",","."); ?></th>
+     	<th align="center" width="20%"><?php 
+      echo $sub3 = number_format($sub_total - $row->monto_descuento ,2,",",".");?></th>
+     	<th align="center" width="30%"><?php 
+      echo "Iva ".$config->iva." % = ".$iva1 = number_format($iva,2,",","."); ?></th>
      	<th align="center" width="30%"><?php echo $total1 = number_format($total,2,",","."); ?> </th>	
      </tr>
     
  </table>
+  <br>
+   <table border="1" align="right" class="table2">
+     <tr>
+      <td align="center" width="70%"> </td>
+      <td align="center"  width="15%"> Forma de Pago</td>
+       <td align="center"  width="15%"> <?php echo $row->tipo_venta; ?></td>
+     </tr>
+   </table>
+
+   <br> 
 
   <div style="width: 45%; float: left; padding-right: 10%">
 				Observaciones: <br>
@@ -179,14 +208,8 @@ body {
 				
 	</div>
 
-
-
-
 </body>
 </html>
-
-
-
 
 <?php /*
 

@@ -159,7 +159,7 @@
                                 </li>
                             </ul>
                         </li>
-                        <li>
+                       <?php /* <li>
                             <a href="#"><i class="fa fa-users"></i>  Empleados<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
@@ -167,6 +167,7 @@
                                 </li>
                             </ul>
                         </li>
+                        */ ?>
                         <li>
                             <a href="#"><i class="fa fa-cog fa-spin fa-1x fa-fw" aria-hidden="true"></i>
                                         <span class="sr-only">Saving. Hang tight!</span> Configuración<span class="fa arrow"></span></a>
