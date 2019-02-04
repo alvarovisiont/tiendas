@@ -200,9 +200,9 @@ class Ventas extends CI_Controller
 				
 				$seller = $this->Usuarios_Model->getById($id_empleado);
 
-				$sub_total_neto = $this->Ventas_Historial_Model->get_sub_total_sell($id_venta);
+				$sub_total_neto = $arreglo_metodo_pago['sub_total'];
 
-				$monto_comision = ($sub_total_neto->sub_total * $seller->comision) /100;
+				$monto_comision = ($sub_total_neto * $seller->comision) /100;
 
 				$array_comision = [
 					'id_empleado' => $id_empleado,
