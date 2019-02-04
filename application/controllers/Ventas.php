@@ -162,6 +162,7 @@ class Ventas extends CI_Controller
 				'dolar_value' => $config->dolar_value,
 				'id_descuento' => $iddescuento,
 				'monto_descuento' => $montodescuento,
+				'porcentaje_descuento' => $this->input->post('porcentaje_descuento')
 
 			];
 

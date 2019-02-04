@@ -7,6 +7,7 @@
 			<input type="hidden" id="id_empleado" name="id_empleado">
 			<input type="hidden" id="id_descuento" name="id_descuento">
 			<input type="hidden" id="descuento_value" name="descuento_value">
+			<input type="hidden" id="´porcentaje_descuento" name="´porcentaje_descuento" value="0">
 
 			<br>
 				<div class="form-group">

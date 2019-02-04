@@ -26,9 +26,12 @@ $(function(){
 
     var tipo_venta = false,
         total_total = 0,
+        total_respaldo = 0 , // variable para tener el total y devolverlo a total_total en caso que el descuento no se quiera aplicar
         total_formateado = false,
         iva_limpio = 0,
+        iva_respaldo = 0,
         sub_total_limpio = 0,
+        sub_total_respaldo = 0,
         dolar_value = parseFloat(<?= $config->dolar_today ?>),
         iva_conf = parseInt(<?= $config->iva ?>),
         porcentaje_efectivo = 0,
@@ -133,6 +136,13 @@ $(function(){
         }
     });
 
+    function igualar_respaldo () {
+      // body... 
+      total_respaldo = total_total
+      iva_respaldo = iva_limpio
+      sub_total_respaldo = sub_total_limpio
+    }
+
     $("#tabla_clientes tbody").on('click', 'tr .escoger_cliente', function()
     {
         $("#cedula_cliente").val($(this).data('cedula'));
@@ -229,6 +239,7 @@ $(function(){
                             total = (parseFloat(sub_total) + parseFloat(iva));
                             total_total = total_total + total;
                             total_pagar = total_total
+
                             if(total_pagar === 0)
                             {
                                 total_pagar = parseFloat(total);
@@ -237,6 +248,10 @@ $(function(){
                             sub_total_limpio = parseFloat(sub_total) + parseFloat(sub_total_limpio)
                             iva_limpio = parseFloat(iva_limpio) + parseFloat(iva)
 
+                            igualar_respaldo()
+                            var sub_total1 = sub_total
+                            var iva1 = iva
+
                             sub_total = formatNumber(sub_total,2,',','.');
                             iva = formatNumber(iva,2,',','.');
                             let total1 = formatNumber(total,2,',','.');
@@ -244,7 +259,7 @@ $(function(){
 
 
 
-                        var filas = "<tr><td class='nombre'>"+data.nombre+"</td><td>"+data.marca+"</td><td>"+data.precio+"</td><td>"+cantidad+"</td><td>"+sub_total+"</td><td>"+iva+"</td><td class='total'>"+total1+"</td><td><button type='button' class='btn btn-danger eliminar_articulo' data-total='"+total+"'><i class='fa fa-remove'></i></button></td></tr>";
+                        var filas = "<tr><td class='nombre'>"+data.nombre+"</td><td>"+data.marca+"</td><td>"+data.precio+"</td><td>"+cantidad+"</td><td>"+sub_total+"</td><td>"+iva+"</td><td class='total'>"+total1+"</td><td><button type='button' class='btn btn-danger eliminar_articulo' data-total='"+total+"' data-sub_total='"+sub_total1+"' data-iva='"+iva1+"'><i class='fa fa-remove'></i></button></td></tr>";
 
                         $("#section_registrar").show('slow/400/fast');
                         $("#tabla_productos tbody").append(filas);
@@ -274,15 +289,21 @@ $(function(){
         }
     });
 
+
     $("#tabla_productos tbody").on('click', 'tr td .eliminar_articulo', function(e){       
 
             var total_span = total_total
             var total_restar = $(this).data('total');
             var nuevo_total_pagar = "";
+            var iva_restar = $(this).data('iva');
+            var sub_total_restar = $(this).data('sub_total');
 
             total_total = parseFloat(total_total) - parseFloat(total_restar);
-
             nuevo_total_pagar = parseFloat(total_span) - parseFloat(total_restar);
+
+            sub_total_limpio = sub_total_limpio - parseFloat(sub_total_restar)
+            iva_limpio = iva_limpio - parseFloat(iva_restar)
+
 
             var nombre_articulo_eliminar = $(this).parent().siblings('.nombre').text();
 
@@ -301,6 +322,10 @@ $(function(){
             
             if(total_filas == 0)
             {
+                total_total = 0
+                iva_limpio = 0
+                sub_total_limpio = 0
+
                 $("#section_registrar").hide('slow');
                 $("#monto_pago").val('')
                 hide_sections_payment_method(1)
@@ -308,6 +333,8 @@ $(function(){
             }
 
             $('#falta_dinero').hide()
+
+            igualar_respaldo()
     });
 
     $("#monto_pago").keyup(function(){
@@ -394,16 +421,28 @@ $(function(){
 
     function calculate_discount(type,validate){
       let isDiscountActive = $('#aplicar_descuento').is(':checked')
+
+      total_total = total_respaldo
+      sub_total_limpio = sub_total_respaldo
+      iva_limpio = iva_respaldo
       
       if(type === "efectivo"){
-        
+
         var total_span,
             porcentaje = 0;
-        porcentaje = (total_total * porcentaje_efectivo) / 100;
-        total_span = parseFloat(total_total) - parseFloat(porcentaje);
 
         if(isDiscountActive){
 
+          porcentaje = (sub_total_limpio * porcentaje_efectivo) / 100;
+          total_span = parseFloat(sub_total_limpio) - parseFloat(porcentaje);
+
+          sub_total_limpio = total_span;
+          iva_limpio = (sub_total_limpio * iva_conf) / 100
+          total_total = sub_total_limpio + iva_limpio
+
+          total_span = total_total
+
+          $('#porcentaje_descuento').val(porcentaje_efectivo)
 
           if(!validate){
             
@@ -418,6 +457,8 @@ $(function(){
         }else{
 
           total_span = total_total
+
+          $('#porcentaje_descuento').val(0)
 
           if(!validate){
             
@@ -437,13 +478,21 @@ $(function(){
         var total_span,
             porcentaje = 0,
             total_dolar = 0
-
-        porcentaje = (total_total * porcentaje_visa) / 100;
-        total_span = parseFloat(total_total) - parseFloat(porcentaje);
-        
-        total_dolar  = parseFloat(total_span) / dolar_value
         
         if(isDiscountActive){
+
+          porcentaje = (sub_total_limpio * porcentaje_visa) / 100;
+          total_span = parseFloat(sub_total_limpio) - parseFloat(porcentaje);
+
+          sub_total_limpio = total_span;
+          iva_limpio = (sub_total_limpio * iva_conf) / 100
+          total_total = sub_total_limpio + iva_limpio
+
+          total_span = total_total
+
+          total_dolar  = parseFloat(total_span) / dolar_value
+
+          $('#porcentaje_descuento').val(porcentaje_visa)
 
           if(!validate){
             $('#dolares_cancelar').val(formatNumber(total_dolar,2,',','.'))
@@ -458,6 +507,8 @@ $(function(){
 
           total_span = parseFloat(total_total);
           total_dolar  = parseFloat(total_span) / parseFloat(dolar_value)
+
+          $('#porcentaje_descuento').val(0)
 
           if(!validate){
             $('#dolares_cancelar').val(formatNumber(total_dolar,2,',','.'))
@@ -476,10 +527,19 @@ $(function(){
 
         var total_span,
             porcentaje = 0;
-        porcentaje = (total_total * porcentaje_debito) / 100;
-        total_span = parseFloat(total_total) - parseFloat(porcentaje);
 
         if(isDiscountActive){
+
+          porcentaje = (sub_total_limpio * porcentaje_debito) / 100;
+          total_span = parseFloat(sub_total_limpio) - parseFloat(porcentaje);
+
+          sub_total_limpio = total_span;
+          iva_limpio = (sub_total_limpio * iva_conf) / 100
+          total_total = sub_total_limpio + iva_limpio
+
+          total_span = total_total
+
+          $('#porcentaje_descuento').val(porcentaje_debito)
 
           if(!validate){
             $('#monto_pago').val(total_span)
@@ -492,6 +552,8 @@ $(function(){
         }else{
 
           total_span = parseFloat(total_total)
+
+          $('#porcentaje_descuento').val(0)
 
           if(!validate){
             $('#monto_pago').val(total_span)
@@ -507,10 +569,19 @@ $(function(){
         
         var total_span,
               porcentaje = 0;
-          porcentaje = (total_total * porcentaje_transferencia) / 100;
-          total_span = parseFloat(total_total) - parseFloat(porcentaje);
 
         if(isDiscountActive){
+
+          porcentaje = (sub_total_limpio * porcentaje_transferencia) / 100;
+          total_span = parseFloat(sub_total_limpio) - parseFloat(porcentaje);
+
+          sub_total_limpio = total_span;
+          iva_limpio = (sub_total_limpio * iva_conf) / 100
+          total_total = sub_total_limpio + iva_limpio
+
+          total_span = total_total
+
+          $('#porcentaje_descuento').val(porcentaje_transferencia)
 
           if(!validate){
             $('#monto_pago').val(total_span)
@@ -522,6 +593,8 @@ $(function(){
 
         }else{
           total_span = parseFloat(total_total)
+
+          $('#porcentaje_descuento').val(0)
           
           if(!validate){
             $('#monto_pago').val(total_span)
@@ -534,6 +607,7 @@ $(function(){
         }
 
       }else{
+        $('#porcentaje_descuento').val(0)
         $("#total span").text(formatNumber(total_total,2,',','.'));
         return [total_total,porcentaje,null];
       }
@@ -559,8 +633,6 @@ $(function(){
         })
 
         if(metodo_pago === "visa"){
-          
-          console.log(monto_pagado,dolar_value,'aquiii visaaaaa')
 
           monto_pagado = parseFloat(monto_pagado) * dolar_value
           siglas = " $";
@@ -582,7 +654,6 @@ $(function(){
 
         if(parseFloat(monto_pagado) < parseFloat(total_pagar))
         {
-          console.log(total_pagar_descuento,'aquiiii descuento')
           
           let monto = 0
 
