@@ -36,13 +36,13 @@ class Ventas extends CI_Controller
 			$descuentos = $this->Descuentos_Model->descuentos_activos();
 			$all_discounts = $this->Descuentos_Model->traer_descuentos();
 
-			$option_bancos = "<option>Seleccione</option>";
+			$option_bancos = "<option value=''>Seleccione</option>";
 			foreach ($bancos as $row) {
 				$option_bancos.= "<option value='$row->id'>$row->nombre</option>";
 			}
 
 
-			$option_bancos_debito = "<option>Seleccione</option>";
+			$option_bancos_debito = "<option value=''>Seleccione</option>";
 			foreach ($bancos_debito as $row) {
 				$option_bancos_debito.= "<option value='$row->id'>$row->nombre</option>";
 			}
@@ -162,7 +162,9 @@ class Ventas extends CI_Controller
 				'dolar_value' => $config->dolar_value,
 				'id_descuento' => $iddescuento,
 				'monto_descuento' => $montodescuento,
-				'porcentaje_descuento' => $this->input->post('porcentaje_descuento')
+				'porcentaje_descuento' => $this->input->post('porcentaje_descuento'),
+				'sub_total' => $this->input->post('total_subtotal'),
+				'iva' => $this->input->post('total_iva'),
 
 			];
 

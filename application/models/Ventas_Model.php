@@ -220,7 +220,9 @@ class Ventas_Model extends CI_Model
          'monto_descuento' => empty($arreglo_pago['monto_descuento']) ? 0 :  $arreglo_pago['monto_descuento'],
          'status' => 1,
          'tipo_factura' => $arreglo_pago['tipo_factura'],
-         'porcentaje_descuento' => $arreglo_pago['porcentaje_descuento']
+         'porcentaje_descuento' => $arreglo_pago['porcentaje_descuento'],
+         'subtotal' => $arreglo_pago['sub_total'],
+         'iva' => $arreglo_pago['iva']
       ];      
 
       if($tipo === "mixto"){

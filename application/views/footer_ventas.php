@@ -392,30 +392,50 @@ $(function(){
 
     function hide_sections_payment_method(type){
       type = parseInt(type)
+      
+      $('#monto_dolares').prop('required',false)
+      $('#banco_debito').prop('required',false)
+      $('#nro_transferencia').prop('required',false)
+      $('#banco_transferencia').prop('required',false)
+
       if(type === 1){
+        
         $('#section_trans').hide()
         $('#section_debito').hide()
         $('#section_mixto').hide()
         $('#section_dolar_cancelar').hide()
+
       }else if(type === 2){
+        
         $('#section_trans').hide()
         $('#section_mixto').hide()
         $('#section_dolar_cancelar').hide()
         $("#grabar_compra").prop('disabled', false);
+        $('#banco_debito').prop('required',true)
+
       }else if(type === 3){
+        
         $('#section_debito').hide()
         $('#section_trans').hide()
         $('#section_dolar_cancelar').hide()
+        $('#monto_dolares').prop('required',true)
+
       }else if(type === 4){
+        
         $('#section_debito').hide()
         $('#section_mixto').hide()
         $('#section_dolar_cancelar').hide()
         $("#grabar_compra").prop('disabled', false);
+        $('#banco_transferencia').prop('required',true)
+        $('#nro_transferencia').prop('required',true)
+
       }else if(type === 5){
+        
         $('#section_trans').hide()
         $('#section_debito').hide()
         $('#section_mixto').hide()
         $('#section_dolar_cancelar').show()
+
       }
     }
 
@@ -678,6 +698,9 @@ $(function(){
         {
             var vuelto = parseFloat(monto_pagado) - parseFloat(total_pagar);
             $("#vuelto").val(vuelto);
+            $("#total_subtotal").val(sub_total_limpio)
+            $("#total_iva").val(iva_limpio)
+
             $.ajax({
                 url: $(this).attr('action'),
                 type: "POST",
