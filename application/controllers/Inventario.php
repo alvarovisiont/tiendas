@@ -126,10 +126,11 @@ class Inventario extends CI_Controller
 
 	public function exportar_excel()
 	{
+		$config = $this->Configuracion_Finanza_Model->traer_datos();	
 		$datos = $this->Inventario_Model->exportar_inventario();
 		if($datos != false)
 		{
-			$this->load->view('imprimir_inventario_excel', compact('datos'));
+			$this->load->view('imprimir_inventario_excel', compact('datos','config'));
 		}
 	}
 
