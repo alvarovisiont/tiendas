@@ -36,13 +36,13 @@ class Ventas extends CI_Controller
 			$descuentos = $this->Descuentos_Model->descuentos_activos();
 			$all_discounts = $this->Descuentos_Model->traer_descuentos();
 
-			$option_bancos = "<option>Seleccione</option>";
+			$option_bancos = "<option value=''>Seleccione</option>";
 			foreach ($bancos as $row) {
 				$option_bancos.= "<option value='$row->id'>$row->nombre</option>";
 			}
 
 
-			$option_bancos_debito = "<option>Seleccione</option>";
+			$option_bancos_debito = "<option value=''>Seleccione</option>";
 			foreach ($bancos_debito as $row) {
 				$option_bancos_debito.= "<option value='$row->id'>$row->nombre</option>";
 			}
@@ -162,6 +162,9 @@ class Ventas extends CI_Controller
 				'dolar_value' => $config->dolar_value,
 				'id_descuento' => $iddescuento,
 				'monto_descuento' => $montodescuento,
+				'porcentaje_descuento' => $this->input->post('porcentaje_descuento'),
+				'sub_total' => $this->input->post('total_subtotal'),
+				'iva' => $this->input->post('total_iva'),
 
 			];
 
@@ -197,9 +200,9 @@ class Ventas extends CI_Controller
 				
 				$seller = $this->Usuarios_Model->getById($id_empleado);
 
-				$sub_total_neto = $this->Ventas_Historial_Model->get_sub_total_sell($id_venta);
+				$sub_total_neto = $arreglo_metodo_pago['sub_total'];
 
-				$monto_comision = ($sub_total_neto->sub_total * $seller->comision) /100;
+				$monto_comision = ($sub_total_neto * $seller->comision) /100;
 
 				$array_comision = [
 					'id_empleado' => $id_empleado,

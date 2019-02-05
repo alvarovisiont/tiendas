@@ -7,6 +7,9 @@
 			<input type="hidden" id="id_empleado" name="id_empleado">
 			<input type="hidden" id="id_descuento" name="id_descuento">
 			<input type="hidden" id="descuento_value" name="descuento_value">
+			<input type="hidden" id="porcentaje_descuento" name="porcentaje_descuento" value="0">
+			<input type="hidden" id="total_subtotal" name="total_subtotal" value="0">
+			<input type="hidden" id="total_iva" name="total_iva" value="0">
 
 			<br>
 				<div class="form-group">
@@ -136,7 +139,7 @@
 						</div>
 						<label class="control-label col-md-2">Banco</label>
 						<div class="col-md-4">
-							<select name="banco_transferencia" class="form-control">
+							<select name="banco_transferencia" id="banco_transferencia" class="form-control">
 								<?= $$option_bancos ?>
 							</select>
 						</div>
@@ -144,7 +147,7 @@
 					<div class="form-group" id="section_debito" style="display: none;">
 						<label class="control-label col-md-3">Banco</label>
 						<div class="col-md-3">
-							<select name="banco_debito" class="form-control">
+							<select name="banco_debito" id="banco_debito" class="form-control">
 								<?= $$option_bancos_debito ?>
 							</select>
 						</div>
