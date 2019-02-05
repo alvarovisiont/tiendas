@@ -46,7 +46,7 @@ td {    padding: 8px; border-bottom: 1px solid black;
     			<td colspan="8" style="font-size: 15px"><CENTER><strong style="text-decoration: underline;">Inventario de la empresa</strong></CENTER></td>
   			</tr>
 				<tr>
-					<th style="text-align: center;">Proveedor</th>
+					<th style="text-align: center;">Referencia</th>
 					<th style="text-align: center;">Nombre</th>
 					<th style="text-align: center;">Marca</th>
 					<th style="text-align: center;">Grupo</th>
@@ -64,7 +64,7 @@ td {    padding: 8px; border-bottom: 1px solid black;
 						{
 							echo '
 							<tr>
-								<td>'.$row->proveedor.'</td>
+								<td>'.$row->ref.'</td>
 								<td>'.$row->nombre.'</td>
 								<td>'.$row->marca.'</td>
 								<td>'.$row->grupo.'</td>

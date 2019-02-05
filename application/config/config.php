@@ -24,7 +24,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |
 */
 
-/*$config['base_url'] = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") ? "https" : "http");
+$config['base_url'] = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") ? "https" : "http");
 
 $config['base_url'] .= "://".$_SERVER['HTTP_HOST'];
 if (!isset($_SERVER['ORIG_SCRIPT_NAME']))
@@ -34,9 +34,9 @@ if (!isset($_SERVER['ORIG_SCRIPT_NAME']))
 else
 {
   $config['base_url'] .= str_replace(basename($_SERVER['ORIG_SCRIPT_NAME']),"",$_SERVER['ORIG_SCRIPT_NAME']);
-}*/
+}
 
-$config['base_url'] = 'https://web21facturacion.herokuapp.com/'; 
+//$config['base_url'] = 'https://web21facturacion.herokuapp.com/'; 
 
 /*
 |--------------------------------------------------------------------------

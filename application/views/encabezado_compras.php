@@ -84,7 +84,7 @@
             </ul>
             <!-- /.navbar-top-links -->
 
-            <div class="navbar-default sidebar" role="navigation">
+              <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
                         <li>
@@ -194,7 +194,7 @@
                         <li><a href="<?php echo base_url().'Auditoria'; ?>"><i class='fa fa-book'></i>&nbsp;Auditoria del Sistema</a></li>
                 <?php
                     }
-                    elseif($this->session->userdata('nivel') == 2)
+                    elseif($this->session->userdata('nivel') == 3)
                     {
                     ?>
                         <li>
@@ -234,6 +234,9 @@
                         <li>
                             <a href="#"><i class="fa fa-shopping-cart"></i>  Ventas<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
+                                 <li>
+                                    <a href="<?php echo base_url()?>Ventas">Realizar Venta</a>
+                                </li>
                                 <li>
                                     <a href="<?php echo base_url()?>Ventas_historial">Historial de Ventas</a>
                                 </li>
@@ -243,35 +246,8 @@
                             </ul>
                         </li>
                 <?php
-                    }
-                    else
-                    {
-                    ?>
-                        <li>
-                            <a href="#"><i class="fa fa-table fa-fw"></i> Caja<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="<?php echo base_url()?>Caja">Movimientos de la Caja</a>
-                                </li>
-                                <li>
-                                    <a href="<?php echo base_url()?>Clientes">Clientes</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-shopping-cart"></i>  Ventas<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="<?php echo base_url()?>Ventas">Realizar Venta</a>
-                                </li>
-                                <li>
-                                    <a href="<?php echo base_url()?>Ventas_historial">Historial de Ventas</a>
-                                </li>
-                            </ul>
-                        </li>
-                <?php
-                    }
-                    ?>
+                    } ?>
+                    
                     </ul>
                 </div>
                 <!-- /.sidebar-collapse -->

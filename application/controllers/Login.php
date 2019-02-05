@@ -99,6 +99,10 @@ class Login extends CI_Controller
 					redirect(base_url()."Admin");	
 				break;
 
+				case 3:
+					redirect(base_url()."Admin");	
+				break;
+
 			}
 		}
 	}

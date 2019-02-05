@@ -15,7 +15,7 @@ class Inventario extends CI_Controller
 
 	public function index()
 	{
-		$this->session->set_userdata('nivel', 1);
+		//$this->session->set_userdata('nivel', 1);
 		
 		if($this->session->has_userdata('nivel'))
 		{	
@@ -27,7 +27,7 @@ class Inventario extends CI_Controller
 
 			$datos = $this->Inventario_Model->traer_datos();
 			$proveedores = $this->Inventario_Model->traer_proveedores();
-			$grupo = $this->Inventario_Model->traer_grupo();
+			$grupo = $this->Inventario_Model->traer_grupo_aux();
 
 			$this->load->view("encabezado_inventario");
 			$this->load->view("inventario", compact('datos', 'proveedores', 'grupo','conf'));
