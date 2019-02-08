@@ -140,4 +140,56 @@ class Inventario extends CI_Controller
 		$this->Inventario_Model->eliminar($id);
 		redirect(base_url()."Inventario");
 	}
+
+
+
+	public function cargar()
+	{
+		
+		$datos = $this->Inventario_Model->cargar();
+
+
+		foreach ($datos as $row) 
+		{
+
+
+			$data = ['nombre' => strtoupper($row->descripcion),
+					'ref' => $row->codigo,
+					'id_proveedor' => 1,
+					'marca' => $row->precio,
+					'grupo' => $row->fabricante,
+					'cantidad' => 0,
+					'precio_proveedor' => 0,
+					'iva' => 16,
+					'precio' => 0,
+					'fecha_agregado' => date('Y-m-d', strtotime($this->input->post('fecha_registro', TRUE))),
+					'observacion' => "",
+					'mostrar' => 0,
+					];
+
+
+			$variableref = $this->Inventario_Model->verificarRef($row->codigo);
+
+			if ($variableref == 0)
+			{ 	
+
+			$this->Inventario_Model->agregar($data);
+			echo 'Agregado con éxito';
+			echo "<br>";
+			 
+
+			}else
+			{
+				echo '**********************************************************'.$row->codigo;
+			echo "<br>";
+			}
+
+		}	
+
+
+
+	}
+
+
+
 }

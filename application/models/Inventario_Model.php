@@ -74,6 +74,7 @@ class Inventario_Model extends CI_Model
          $this->db->select('inventario.*, proveedores.nombre as proveedor_nombre');
          $this->db->from('inventario');
          $this->db->join('proveedores', 'proveedores.id = inventario.id_proveedor');
+          $this->db->order_by("inventario.nombre","asc");
    		$query = $this->db->get();
    		if($query->num_rows() > 0)
    		{
@@ -242,5 +243,26 @@ class Inventario_Model extends CI_Model
             ];
         $this->db->where('id', $id);     
        $this->db->update('inventario', $datos);
-   }    
+   }   
+
+
+
+   public function cargar()
+    {
+           //con esta línea cargamos la base de datos prueba
+           //y la asignamos a $db_prueba
+ 
+    $db_prueba = $this->load->database('prueba', TRUE);
+           //y de esta forma accedemos, no con $this->db->get,
+           //sino con $db_prueba->get que contiene la conexión
+           //a la base de datos prueba
+                $db_prueba->where('id >', 1590);
+    $usuarios = $db_prueba->get('productos');
+
+    foreach($usuarios->result() as $fila)
+    {
+    $data[] = $fila;
+    }
+    return $data;
+    } 
 }
