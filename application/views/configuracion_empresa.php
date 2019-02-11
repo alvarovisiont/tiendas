@@ -326,7 +326,7 @@
 		        <h3 class="text-center">Modicar Datos&nbsp;<i class="fa fa-building"></i>&nbsp;&nbsp;<i class="fa fa-pencil"></i></h3>
 		      </div>
 		      <form action="<?php echo base_url().'Configuracion/modificar_empresa';?>" class="form-horizontal" method="POST" id="form_agregar" enctype="multipart/form-data">
-		      <input type="hidden" id="id_modificar_empresa" name="id_modificar_empresa">ç
+		      <input type="hidden" id="id_modificar_empresa" name="id_modificar_empresa">
 		      <input type="hidden" id="nombre_logo" name="nombre_logo">
 		      	<div class="modal-body">
 
@@ -335,16 +335,20 @@
 		      			<div class="col-md-8">
 		      				<div class="input-group">
 		      					<span class="input-group-addon"><i class="fa fa-picture" aria-hidden="true"></i></span>
+		      					<input type="text" required="" name="factura_empresa_modi" id="factura_empresa_modi" class="form-control">
 		      					
 		      				</div>
 		      			</div>
 		      		</div>
 
 		      		<div class="form-group">
-		      			<label for="" class="control-label col-md-3">Factura</label>
+		      			<label for="" class="control-label col-md-3">Prefactura</label>
 		      			<div class="col-md-8">
 		      				<div class="input-group">
 		      					<span class="input-group-addon"><i class="fa fa-picture" aria-hidden="true"></i></span>
+
+		      					<input type="text" required="" name="prefactura_empresa_modi" id="prefactura_empresa_modi" class="form-control">
+		      					
 		      					
 		      				</div>
 		      			</div>
