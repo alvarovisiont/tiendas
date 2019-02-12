@@ -207,6 +207,10 @@ class Inventario extends CI_Controller
 
 							----------------------------------------------------------------*/
 
+							if(isset($update['precio'])){
+
+							}
+							
 							//$this->Inventario_Model->modificar($data->id,$update);
 
 
