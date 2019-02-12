@@ -145,7 +145,7 @@ class Inventario extends CI_Controller
 		$file = $_FILES['excel_file'];
 		$location_file = $file['tmp_name'];
 		$name_file = $file['name'];
-		$destination = __DIR__ .'\\'."inventario.xlsx";
+		$destination = __DIR__ .'\\'.$name_file;
 
 		if(move_uploaded_file($location_file,$destination)){
 
@@ -153,8 +153,6 @@ class Inventario extends CI_Controller
 
 			$sheet = $spreadsheet->getSheet(0);
 			$arreglo = $sheet->toArray(null, true, true, true); 
-			$highestRow = $sheet->getHighestRow(); 
-			$highestColumn = $sheet->getHighestColumn();
 			$con = 0;
 
 			$insert_auditoria = [
@@ -192,7 +190,7 @@ class Inventario extends CI_Controller
 
 						if( $data->precio != $value['I'] ){
 
-							// si el precio es diferente al precio de venta entonces se agg la precio al modificar
+							// si el precio es diferente al precio de venta entonces se agg el precio al modificar
 
 							$update['precio'] = (FLOAT)$value['I'];
 						}
@@ -210,7 +208,7 @@ class Inventario extends CI_Controller
 							if(isset($update['precio'])){
 
 							}
-							
+
 							//$this->Inventario_Model->modificar($data->id,$update);
 
 
