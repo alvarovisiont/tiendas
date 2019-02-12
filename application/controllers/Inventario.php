@@ -3,6 +3,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 require_once __DIR__ . '/../../vendor/autoload.php';
 
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+
 class Inventario extends CI_Controller 
 {
 	function __Construct()
@@ -132,6 +135,43 @@ class Inventario extends CI_Controller
 		{
 			$this->load->view('imprimir_inventario_excel', compact('datos','config'));
 		}
+	}
+
+	public function modificar_excel(){
+		$file = $_FILES['excel_file'];
+		$location_file = $file['tmp_name'];
+		$name_file = $file['name'];
+		$destination = __DIR__ .'\\'."inventario.xlsx";
+
+		if(move_uploaded_file($location_file,$destination)){
+
+			$spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($destination);
+
+			$sheet = $spreadsheet->getSheet(0);
+			$arreglo = $sheet->toArray(null, true, true, true); 
+			$highestRow = $sheet->getHighestRow(); 
+			$highestColumn = $sheet->getHighestColumn();
+			
+
+			$con = 0;
+			foreach ($arreglo as $value) {
+				# code.
+				if($con > 4){
+					
+						print_r($value);
+						break;
+						exit();
+				}
+
+				$con++;
+			}
+
+			//unlink($destination);
+		}else{
+			echo "Error en la sibuda";	
+		}
+
+
 	}
 
 	public function eliminar()

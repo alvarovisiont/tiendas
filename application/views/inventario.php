@@ -51,7 +51,15 @@
 					<button type="button" class="btn btn-danger btn-md btn-block btn-outline" data-ruta="<?php echo base_url().'Inventario/exportar_pdf';?>" id="exportar_pdf">Exportar a PDF&nbsp;<i class="fa fa-file-pdf-o"></i></button>
 				</div>
 				<div class="col-md-3">
-					<button class="btn btn-success btn-md btn-block btn-outline" data-ruta="<?php echo base_url().'Inventario/exportar_excel';?>" id="exportar_excel">Exportar a EXCEL&nbsp;<i class="fa fa-file-excel-o"></i></button>
+					<div class="btn-group">
+					  <button type="button" class="btn btn-success btn-block btn-outline dropdown-toggle"
+					          data-toggle="dropdown">Acciones EXCEL&nbsp;<i class="fa fa-file-excel-o"></i> <span class="caret"></span>
+					  </button>
+					  <ul class="dropdown-menu" role="menu">
+					  	<li><a href="javascript:void(0)" data-ruta="<?php echo base_url().'Inventario/exportar_excel';?>" id="exportar_excel">Exportar Inventario</a></li>
+					  	<li><a href="#modal_modificar_inventario" data-toggle="modal">Modificar Inventario</a></li>
+					  </ul>
+					 </div>
 				</div>
 			</div>
 			<br><br>
@@ -549,6 +557,30 @@
 	      <div class="modal-footer">
 	      	<button class="btn btn-success btn-md" type="button" id="boton_agregar_grupo">Agregar&nbsp;<i class="fa fa-thumbs-up"></i></button>
 	      </div>
+    	</div>
+	</div>
+</div>
+
+<div class="modal fade" id="modal_modificar_inventario" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  	<div class="modal-dialog" role="document">
+    	<div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	        <h3 class="text-center">Modificar Inventario&nbsp;<i class="fa fa-file"></i></h3>
+	      </div>
+	      <form action="<?php echo base_url().'Inventario/modificar_excel'; ?>" method="POST" id="form_modi_excel" class="form-horizontal" enctype="multipart/form-data">
+		      <div class="modal-body">
+		      	<h3 class="text-center">Debe escoger el excel del inventario que descargo</h3>
+		      	<br>
+		      	<input type="file" name="excel_file" id="excel_file" style="display: none;">
+		      	<button type="button" class="btn btn-info btn-block" id="pick_excel">Escoger Excel Inventario</button>
+		      </div>
+		      <div class="modal-footer">
+		      	<button class="btn btn-success btn-md" type="submit">Modificar&nbsp;<i class="fa fa-thumbs-up"></i></button>
+		      </div>
+		    </form>
     	</div>
 	</div>
 </div>
