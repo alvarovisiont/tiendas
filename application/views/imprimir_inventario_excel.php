@@ -49,8 +49,9 @@ td {    padding: 8px; border-bottom: 1px solid black;
 					<th style="text-align: center;">Referencia</th>
 					<th style="text-align: center;">Descripción del Artícul</th>
 					<th style="text-align: center;">Existencia</th>
-
 					<th style="text-align: center;">Físico</th>
+					<th style="text-align: center;">Costo Proveedor.</th>
+					<th style="text-align: center;">Costo Nuevo.</th>
 					<th style="text-align: center;">Costo Unitario.</th>
 					<th style="text-align: center;">Costo Subtotal</th>
 					<th style="text-align: center;">Precio Venta</th>
@@ -70,6 +71,7 @@ td {    padding: 8px; border-bottom: 1px solid black;
 			               $costo_total = 0;
 			          
 			               $variableprecio = number_format($row->precio * $config->dolar_value,2,',','.');
+
 			               $variablecosto = number_format($row->cantidad * $row->precio,2,',','.');
 			               $total = $total + $row->cantidad;
 			               $total_total = $row->cantidad * $row->precio;
@@ -80,6 +82,8 @@ td {    padding: 8px; border-bottom: 1px solid black;
 								<td>'.$row->ref.'</td>
 								<td>'.$row->nombre.'</td>
 								<td>'.$row->cantidad.'</td>
+								<td></td>
+								<td>'.$row->precio_proveedor.'</td>
 								<td></td>
 								<td>'.$row->precio.'</td>
 								<td>'.$variablecosto.'</td>

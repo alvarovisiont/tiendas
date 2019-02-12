@@ -100,6 +100,8 @@ class Configuracion extends CI_Controller
 					'email' => $this->input->post('email_empresa_modi', TRUE),
 					'rif' => $this->input->post('rif_empresa_modi', TRUE),
 					'fax' => $this->input->post('fax_empresa_modi', TRUE),
+					'factura' => $this->input->post('factura_empresa_modi', TRUE),
+					'prefactura' => $this->input->post('prefactura_empresa_modi', TRUE),
 					'logo' => $logo];
 
 		$this->Configuracion_Model->modificar_empresa($id,$array);
