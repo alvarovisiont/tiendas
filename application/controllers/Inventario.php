@@ -12,8 +12,11 @@ class Inventario extends CI_Controller
 	{
           
           parent:: __Construct();
-         
-         $this->load->model(["Inventario_Model",'Configuracion_Finanza_Model']); 
+					
+				 $arreglo_model = ["Inventario_Model",'Configuracion_Finanza_Model'];
+				 $arreglo_model2 = ['Auditoria_Inventario_Model'];
+
+         $this->load->model(array_merge($arreglo_model,$arreglo_model2)); 
 	}
 
 	public function index()
@@ -138,6 +141,7 @@ class Inventario extends CI_Controller
 	}
 
 	public function modificar_excel(){
+
 		$file = $_FILES['excel_file'];
 		$location_file = $file['tmp_name'];
 		$name_file = $file['name'];
@@ -151,24 +155,91 @@ class Inventario extends CI_Controller
 			$arreglo = $sheet->toArray(null, true, true, true); 
 			$highestRow = $sheet->getHighestRow(); 
 			$highestColumn = $sheet->getHighestColumn();
-			
-
 			$con = 0;
+
+			$insert_auditoria = [
+				'id_usuario' => $this->session->userdata('id'),
+				'created_at' => date('Y-m-d H:i:s')
+			];
+
+			$id_auditoria_inventario = $this->Auditoria_Inventario_Model->store_auditoria_invetario($insert_auditoria);
+
 			foreach ($arreglo as $value) {
 				# code.
 				if($con > 4){
 					
-						print_r($value);
-						break;
-						exit();
-				}
+					/*--------------------------------------------------------------- 
+
+					  Se empieza a leer desde el primer producto y se busca sus
+					  datos por el número de ref y nombre del artículo
+
+					----------------------------------------------------------------*/
+
+
+					$update = [];
+
+					$where = "i.ref = '".trim($value['A'])."' and i.nombre like '".trim($value['B'])."'";
+
+					$data = $this->Inventario_Model->exportar_inventario_filtrado($where)[0];
+
+					if($data){
+						if( $data->cantidad != $value['C'] ){
+							
+							// si la cantidad es diferente entonces se agg la cantidad al modificar
+
+							$update['cantidad'] = (INT)$value['C'];
+						}
+
+						if( $data->precio != $value['I'] ){
+
+							// si el precio es diferente al precio de venta entonces se agg la precio al modificar
+
+							$update['precio'] = (FLOAT)$value['I'];
+						}
+						
+						if(count($update) > 0){
+
+							/*--------------------------------------------------------------- 
+
+								Mira mi amor aquí antes del modificar vas a hacer tus calculos
+								con el porcentaje de yo no se que con que y le agg 
+								el key => valor en el arreglo update 
+
+							----------------------------------------------------------------*/
+
+							//$this->Inventario_Model->modificar($data->id,$update);
+
+
+							/*--------------------------------------------------------------- 
+
+												Insert del detalle de la auditoria inventario
+
+							----------------------------------------------------------------*/
+
+							$insert_auditoria_detalle = [
+								'id_auditoria_inventario' => $id_auditoria_inventario,
+								'precio' => isset($update['precio']) ? $update['precio'] : null,
+								'cantidad' => isset($update['cantidad']) ? $update['cantidad'] : null,
+								'created_at' => date('Y-m-d H:i:s'),
+								'id_inventario' => $data->id
+							];
+
+							$this->Auditoria_Inventario_Model->store_auditoria_invetario_detalle($insert_auditoria_detalle);
+						
+						} // fin si se va a modificar
+
+					} // fin si data del inventario se encontro
+						
+				} // fin if celda 4
 
 				$con++;
-			}
 
-			//unlink($destination);
+			} // fin foreach
+
+			unlink($destination);
+			redirect(base_url().'Inventario','refresh');
 		}else{
-			echo "Error en la sibuda";	
+			redirect(base_url().'Inventario','refresh');
 		}
 
 

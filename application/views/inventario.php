@@ -568,16 +568,25 @@
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	          <span aria-hidden="true">&times;</span>
 	        </button>
-	        <h3 class="text-center">Modificar Inventario&nbsp;<i class="fa fa-file"></i></h3>
+	        <h2 class="text-center">Modificar Inventario&nbsp;<i class="fa fa-file"></i></h2>
 	      </div>
 	      <form action="<?php echo base_url().'Inventario/modificar_excel'; ?>" method="POST" id="form_modi_excel" class="form-horizontal" enctype="multipart/form-data">
 		      <div class="modal-body">
-		      	<h3 class="text-center">Debe escoger el excel del inventario que descargo</h3>
+		      	<h3 class="text-center">Debe escoger el excel del inventario que descargo previamente modificado a formato excel</h3>
 		      	<br>
-		      	<input type="file" name="excel_file" id="excel_file" style="display: none;">
-		      	<button type="button" class="btn btn-info btn-block" id="pick_excel">Escoger Excel Inventario</button>
+		      	<div class="text-center">
+		      		<a href="<?= base_url().'img/formato_excel.png' ?>" target="_blank">
+		      			<img src="<?= base_url().'img/formato_excel.png' ?>" style="width: 250px;">
+		      		</a>
+		      		<p>Referencia</p>
+		      	</div>
+		      	<br>
+		      	<input type="file" name="excel_file" id="excel_file" style="display: none;" accept=".xls,.xlsx">
+		      	<button type="button" class="btn btn-info btn-block" id="pick_excel">Escoger Archivo</button>
+		      	<br>
 		      </div>
 		      <div class="modal-footer">
+		      	<button class="btn btn-default btn-md" data-dismiss="modal">Cancelar</button>
 		      	<button class="btn btn-success btn-md" type="submit">Modificar&nbsp;<i class="fa fa-thumbs-up"></i></button>
 		      </div>
 		    </form>

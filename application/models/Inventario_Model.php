@@ -209,7 +209,7 @@ class Inventario_Model extends CI_Model
 
    public function exportar_inventario_filtrado($where)
    {
-      $this->db->select('i.ref, i.nombre, i.marca, i.grupo, i.cantidad, i.precio, i.precio_proveedor, i.fecha_agregado, p.nombre as proveedor');
+      $this->db->select('i.id,i.ref, i.nombre, i.marca, i.grupo, i.cantidad, i.precio, i.precio_proveedor, i.fecha_agregado, p.nombre as proveedor');
       $this->db->from('inventario i');
       $this->db->join('proveedores p' , 'p.id = i.id_proveedor');
       $this->db->where($where);
@@ -248,7 +248,7 @@ class Inventario_Model extends CI_Model
 
 
    public function cargar()
-    {
+  {
            //con esta línea cargamos la base de datos prueba
            //y la asignamos a $db_prueba
  
@@ -264,5 +264,5 @@ class Inventario_Model extends CI_Model
     $data[] = $fila;
     }
     return $data;
-    } 
+  } 
 }
