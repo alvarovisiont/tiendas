@@ -142,6 +142,9 @@ class Inventario extends CI_Controller
 
 	public function modificar_excel(){
 
+		$conf  = $this->Configuracion_Finanza_Model->traer_datos();
+
+
 		$file = $_FILES['excel_file'];
 		$location_file = $file['tmp_name'];
 		$name_file = $file['name'];
@@ -196,7 +199,7 @@ class Inventario extends CI_Controller
 
 							$vari = 0;
 
-							$vari = (FLOAT)$value['E'] * 30;
+							$vari = (FLOAT)$value['E'] * $conf->retencion;
 
 							$vari = $vari / 100;
 
