@@ -142,9 +142,6 @@ class Inventario extends CI_Controller
 
 	public function modificar_excel(){
 
-		$conf  = $this->Configuracion_Finanza_Model->traer_datos();
-
-
 		$file = $_FILES['excel_file'];
 		$location_file = $file['tmp_name'];
 		$name_file = $file['name'];
@@ -163,7 +160,10 @@ class Inventario extends CI_Controller
 				'created_at' => date('Y-m-d H:i:s')
 			];
 
-			$id_auditoria_inventario = $this->Auditoria_Inventario_Model->store_auditoria_invetario($insert_auditoria);
+			$id_auditoria_inventario = $this->Auditoria_Inventario_Model->store_auditoria_invetario($insert_auditoria
+
+			$conf  = $this->Configuracion_Finanza_Model->traer_datos();	
+
 
 			foreach ($arreglo as $value) {
 				# code.
