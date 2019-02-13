@@ -162,7 +162,7 @@ class Inventario extends CI_Controller
 
 			$id_auditoria_inventario = $this->Auditoria_Inventario_Model->store_auditoria_invetario($insert_auditoria
 
-			$conf  = $this->Configuracion_Finanza_Model->traer_datos();	
+			$configuraciones  = $this->Configuracion_Finanza_Model->traer_datos();	
 
 
 			foreach ($arreglo as $value) {
@@ -199,7 +199,7 @@ class Inventario extends CI_Controller
 
 							$vari = 0;
 
-							$vari = (FLOAT)$value['E'] * $conf->retencion;
+							$vari = (FLOAT)$value['E'] * $configuraciones->retencion;
 
 							$vari = $vari / 100;
 
