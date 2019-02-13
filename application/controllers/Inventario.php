@@ -160,7 +160,7 @@ class Inventario extends CI_Controller
 				'created_at' => date('Y-m-d H:i:s')
 			];
 
-			$id_auditoria_inventario = $this->Auditoria_Inventario_Model->store_auditoria_invetario($insert_auditoria;
+			$id_auditoria_inventario = $this->Auditoria_Inventario_Model->store_auditoria_invetario($insert_auditoria);
 
 			$configuraciones  = $this->Configuracion_Finanza_Model->traer_datos();	
 
