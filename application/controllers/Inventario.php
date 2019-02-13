@@ -188,11 +188,21 @@ class Inventario extends CI_Controller
 							$update['cantidad'] = (INT)$value['C'];
 						}
 
-						if( $data->precio != $value['I'] ){
+						if( $data->precio_proveedor != $value['E'] ){
 
 							// si el precio es diferente al precio de venta entonces se agg el precio al modificar
 
-							$update['precio'] = (FLOAT)$value['I'];
+							$update['precio_proveedor'] = (FLOAT)$value['E'];
+
+							$vari = 0;
+
+							$vari = (FLOAT)$value['E'] * 30;
+
+							$vari = $vari / 100;
+
+							$vari = (FLOAT)$value['E'] + $vari;
+
+							$update['precio'] = $vari;
 						}
 						
 						if(count($update) > 0){
@@ -209,7 +219,7 @@ class Inventario extends CI_Controller
 
 							}
 
-							//$this->Inventario_Model->modificar($data->id,$update);
+							$this->Inventario_Model->modificar($data->id,$update);
 
 
 							/*--------------------------------------------------------------- 
