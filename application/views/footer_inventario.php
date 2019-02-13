@@ -182,6 +182,9 @@
             window.open(ruta);
         });
 
+        $('#pick_excel').click(function(e) {
+           $('#excel_file').click()
+        })
 
     });
 </script>
