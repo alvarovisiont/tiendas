@@ -91,9 +91,6 @@
                     {
 
                     ?>
-
-                    <?php /*
-
                         <li>
                             <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Almancen<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
@@ -137,9 +134,6 @@
                                 </li>
                             </ul>
                         </li>
-
-                        */ ?>
-                        
                         <li>
                             <a href="#"><i class="fa fa-shopping-cart"></i>  Ventas<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
@@ -199,6 +193,8 @@
                     elseif($this->session->userdata('nivel') == 3)
                     {
                     ?>
+                    <?php /*
+
                         <li>
                             <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Almancen<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
@@ -233,6 +229,8 @@
                                 </li>
                             </ul>
                         </li>
+
+                        */ ?>
                         <li>
                             <a href="#"><i class="fa fa-shopping-cart"></i>  Ventas<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
