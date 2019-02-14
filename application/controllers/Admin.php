@@ -30,7 +30,6 @@ class Admin extends CI_Controller
 
 		elseif($this->session->userdata('nivel') == 3 )
 		{
-
 			$this->load->model('Empleados_Model');
 
 			$datos = $this->Admin_Model->traer_datos();

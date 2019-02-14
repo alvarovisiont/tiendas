@@ -13,8 +13,6 @@ class Empleados extends CI_Controller
 
 	public function index()
 	{	
-
-		//$this->session->set_userdata('nivel', 1);
 		
 		$this->load->model('Auditoria_Model');
 		$this->Auditoria_Model->grabar_ultima_conexion();

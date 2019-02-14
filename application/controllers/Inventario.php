@@ -21,7 +21,6 @@ class Inventario extends CI_Controller
 
 	public function index()
 	{
-		//$this->session->set_userdata('nivel', 1);
 		
 		if($this->session->has_userdata('nivel'))
 		{	
