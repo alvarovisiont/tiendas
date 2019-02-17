@@ -27,7 +27,7 @@ body {
   .table3 {  
     font-family: "Arial", "Lucida Grande", 
     Sans-Serif;
-    font-size: 11px;     
+    font-size: 9px;     
     width: 100%; 
      border-collapse: collapse; } 
 
