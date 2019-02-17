@@ -13,9 +13,23 @@ class Comisiones extends CI_Controller
 	}
 
 	public function index(){
-		$data = $this->Comision_Model->get();
-		$datos= $this->Comision_Model->get_total_by_month();
-		$empleados = $this->Usuarios_Model->traer_trabajadores();
+
+		if($this->session->userdata('nivel') == 1)
+			{		
+			$data = $this->Comision_Model->get();
+			$datos= $this->Comision_Model->get_total_by_month();
+			$empleados = $this->Usuarios_Model->traer_trabajadores();
+
+			}else
+			{
+			$data = $this->Comision_Model->get(null, null, $this->session->userdata('id'));
+			$datos= $this->Comision_Model->get_total_by_month(null, null, $this->session->userdata('id'));
+			$empleados = $this->Usuarios_Model->traer_trabajadores($this->session->userdata('id'));
+
+			}
+
+
+		
 
 		$this->load->model('Auditoria_Model');
 		$this->Auditoria_Model->grabar_ultima_conexion();
@@ -64,8 +78,19 @@ class Comisiones extends CI_Controller
 
 			
 
+		if($this->session->userdata('nivel') == 1)
+			{
+				
 		$data = $this->Comision_Model->get(null,$where);
 		$datos= $this->Comision_Model->get_total_by_month(null,$where);
+
+	    }
+		else
+		{
+			$data = $this->Comision_Model->get(null,$where, $this->session->userdata('id'));
+		$datos= $this->Comision_Model->get_total_by_month(null,$where, $this->session->userdata('id'));
+		}	
+
 
 		echo json_encode(['individual' => $data, 'grupal' => $datos]);
 

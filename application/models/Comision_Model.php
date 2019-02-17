@@ -10,7 +10,7 @@ class Comision_Model extends CI_Model
    	//parent:: __Construct();
    }
 
-  public function get($id = null,$search = null){
+  public function get($id = null,$search = null, $idempleado = null){
     if($id){
       return $this->db->where('id',$id)->get('comision')->row();
     }else{
@@ -19,6 +19,10 @@ class Comision_Model extends CI_Model
         $search.= " AND ventas.status = 1";
       }else{
         $search = "ventas.status = 1";
+      }
+
+      if($idempleado){
+        $search.= " and comision.id_empleado = ".$idempleado;
       }
 
       return $this->db->select("comision.*,usuarios.nombre_apellido,ventas.factura,TO_CHAR(comision.created_at,'DD-MM-YYYY HH:mm:SS') as fecha1")
@@ -32,12 +36,16 @@ class Comision_Model extends CI_Model
     }
   }
 
-  public function get_total_by_month($month = null,$search = null){
+  public function get_total_by_month($month = null,$search = null, $idempleado = null){
 
       if($search){
         $search.= " AND comision.id_venta IN (SELECT id from ventas where status = 1)";
       }else{
         $search = "comision.id_venta IN (SELECT id from ventas where status = 1)";
+      }
+
+      if($idempleado){
+        $search.= " and comision.id_empleado = ".$idempleado;
       }
 
       $sql = "SELECT * from (

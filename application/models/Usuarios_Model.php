@@ -28,8 +28,33 @@ class Usuarios_Model extends CI_Model
       return $this->db->where('id',$id)->get('usuarios')->row();
    }
 
-   public function traer_trabajadores(){
-      return $this->db->where('nivel',3)->get('usuarios')->result();
+   public function traer_trabajadores($id = null){
+
+    if($id){
+
+      $this->db->where('nivel', 3);
+      $this->db->where('id', $id);
+
+      $query = $this->db->get('usuarios');
+         if($query->num_rows() > 0)
+         {
+            $filas = $query->result();
+            $query->free_result();
+            return $filas;
+         }
+         else
+         {
+            return false;
+         }  
+
+      }else
+      {
+
+         return $this->db->where('nivel',3)->get('usuarios')->result();
+      }
+
+
+     
    }
 
    public function agregar($datos)
