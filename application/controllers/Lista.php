@@ -144,14 +144,24 @@ class Lista extends CI_Controller
 		}
 	}
 
-	public function exportar_excel()
+	public function exportar_excel_bss()
 	{
-		$datos = $this->Inventario_Model->exportar_inventario();
-		if($datos != false)
-		{
-			$this->load->view('imprimir_inventario_excel', compact('datos'));
-		}
+		$config = $this->Configuracion_Finanza_Model->traer_datos();	
+		$datos = $this->Inventario_Model->traer_datos_orden_mostrar();
+		
+			$this->load->view('imprimir_inventario_excel_bss', compact('datos','config'));
+		
 	}
+
+	public function exportar_excel_visa()
+	{
+		$config = $this->Configuracion_Finanza_Model->traer_datos();	
+		$datos = $this->Inventario_Model->traer_datos_orden_mostrar();
+		
+			$this->load->view('imprimir_inventario_excel_visa', compact('datos','config'));
+		
+	}
+
 
 	public function eliminar()
 	{

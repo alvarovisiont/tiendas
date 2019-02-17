@@ -182,6 +182,16 @@
             window.open(ruta);
         });
 
+         $("#exportar_excel_bss").click(function(){
+            var ruta = $(this).data('ruta');
+            window.open(ruta);
+        });
+
+          $("#exportar_excel_visa").click(function(){
+            var ruta = $(this).data('ruta');
+            window.open(ruta);
+        });
+
         $('#pick_excel').click(function(e) {
            $('#excel_file').click()
         })

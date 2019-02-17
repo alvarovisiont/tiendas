@@ -12,7 +12,7 @@
 					<button type="button" class="btn btn-danger btn-md btn-block btn-outline" data-ruta="<?php echo base_url().'Lista/exportar_pdf_bss';?>" id="exportar_pdf_bss">Exportar a PDF Bs.S&nbsp;<i class="fa fa-file-pdf-o"></i></button>
 				</div>
 				<div class="col-md-3">
-					<button class="btn btn-success btn-md btn-block btn-outline" data-ruta="<?php echo base_url().'Inventario/exportar_excel';?>" id="exportar_excel">Exportar a EXCEL Bs.S&nbsp;<i class="fa fa-file-excel-o"></i></button>
+					<button class="btn btn-success btn-md btn-block btn-outline" data-ruta="<?php echo base_url().'Lista/exportar_excel_bss';?>" id="exportar_excel_bss">Exportar a EXCEL Bs.S&nbsp;<i class="fa fa-file-excel-o"></i></button>
 				</div>
 			</div>
 
@@ -23,7 +23,7 @@
 					<button type="button" class="btn btn-danger btn-md btn-block btn-outline" data-ruta="<?php echo base_url().'Lista/exportar_pdf_visa';?>" id="exportar_pdf_visa">Exportar a PDF Visa&nbsp;<i class="fa fa-file-pdf-o"></i></button>
 				</div>
 				<div class="col-md-3">
-					<button class="btn btn-success btn-md btn-block btn-outline" data-ruta="<?php echo base_url().'Inventario/exportar_excel';?>" id="exportar_excel">Exportar a EXCEL Visa&nbsp;<i class="fa fa-file-excel-o"></i></button>
+					<button class="btn btn-success btn-md btn-block btn-outline" data-ruta="<?php echo base_url().'Lista/exportar_excel_visa';?>" id="exportar_excel_visa">Exportar a EXCEL Visa&nbsp;<i class="fa fa-file-excel-o"></i></button>
 				</div>
 			</div>
 			

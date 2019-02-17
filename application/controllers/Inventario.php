@@ -276,22 +276,22 @@ class Inventario extends CI_Controller
 		{
 
 
-			$data = ['nombre' => strtoupper($row->descripcion),
-					'ref' => $row->codigo,
+			$data = ['nombre' => strtoupper($row->nombre),
+					'ref' => $row->ref,
 					'id_proveedor' => 1,
-					'marca' => $row->precio,
-					'grupo' => $row->fabricante,
+					'marca' => $row->marca,
+					'grupo' => $row->grupo,
 					'cantidad' => 0,
 					'precio_proveedor' => 0,
 					'iva' => 16,
 					'precio' => 0,
-					'fecha_agregado' => date('Y-m-d', strtotime($this->input->post('fecha_registro', TRUE))),
+					'fecha_agregado' => '2019-02-17',
 					'observacion' => "",
 					'mostrar' => 0,
 					];
 
 
-			$variableref = $this->Inventario_Model->verificarRef($row->codigo);
+			$variableref = $this->Inventario_Model->verificarRef($row->rif);
 
 			if ($variableref == 0)
 			{ 	
@@ -303,7 +303,7 @@ class Inventario extends CI_Controller
 
 			}else
 			{
-				echo '**********************************************************'.$row->codigo;
+				echo '*************************'.$row->codigo;
 			echo "<br>";
 			}
 
