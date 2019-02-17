@@ -13,7 +13,6 @@ class Auditoria extends CI_Controller
 
 	public function index()
 	{
-		//$this->session->set_userdata('nivel', 1);
 		$datos = $this->Auditoria_Model->traer_datos();
 		$this->load->view('encabezado');
 		$this->load->view('auditoria', compact('datos'));

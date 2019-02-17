@@ -193,6 +193,8 @@
                     elseif($this->session->userdata('nivel') == 3)
                     {
                     ?>
+                    <?php /*
+
                         <li>
                             <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Almancen<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
@@ -227,6 +229,8 @@
                                 </li>
                             </ul>
                         </li>
+
+                        */ ?>
                         <li>
                             <a href="#"><i class="fa fa-shopping-cart"></i>  Ventas<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
@@ -241,6 +245,7 @@
                                 </li>
                             </ul>
                         </li>
+                          <li><a href="<?php echo base_url().'Comisiones'; ?>"><i class='fa fa-money'></i>&nbsp;Comisiones</a></li>
                 <?php
                     } ?>
                     

@@ -51,7 +51,6 @@ td {    padding: 8px; border-bottom: 1px solid black;
 					<th style="text-align: center;">Existencia</th>
 					<th style="text-align: center;">Físico</th>
 					<th style="text-align: center;">Costo Proveedor.</th>
-					<th style="text-align: center;">Costo Nuevo.</th>
 					<th style="text-align: center;">Costo Unitario.</th>
 					<th style="text-align: center;">Costo Subtotal</th>
 					<th style="text-align: center;">Precio Venta</th>
@@ -84,7 +83,6 @@ td {    padding: 8px; border-bottom: 1px solid black;
 								<td>'.$row->cantidad.'</td>
 								<td></td>
 								<td>'.$row->precio_proveedor.'</td>
-								<td></td>
 								<td>'.$row->precio.'</td>
 								<td>'.$variablecosto.'</td>
 								<td>'.$variableprecio.'</td>

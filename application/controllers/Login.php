@@ -17,6 +17,12 @@ class Login extends CI_Controller
 	{
 		if($this->input->is_ajax_request())
 		{
+
+
+		$sessiones = ['id', 'usuario', 'nivel', 'empresa', 'logo', 'siglas', 
+		'id_auditoria', 'direccion', 'telefono', 'email', 'retencion'];
+		$this->session->unset_userdata($sessiones);
+
 			$this->load->model("Login_Model");
 
 			$data = ["usuario" => $this->input->post("usuario", TRUE),
@@ -82,11 +88,6 @@ class Login extends CI_Controller
 
 	public function acceso()
 	{ 
-        /*  ver ..............................
-       $this->session->set_userdata('id', 1);
-	   $this->session->set_userdata('usuario', 'admin');	
-       $this->session->set_userdata('nivel', 1);
-        /* ----------------------------------*/
 
    		if($this->session->userdata('nivel') != NULL)
 		{

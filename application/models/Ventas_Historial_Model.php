@@ -52,6 +52,31 @@ class Ventas_Historial_Model extends CI_Model
          }
    }
 
+   public function traer_datos_cliente_id($idusuario)
+   {
+      $this->db->select('v.*, c.cedula as cedula, c.nombre as nombre, usu.nombre_apellido as usuario, usu.usuario as login');  
+      $this->db->from('ventas as v');
+      $this->db->join('clientes as c', 'c.id_venta = v.id');
+      $this->db->join('comision as comi', 'comi.id_venta = v.id');
+      $this->db->join('usuarios as usu', 'comi.id_empleado = usu.id');
+      $this->db->where('usu.id', $idusuario);
+
+      $this->db->order_by("v.id","desc");
+
+       $query = $this->db->get();
+
+         if($query->num_rows() > 0)
+         {
+            $filas = $query->result();
+            $query->free_result();
+            return $filas;
+         }
+         else
+         {
+            return false;
+         }
+   }
+
    public function get_sub_total_sell($id_venta){
       $sql = "SELECT SUM(sub_total) as sub_total from ventas_detalle where id_venta = $id_venta";
       return $this->db->query($sql)->row();
