@@ -184,12 +184,15 @@
 												<td></td>
 												<td></td>
 												<td></td>
+												<td></td>
 												
 											</tr>";
 									}
 									else
 									{
 										echo "<tr>
+												<td></td>
+												<td></td>
 												<td></td>
 												<td></td>
 												<td></td>

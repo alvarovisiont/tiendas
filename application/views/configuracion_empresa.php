@@ -133,7 +133,7 @@
 		      			<div class="col-md-8">
 		      				<div class="input-group">
 		      					<span class="input-group-addon"><i class="fa fa-home"></i></span>
-		      					<input type="text" required="" name="cedula_encargado" id="cedula_encargado" class="form-control">
+		      					<input type="number" required="" name="cedula_encargado" id="cedula_encargado" class="form-control">
 		      				</div>
 		      			</div>
 		      		</div>
@@ -200,7 +200,7 @@
 		      			<div class="col-md-8">
 		      				<div class="input-group">
 		      					<span class="input-group-addon"><i class="fa fa-home"></i></span>
-		      					<input type="text" required="" name="cedula_encargado_modi" id="cedula_encargado_modi" class="form-control">
+		      					<input type="number" required="" name="cedula_encargado_modi" id="cedula_encargado_modi" class="form-control">
 		      				</div>
 		      			</div>
 		      		</div>
@@ -248,7 +248,7 @@
 		      			<div class="col-md-8">
 		      				<div class="input-group">
 		      					<span class="input-group-addon"><i class="fa fa-building-o"></i></span>
-		      					<input type="text" required="" pattern="[a-zA-Z]" name="nombre_empresa" id="nombre_empresa" class="form-control">
+		      					<input type="text" required="" name="nombre_empresa" id="nombre_empresa" class="form-control">
 		      				</div>
 		      			</div>
 		      		</div>
@@ -266,7 +266,7 @@
 		      			<div class="col-md-8">
 		      				<div class="input-group">
 		      					<span class="input-group-addon"><i class="fa fa-phone"></i></span>
-		      					<input type="text" required="" name="telefono_empresa" id="telefono_empresa" class="form-control">
+		      					<input type="number" required="" name="telefono_empresa" id="telefono_empresa" class="form-control">
 		      				</div>
 		      			</div>
 		      		</div>
@@ -377,7 +377,7 @@
 		      			<div class="col-md-8">
 		      				<div class="input-group">
 		      					<span class="input-group-addon"><i class="fa fa-phone"></i></span>
-		      					<input type="text" required="" name="telefono_empresa_modi" id="telefono_empresa_modi" class="form-control">
+		      					<input type="number" required="" name="telefono_empresa_modi" id="telefono_empresa_modi" class="form-control">
 		      				</div>
 		      			</div>
 		      		</div>

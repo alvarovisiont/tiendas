@@ -119,24 +119,22 @@ class Inventario extends CI_Controller
 		$config = $this->Configuracion_Finanza_Model->traer_datos();
 		$datos = $this->Inventario_Model->exportar_inventario();
 
-		if($datos != false)
-		{
+		
 			$html = $this->load->view('imprimir_inventario_pdf', compact('datos', 'config'), TRUE);
 			
 			$mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8', 'format' => 'A4', [190, 236] ] );
 			$mpdf->WriteHTML($html);
 			$mpdf->Output('Inventario.pdf', "I");
-		}
+		
 	}
 
 	public function exportar_excel()
 	{
 		$config = $this->Configuracion_Finanza_Model->traer_datos();	
 		$datos = $this->Inventario_Model->exportar_inventario();
-		if($datos != false)
-		{
+		
 			$this->load->view('imprimir_inventario_excel', compact('datos','config'));
-		}
+		
 	}
 
 	public function modificar_excel(){

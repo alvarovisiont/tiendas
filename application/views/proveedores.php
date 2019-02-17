@@ -19,7 +19,7 @@
 								<th class="text-center">Dirección</th>
 								<th class="text-center">Rif</th>
 								<th class="text-center">Fax</th>
-								<th class="text-center">Artículos</th>
+							
 								<th class="text-center">Acción&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
 							</thead>
 							<tbody class="text-center">
@@ -35,13 +35,7 @@
 													<td>$row->direccion</td>
 													<td>$row->rif</td>
 													<td>$row->fax</td>
-													<td>
-															<button class='btn btn-info btn-sm' data-toggle='modal' data-target='#articulos_provee'
-															data-id = '$row->id'>
-															Ver&nbsp;&nbsp;<i class='fa fa-search'></i>
-															</button>
-															
-													</td>";
+													";
 
 													if ($row->id <> 1){
 
@@ -201,7 +195,7 @@
 	        </button>
 	        <h3 class="text-center">Agregar Proveedor&nbsp;<i class="fa fa-user-plus"></i></h3>
 	      </div>
-	      <form class="form-horizontal" action="<?php echo base_url().'Proveedores/agregar'; ?>" id="form_agregar" method="POST">
+	      <form class="form-horizontal" action="<?php// echo base_url().'Proveedores/agregar'; ?>" id="form_agregar" method="POST">
 	      	<div class="modal-body">
 	      		<div class="row">
 	      			<div class="form-group">

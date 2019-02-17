@@ -41,7 +41,9 @@
 						<td><label class="control-label col-md-2">Valor Dolar en Bs.S </label>
 							<span class="col-md-10 text-center">
 								<h4>
+									<?php if(!empty($datos->dolar_value)){ ?>
 									<?= number_format($datos->dolar_value,2,',','.'); ?>
+									<?php }?>
 								</h4>
 							</span>
 						</td>		
@@ -51,7 +53,9 @@
 						<td><label class="control-label col-md-2">Valor Dolar Visa Actual Bs.S </label>
 							<span class="col-md-10 text-center">
 								<h4>
+									<?php if(!empty($datos->dolar_today)){ ?>
 									<?= number_format($datos->dolar_today,2,',','.'); ?>
+									<?php }?>
 								</h4>
 							</span>
 						</td>		
@@ -73,9 +77,9 @@
 	      <form action="<?php echo base_url().'Configuracion_finanza/grabar'; ?>" id='form_agregar' class='form-horizontal' method='POST'>
 	      <div class="modal-body">
 	      	<div class="form-group">
-	      		<label for="" class="control-label col-md-3">Siglas 2222 de la moneda</label>
+	      		<label for="" class="control-label col-md-3">Siglas de la moneda</label>
 	      		<div class="col-md-7">
-	      			<input type="text" id="siglas" name="siglas" pattern="[a-zA-Z]{2,}" class="form-control" placeholder="Ejemplo: Moneda: Bolivares Siglas(BSF)" required="">
+	      			<input type="text" id="siglas" name="siglas" class="form-control" placeholder="Ejemplo: Moneda: Bolivares Siglas(BSF)" required="">
 	      		</div>
 	      	</div>
 	      	<div class="form-group">
