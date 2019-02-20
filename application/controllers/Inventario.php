@@ -285,13 +285,13 @@ class Inventario extends CI_Controller
 					'precio_proveedor' => 0,
 					'iva' => 16,
 					'precio' => 0,
-					'fecha_agregado' => '2019-02-17',
+					'fecha_agregado' => '2019-02-19',
 					'observacion' => "",
 					'mostrar' => 0,
 					];
 
 
-			$variableref = $this->Inventario_Model->verificarRef($row->rif);
+			$variableref = $this->Inventario_Model->verificarRef($row->ref);
 
 			if ($variableref == 0)
 			{ 	
@@ -303,7 +303,7 @@ class Inventario extends CI_Controller
 
 			}else
 			{
-				echo '*************************'.$row->codigo;
+				echo '*************************'.$row->id;
 			echo "<br>";
 			}
 

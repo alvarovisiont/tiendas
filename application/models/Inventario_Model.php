@@ -256,7 +256,7 @@ class Inventario_Model extends CI_Model
            //y de esta forma accedemos, no con $this->db->get,
            //sino con $db_prueba->get que contiene la conexión
            //a la base de datos prueba
-                $db_prueba->where('id >', 0);
+                $db_prueba->where('id >', 1538);
                 $db_prueba->order_by('nombre', 'ASC');
 
     $usuarios = $db_prueba->get('inventario');
