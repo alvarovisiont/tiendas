@@ -240,6 +240,43 @@ class Inventario extends CI_Controller
 						
 						} // fin si se va a modificar
 
+					}else
+					{
+
+					//ingresar al inventario
+					$varref = trim($value['A']);
+					$varnombre = trim($value['B']);
+					$varcanti = (INT)$value['C'];
+
+					$varprove = (FLOAT)$value['E'];
+
+					$vari = 0;
+					$vari = (FLOAT)$value['E'] * $configuraciones->retencion;
+                    $vari = $vari / 100;
+                    $vari = (FLOAT)$value['E'] + $vari;
+
+                    $variprecio = $vari;
+
+					$data = [
+					'nombre' => strtoupper($varnombre),
+					'ref' => $varref,
+					'id_proveedor' => 1,
+					'marca' => 'S/N',
+					'grupo' => 'S/N',
+					'cantidad' => $varcanti,
+					'precio_proveedor' => $varprove,
+					'iva' => 16,
+					'precio' => $variprecio,
+					'fecha_agregado' => '2019-02-21',
+					'observacion' => "",
+					'mostrar' => 0,
+					];
+
+					$this->Inventario_Model->agregar($data);
+
+
+
+
 					} // fin si data del inventario se encontro
 						
 				} // fin if celda 4
