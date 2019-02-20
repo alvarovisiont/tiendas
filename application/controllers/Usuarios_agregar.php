@@ -44,7 +44,7 @@ class Usuarios_agregar extends CI_Controller
 				'sueldo' => $sueldo ? $sueldo : null
 			];
 
-			$datos = $this->Usuarios_model->agregar($array);
+			$datos = $this->Usuarios_Model->agregar($array);
 
 			if($datos != "repetido")
 			{
