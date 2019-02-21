@@ -230,7 +230,7 @@ class Inventario extends CI_Controller
 
 							$insert_auditoria_detalle = [
 								'id_auditoria_inventario' => $id_auditoria_inventario,
-								'precio' => isset($update['precio']) ? $update['precio'] : null,
+								'precio' => isset($update['precio_proveedor']) ? $update['precio_proveedor'] : null,
 								'cantidad' => isset($update['cantidad']) ? $update['cantidad'] : null,
 								'created_at' => date('Y-m-d H:i:s'),
 								'id_inventario' => $data->id
@@ -243,6 +243,8 @@ class Inventario extends CI_Controller
 					}else
 					{
 
+					if (trim($value['A']) <> "")
+					{	
 					//ingresar al inventario
 					$varref = trim($value['A']);
 					$varnombre = trim($value['B']);
@@ -274,7 +276,17 @@ class Inventario extends CI_Controller
 
 					$this->Inventario_Model->agregar($data);
 
+					$insert_auditoria_detalle = [
+								'id_auditoria_inventario' => $id_auditoria_inventario,
+								'precio' => isset($update['precio_proveedor']) ? $update['precio_proveedor'] : null,
+								'cantidad' => isset($update['cantidad']) ? $update['cantidad'] : null,
+								'created_at' => date('Y-m-d H:i:s'),
+								'id_inventario' => 0
+							];
 
+							$this->Auditoria_Inventario_Model->store_auditoria_invetario_detalle($insert_auditoria_detalle);
+
+					 }		
 
 
 					} // fin si data del inventario se encontro
@@ -349,6 +361,30 @@ class Inventario extends CI_Controller
 
 
 	}
+
+
+	/*public function historial()
+	{
+		
+		if($this->session->has_userdata('nivel'))
+		{	
+
+			$this->load->model('Auditoria_Model');
+			$this->Auditoria_Model->grabar_ultima_conexion();
+			
+			$datos = $this->Inventario_Model->traer_datos();
+			$proveedores = $this->Inventario_Model->traer_proveedores();
+			$grupo = $this->Inventario_Model->traer_grupo_aux();
+
+			$this->load->view("encabezado_inventario");
+			$this->load->view("inventario", compact('datos', 'proveedores', 'grupo','conf'));
+			$this->load->view("footer_inventario");
+		}
+		else
+		{
+			return view('login');
+		}
+	}*/
 
 
 

@@ -173,6 +173,11 @@
                 <input type="text" id="usuario" name="usuario" class="form-control" placeholder="Usuario" required autofocus>
                 <input type="password" id="clave" name="clave" class="form-control" placeholder="Clave" required>
                 <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Acceder&nbsp;&nbsp;<i class="fa fa-check"></i></button>
+                 <a href="<?= base_url().'index.php/login/salir'?>" class="btn btn-lg btn-warning btn-block ">
+                        <i class="ace-icon fa fa-fire bigger-230"></i>
+                        Liberar Navegador&nbsp;
+                    </a>
+
             </form><!-- /form -->
             <p id="aviso" class="alert alert-info"></p>
         </div><!-- /card-container -->
