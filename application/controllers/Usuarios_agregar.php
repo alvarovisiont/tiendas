@@ -32,7 +32,7 @@ class Usuarios_agregar extends CI_Controller
 			$comision = $this->input->post('comision');
 			$sueldo   = $this->input->post('sueldo');
 
-			$this->load->model('Usuarios_model');
+			$this->load->model('Usuarios_Model');
 
 			$array = [
 				'usuario' => $this->input->post('usuario'),
@@ -44,7 +44,7 @@ class Usuarios_agregar extends CI_Controller
 				'sueldo' => $sueldo ? $sueldo : null
 			];
 
-			$datos = $this->Usuarios_model->agregar($array);
+			$datos = $this->Usuarios_Model->agregar($array);
 
 			if($datos != "repetido")
 			{
