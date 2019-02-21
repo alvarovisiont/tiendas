@@ -222,7 +222,8 @@ class Ventas_Model extends CI_Model
          'tipo_factura' => $arreglo_pago['tipo_factura'],
          'porcentaje_descuento' => $arreglo_pago['porcentaje_descuento'],
          'subtotal' => $arreglo_pago['sub_total'],
-         'iva' => $arreglo_pago['iva']
+         'iva' => $arreglo_pago['iva'],
+         'id_usuario' => $this->session->userdata('id')
       ];      
 
       if($tipo === "mixto"){
@@ -387,7 +388,10 @@ class Ventas_Model extends CI_Model
 
       $this->set_cantidad_inventario("suma",$id);
       //$this->db->where('id_venta',$id)->delete('ventas_detalle');
-      //$this->db->where('id_venta',$id)->delete('comision');
+      $update_comision = ['type' => false, 'anulate_at' => date('Y-m-d H:i:s')];
+      
+      $this->db->where('id_venta',$id)->update('comision',$update_comision);
+
       $this->db->where('id',$id)->update('ventas',['status' => 0]);
    }
 

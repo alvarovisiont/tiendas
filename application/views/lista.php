@@ -1,6 +1,5 @@
 <?php
-	$session = 1;
-	//$this->session->userdata('nivel');
+	$session = $this->session->userdata('nivel');
 ?>
 
 <div class="row">
@@ -29,14 +28,13 @@
 			
 			<br><br>
 			<br>
-			<div class="panel panel-green">
+			<div class="panel panel-black">
 				<div class="panel-heading">
 					<h3>Lista de Precios&nbsp;&nbsp;<i class="fa fa-book"></i>
-					</h3>
 
-					<div class="col-md-2" id="">
-						<button type="button" class="btn btn-info btn-block" title="Ver descuentos activos" data-toggle="modal" data-target="#mod_descuentos_activos">Filtro Grupos&nbsp;<i class="fa fa-search fa-1x"></i></button>
-					</div>
+						<button type="button" class="btn btn-info pull-right" title="Ver descuentos activos" data-toggle="modal" data-target="#mod_descuentos_activos">Filtro Grupos&nbsp;<i class="fa fa-search fa-1x"></i></button>
+
+					</h3>
 					</div>
 				</div>
 				<div class="panel-body">

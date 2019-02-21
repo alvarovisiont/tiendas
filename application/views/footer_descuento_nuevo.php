@@ -21,14 +21,17 @@
 <script type="text/javascript">
     $(function(){
 
-         $("#agg_activar").on('show.bs.modal', function(e){
+        $('[data-toggle="popover"]').popover();   
+
+        $("#agg_activar").on('shown.bs.modal', function(e){
             var  x = $(e.relatedTarget).data().id_modi;
                      $("#id_modificar").val(x);
 
-              var  x = $(e.relatedTarget).data().sw_modi;
+            var  x = $(e.relatedTarget).data().sw_modi;
                      $("#sw_modificar").val(x);        
 
-                
+            var  x = $(e.relatedTarget).data().porcentaje;
+                     $("#cantidad").val(x);        
         });
 
     });

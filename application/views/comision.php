@@ -20,6 +20,8 @@
 							<th class="text-center">Porcentaje</th>
 							<th class="text-center">Monto</th>
 							<th class="text-center">Fecha Venta</th>
+							<th class="text-center">Tipo</th>
+							<th class="text-center">Fecha Anulación</th>
 						</thead>
 						<tbody class="text-center">
 							<?php
@@ -30,6 +32,8 @@
 											<td>$row->porcentaje %</td>
 											<td><span class='badge letras' style='background-color: darkred; color: white;'>".number_format($row->monto,2,',','.')." Bs.S</span></td>
 											<td>$row->fecha1</td>
+											<td>$row->type</td>
+											<td>$row->fecha2</td>
 										</tr>";
 								}
 							?>
@@ -52,7 +56,7 @@
 						<tbody class="text-center">
 							<?php
 
-								foreach ($datos as $row) 
+								foreach ($data_by_month as $row) 
 								{
 									echo "<tr>
 											<td>$row->nombre_apellido</td>

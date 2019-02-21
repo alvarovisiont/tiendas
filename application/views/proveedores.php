@@ -5,10 +5,10 @@
 			<br>
 			<br>
 			<section id="section_table">
-				<div class="panel panel-green">
+				<div class="panel panel-black">
 					<div class="panel-heading">
 						<h3 style="display: inline-block">Proveedores&nbsp;&nbsp;<i class="fa fa-truck"></i></h3>
-						<button class="btn btn-default btn-md col-md-offset-7" id="agregar_proveedor">Agregar Proveedor&nbsp;<i class="fa fa-plus"></i>&nbsp;<i class="fa fa-users"></i></button>
+						<button class="btn btn-primary btn-md col-md-offset-7" id="agregar_proveedor">Agregar Proveedor&nbsp;<i class="fa fa-plus"></i>&nbsp;<i class="fa fa-users"></i></button>
 					</div>
 					<div class="panel-body tabla_modal">
 						<table class="table table-streped table-hover" id="tabla">

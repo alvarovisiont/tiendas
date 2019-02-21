@@ -207,7 +207,8 @@ class Ventas extends CI_Controller
 					'porcentaje' => $seller->comision,
 					'monto' =>  $monto_comision,
 					'id_venta' => $id_venta,
-					'created_at' => date('Y-m-d H:i:s')
+					'created_at' => date('Y-m-d H:i:s'),
+					'type' => true
 				];
 
 				$this->Comision_Model->store($array_comision);

@@ -69,7 +69,9 @@
                 {"data": "monto", "render" : function(monto){
                   return `<span class='badge letras' style='background-color: darkred; color: white;'>${formatNumber(monto,2,',','.')} Bs.S</span>`
                 }},
-                {"data": "fecha1"}
+                {"data": "fecha1"},
+                {"data": "type"},
+                {"data": "fecha2"}
               ]
             })
 

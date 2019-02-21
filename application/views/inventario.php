@@ -64,14 +64,14 @@
 			</div>
 			<br><br>
 			<br>
-			<div class="panel panel-green">
+			<div class="panel panel-black">
 				<div class="panel-heading">
 					<h3>Inventario del Almacen&nbsp;&nbsp;<i class="fa fa-book"></i>
 					<?php 
 					if($session == 1)
 					{
 					?>
-						<button class="btn btn-default btn-md" style="float: right" data-toggle="modal" data-target="#agg_articulo">Agregar Artículo&nbsp;<i class="fa fa-plus"></i></button>
+						<button class="btn btn-primary btn-md" style="float: right" data-toggle="modal" data-target="#agg_articulo">Agregar Artículo&nbsp;<i class="fa fa-plus"></i></button>
 					<?php
 					}
 					?>

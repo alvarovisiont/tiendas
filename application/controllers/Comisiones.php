@@ -14,22 +14,35 @@ class Comisiones extends CI_Controller
 
 	public function index(){
 
-		if($this->session->userdata('nivel') == 1)
-			{		
+		if($this->session->userdata('nivel') == 1){		
+			
 			$data = $this->Comision_Model->get();
 			$datos= $this->Comision_Model->get_total_by_month();
+			$datos_anulate = $this->Comision_Model->get_total_by_month_anulate();
 			$empleados = $this->Usuarios_Model->traer_trabajadores();
 
-			}else
-			{
+		}else{
+
 			$data = $this->Comision_Model->get(null, null, $this->session->userdata('id'));
 			$datos= $this->Comision_Model->get_total_by_month(null, null, $this->session->userdata('id'));
+			$datos_anulate = $this->Comision_Model->get_total_by_month_anulate(null, null, $this->session->userdata('id'));
 			$empleados = $this->Usuarios_Model->traer_trabajadores($this->session->userdata('id'));
 
+		}
+
+
+		$data_by_month = [];
+
+		foreach ($datos as $row) {
+			
+			foreach ($datos_anulate as $row1) {
+				if(($row->mes === $row1->mes) && ($row->año === $row1->año) && 	($row->id_empleado === $row1->id_empleado)) {
+					$row->total = $row->total - $row1->total;
+				}
 			}
 
-
-		
+			$data_by_month[] = $row;
+		}
 
 		$this->load->model('Auditoria_Model');
 		$this->Auditoria_Model->grabar_ultima_conexion();
@@ -40,7 +53,7 @@ class Comisiones extends CI_Controller
 		}
 
 		$this->load->view("encabezado");
-		$this->load->view("comision", compact('data','datos','select_worker'));
+		$this->load->view("comision", compact('data','data_by_month','select_worker'));
 		$this->load->view("footer_comision");
 
 	}
@@ -78,21 +91,34 @@ class Comisiones extends CI_Controller
 
 			
 
-		if($this->session->userdata('nivel') == 1)
-			{
+		if($this->session->userdata('nivel') == 1){
 				
-		$data = $this->Comision_Model->get(null,$where);
-		$datos= $this->Comision_Model->get_total_by_month(null,$where);
+			$data = $this->Comision_Model->get(null,$where);
+			$datos= $this->Comision_Model->get_total_by_month(null,$where);
+			$datos_anulate = $this->Comision_Model->get_total_by_month_anulate(null,$where);
 
-	    }
-		else
-		{
+	  }else{
 			$data = $this->Comision_Model->get(null,$where, $this->session->userdata('id'));
-		$datos= $this->Comision_Model->get_total_by_month(null,$where, $this->session->userdata('id'));
+			$datos= $this->Comision_Model->get_total_by_month(null,$where, $this->session->userdata('id'));
+			$datos_anulate = $this->Comision_Model->get_total_by_month_anulate(null,$where, $this->session->userdata('id'));
+
 		}	
 
+		$data_by_month = [];
 
-		echo json_encode(['individual' => $data, 'grupal' => $datos]);
+		foreach ($datos as $row) {
+			
+			foreach ($datos_anulate as $row1) {
+				if(($row->mes === $row1->mes) && ($row->año === $row1->año) && 	($row->id_empleado === $row1->id_empleado)) {
+					$row->total = $row->total - $row1->total;
+				}
+			}
+
+			$data_by_month[] = $row;
+		}
+
+
+		echo json_encode(['individual' => $data, 'grupal' => $data_by_month]);
 
 
 	}

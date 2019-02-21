@@ -31,24 +31,20 @@
 	   <table width="100%" cellpadding="" border="0" cellspacing=""> 	
 	   	<tr>
 	  <?php
-		foreach ($datos as $row) 
-		{ ?>
-
-		
-
-		<td>	
-			<h3>
-				<?php echo $row->nombre; ?>
-			</h3>
+		foreach ($datos as $row) { ?>
+			<td>	
+				<h3>
+					<?php echo $row->nombre; ?>
+				</h3>
 
 		<?php if ($row->status == 0){ $sw = 1;?>
 
-			<button class="btn btn-default btn-md" style="float: center" data-toggle="modal" data-target="#agg_activar" data-id_modi = "<?php echo $row->id;?>" data-sw_modi = "<?php echo $sw;?>"><img src='./img/apagar.png' class='img-responsive' width='100px'  class="rounded-circle"></button>
+			<button class="btn btn-default btn-md" style="float: center" data-toggle="modal" data-target="#agg_activar" data-id_modi = "<?php echo $row->id;?>" data-porcentaje="<?= $row->cantidad ?>" data-sw_modi = "<?php echo $sw;?>"><img src='./img/apagar.png' class='img-responsive' width='100px'  class="rounded-circle"></button>
 		<?php }
 
          if ($row->status == 1){ $sw = 2; ?>
 
-         	<button class="btn btn-default btn-md" style="float: center" data-toggle="modal" data-target="#agg_activar" data-id_modi = "<?php echo $row->id;?>"  data-sw_modi = "<?php echo $sw;?>"><img src='./img/encender.png' class='img-responsive' width='100px'  class="rounded-circle"></button>
+         	<button class="btn btn-default btn-md" style="float: center" data-toggle="modal" data-target="#agg_activar" data-id_modi = "<?php echo $row->id;?>" data-porcentaje="<?= $row->cantidad ?>"  data-sw_modi = "<?php echo $sw;?>"><img src='./img/encender.png' class='img-responsive' width='100px'  class="rounded-circle"></button>
 
          	<br><br>
 						<div class="alert alert-success alert-dismissable">
@@ -158,24 +154,4 @@
 	    </div>
 	  </div>
 </div>
-
-
-<script>
-$(document).ready(function(){
-    $('[data-toggle="popover"]').popover();   
-});
-
-
-$(function(){
-        $("#agg_activar").on('show.bs.modal', function(e){
-
-            var  x = $(e.relatedTarget).data().id_modi;
-                     $("#id_modificar").val(x);
-            var  x = $(e.relatedTarget).data().sw_modi;
-                     $("#sw_modi").val(x);         
-        });
-    
-        });
-    
-</script>	
 

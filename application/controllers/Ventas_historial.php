@@ -10,7 +10,7 @@ class Ventas_historial extends CI_Controller
 	{
           
           parent:: __Construct(); 
-          $this->load->model(['Ventas_Historial_Model','Configuracion_Finanza_Model']);
+          $this->load->model(['Ventas_Historial_Model','Configuracion_Finanza_Model','Usuarios_Model']);
 	}
 
 	public function index()
@@ -18,12 +18,12 @@ class Ventas_historial extends CI_Controller
 		if($this->session->has_userdata('nivel'))
 		{
 
-			if($this->session->userdata('nivel') == 1)
-			{		
-			$datos = $this->Ventas_Historial_Model->traer_datos_cliente();
-			}else
-			{	
-			$datos = $this->Ventas_Historial_Model->traer_datos_cliente_id($this->session->userdata('id'));	
+			if($this->session->userdata('nivel') == 1){		
+				$datos = $this->Ventas_Historial_Model->traer_datos_cliente();
+				$empleados = $this->Usuarios_Model->traer_trabajadores();
+			}else{	
+				$datos = $this->Ventas_Historial_Model->traer_datos_cliente_id($this->session->userdata('id'));	
+				$empleados = $this->Usuarios_Model->traer_trabajadores($this->session->userdata('id'));
 			}
 
 			$this->load->model('Auditoria_Model');
@@ -31,8 +31,13 @@ class Ventas_historial extends CI_Controller
 			
 			$conf = $this->Configuracion_Finanza_Model->traer_datos();
 
+			$select_worker = "<option value=''>Todos</option>";
+			foreach ($empleados as $row) {
+				$select_worker.="<option value='$row->id'>$row->nombre_apellido</option>";
+			}
+
 			$this->load->view('encabezado_inventario');
-			$this->load->view('ventas_historial', compact('datos','conf'));
+			$this->load->view('ventas_historial', compact('datos','conf','select_worker'));
 			$this->load->view('footer_ventas_historial','conf');
 			
 		}
@@ -71,8 +76,7 @@ class Ventas_historial extends CI_Controller
 		}
 	}
 
-	public function imprimir_factura()
-	{
+	public function imprimir_factura(){
 
 		$id_venta = $this->uri->segment(3);
 		$datos = $this->Ventas_Historial_Model->buscar_cliente_factura($id_venta);
@@ -93,4 +97,59 @@ class Ventas_historial extends CI_Controller
 		     die();
 		}
 	}
+
+	public function get_registers_by_filter(){
+
+		$desde = $this->input->get('desde');
+		$hasta = $this->input->get('hasta');
+		$worker = $this->input->get('worker');
+		$status = $this->input->get('status');
+
+		$where = null;
+
+		if(!empty($desde)){
+			$where = "( CAST(v.fecha_venta as DATE) >= '$desde'";
+		}
+
+		if(!empty($hasta)){
+			if(!empty($where)){
+				$where .= " AND CAST(v.fecha_venta as DATE) <= '$hasta' )";
+			}else{
+				$where = "CAST(v.fecha_venta as DATE) <= '$hasta'";
+			}
+		}else{
+			if(!empty($where)){
+				$where.= " )";
+			}
+		}
+
+		if(!empty($worker)){
+			if(!empty($where)){
+				$where .= " AND v.id_usuario = $worker";
+			}else{
+				$where = "v.id_usuario = $worker";
+			}	
+		}
+
+		if(!empty($status)){
+			
+			$status = $status == 1 ?  $status : 0;
+
+			if(!empty($where)){
+				$where .= " AND v.status = $status";
+			}else{
+				$where = "v.status = $status";
+			}	
+		}
+		
+		if($this->session->userdata('nivel') == 1){		
+				$datos = $this->Ventas_Historial_Model->traer_datos_cliente($where);
+			}else{	
+				$datos = $this->Ventas_Historial_Model->traer_datos_cliente_id($this->session->userdata('id'),$where);	
+			}
+
+			echo json_encode($datos);
+	}
+
+
 }

@@ -7,8 +7,13 @@
 				}
 			?>
 		<br><br>
-
-			<div class="panel panel-yellow">
+			<div class="col-md-6 col-sm-6 col-xl-12 col-md-offset-3 col-sm-offset-3">
+				<button class="btn btn-primary btn-block" data-target="#modal_filtros" data-toggle="modal">Filtrar&nbsp;<i class="fa fa-search"></i></button>
+			</div>
+			<br>
+			<br>
+			<br>
+			<div class="panel panel-black">
 				<div class="panel-heading">
 					<h3 style="color: white; display: inline-block;">Historial de ventas</h3>
 				</div>
@@ -18,9 +23,7 @@
 							<th class="text-center">Tipo Factura</th>
 							<th class="text-center">Factura</th>
 							<th class="text-center">Fecha Venta</th>
-							<th class="text-center">Cliente</th>
 							<th class="text-center">monto_pagado</th>
-							<th class="text-center">Vuelto</th>
 							<th class="text-center">Tipo de Venta</th>
 							<th class="text-center">Vendedor</th>
 							<th>Detalle Venta</th>
@@ -52,9 +55,7 @@
 										        <td>$tipofact</td>
 												<td>$row->factura</td>
 												<td>".date('d-m-Y' ,strtotime($row->fecha_venta))."</td>
-												<td>$row->cedula - $row->nombre</td>
 												<td>".number_format($row->monto_pagado,2,',','.')."</td>
-												<td>".number_format($row->vuelto,2,',','.')."</td>
 												<td>$row->tipo_venta</td>
 												<td>$row->login - $row->usuario</td>
 												<td>".$detalle."</td>
@@ -90,6 +91,7 @@
 		      				<th class="text-center">Sub_Total</th>
 		      				<th class="text-center">Iva</th>
 		      				<th class="text-center">Total</th>
+		      				<th class="text-center">Vuelto</th>
 		      				<th></th>
 	      				</thead>
 	      				<tbody class="text-center">
@@ -132,6 +134,52 @@
 	          	<button type='button' class='btn btn-default' data-dismiss='modal'>cerrar&nbsp;&nbsp;<i class='fa fa-remove'></i></button>
 	        </div>
 	    </div>
+	</div>
+</div>
+
+<div class="modal fade" id="modal_filtros" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  	<div class="modal-dialog modal-lg" role="document">
+    	<div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	        <h3 class="text-center">Filtros de Registros</h3>
+	      </div>
+	      <div class="modal-body">
+	      	<div class="row">
+    				<div class="col-md-6">
+    					<label class="control-label">Desde</label>
+							<input type="date" name="desde" id="desde" class="form-control">
+						</div>
+						<div class="col-md-6">
+							<label class="control-label">Hasta</label>
+							<input type="date" name="hasta" id="hasta" class="form-control">
+						</div>  
+					</div>
+					<br>
+					<div class="row">
+						<div class="col-md-6">
+							<label class="control-label">Trabajador</label>
+							<select class="form-control" id="worker" name="worker">
+								<?= $select_worker; ?>
+							</select>
+						</div>  			
+						<div class="col-md-6">
+							<label class="control-label">Estado</label>
+							<select class="form-control" id="status" name="status">
+								<option value="">todas</option>
+								<option value="1">Activas</option>
+								<option value="2">Anuladas</option>
+							</select>
+						</div>  			
+	      	</div>
+	      </div>
+	      <div class="modal-footer">
+	      	<button class="btn btn-default btn-md" type="button" data-dismiss="modal">Cerrar&nbsp;<i class="fa fa-remove"></i></button>
+	      	<button class="btn btn-success" id="btn_filter"><span id="span_filter">Fitrar</span>&nbsp;<i class="fa fa-search"></i></button>
+	      </div>
+    	</div>
 	</div>
 </div>
 

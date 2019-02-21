@@ -28,15 +28,17 @@ class Ventas_Historial_Model extends CI_Model
    }
 
 
-   public function traer_datos_cliente()
-   {
-      $this->db->select('v.*, c.cedula as cedula, c.nombre as nombre, usu.nombre_apellido as usuario, usu.usuario as login');  
+   public function traer_datos_cliente($where = null){
+      $this->db->select("v.*, c.cedula as cedula, c.nombre as nombre, usu.nombre_apellido as usuario, usu.usuario as login,
+         TO_CHAR(v.fecha_venta,'DD-MM-YYYY HH:MI:SS') as fecha1");  
       $this->db->from('ventas as v');
       $this->db->join('clientes as c', 'c.id_venta = v.id');
       $this->db->join('comision as comi', 'comi.id_venta = v.id');
       $this->db->join('usuarios as usu', 'comi.id_empleado = usu.id');
-
       $this->db->order_by("v.id","desc");
+      if($where){
+         $this->db->where($where);
+      }
 
        $query = $this->db->get();
 
@@ -52,16 +54,19 @@ class Ventas_Historial_Model extends CI_Model
          }
    }
 
-   public function traer_datos_cliente_id($idusuario)
-   {
-      $this->db->select('v.*, c.cedula as cedula, c.nombre as nombre, usu.nombre_apellido as usuario, usu.usuario as login');  
+   public function traer_datos_cliente_id($idusuario,$where = null){
+      $this->db->select("v.*, c.cedula as cedula, c.nombre as nombre, usu.nombre_apellido as usuario, usu.usuario as login,
+         TO_CHAR(v.fecha_venta,'DD-MM-YYYY HH:II:SS') as fecha1");  
       $this->db->from('ventas as v');
       $this->db->join('clientes as c', 'c.id_venta = v.id');
       $this->db->join('comision as comi', 'comi.id_venta = v.id');
       $this->db->join('usuarios as usu', 'comi.id_empleado = usu.id');
       $this->db->where('usu.id', $idusuario);
-
       $this->db->order_by("v.id","desc");
+
+      if($where){
+         $this->db->where($where);
+      }
 
        $query = $this->db->get();
 

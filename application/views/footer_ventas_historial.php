@@ -49,9 +49,10 @@
                     let precio_dolar = formatNumber(e.precio / dolar_value,2,',','.')
                         iva_dolar = formatNumber(e.iva / dolar_value,2,',','.'),
                         sub_total_dolar = formatNumber(e.sub_total / dolar_value,2,',','.'),
-                        total_dolar = formatNumber(e.total / dolar_value,2,',','.')
+                        total_dolar = formatNumber(e.total / dolar_value,2,',','.'),
+                        vuelto_dolar = formatNumber(e.vuelto / dolar_value,2,',','.')
 
-                    filas += "<tr><td>"+e.nombre_articulo+"</td><td>"+e.marca+"</td><td>"+formatNumber(e.precio,2,',','.')+siglas+" / <br/> "+precio_dolar+"$</td><td>"+e.cantidad+"</td><td>"+formatNumber(e.sub_total,2,',','.')+siglas+" / <br> "+sub_total_dolar+"$</td><td>"+formatNumber(e.iva,2,',','.')+siglas+"/ <br/> "+iva_dolar+"$</td><td>"+formatNumber(e.total,2,',','.')+siglas+" / <br/> "+total_dolar+"$</td><td>"+button+"</td>";
+                    filas += "<tr><td>"+e.nombre_articulo+"</td><td>"+e.marca+"</td><td>"+formatNumber(e.precio,2,',','.')+siglas+" / <br/> "+precio_dolar+"$</td><td>"+e.cantidad+"</td><td>"+formatNumber(e.sub_total,2,',','.')+siglas+" / <br> "+sub_total_dolar+"$</td><td>"+formatNumber(e.iva,2,',','.')+siglas+"/ <br/> "+iva_dolar+"$</td><td>"+formatNumber(e.total,2,',','.')+siglas+" / <br/> "+total_dolar+"$</td><td>"+formatNumber(e.vuelto,2,',','.')+" "+siglas+" / <br>"+vuelto_dolar+"</td><td>"+button+"</td>";
                 });
 
                 button = "<button class='btn btn-success btn-md' data-toggle='modal' data-target='#modal_clientes' data-id_cliente='"+id_cliente+"'>Ver Cliente&nbsp;<i class='fa fa-user'></i></button><button type='button' class='btn btn-primary' data-dismiss='modal'>cerrar&nbsp;&nbsp;<i class='fa fa-remove'></i></button>";
@@ -71,11 +72,10 @@
             }); 
         });
 
-        $(".imprimir").click(function()
-        {
+        $('#tabla tbody').on('click','tr > td > .imprimir',function(e){
             var ruta = $(this).data('ruta');
             window.open(ruta, '_blank');
-        });
+        })
 
         $('#tabla tbody').on('click','tr > td > .devolver',function(e){
           
@@ -86,5 +86,67 @@
         $('#dismiss_sell').click(function(e){
           window.location.href = ruta_redirect
         })
+
+        $('#btn_filter').click(function (e) {
+       let desde = $('#desde').val(),
+           hasta = $('#hasta').val(),
+           worker= $('#worker').val(),
+           status  = $('#status').val(),
+           span = $(this).children('#span_filter')
+        
+        span.text('Filtrando...')
+
+        $.ajax({
+          url: "<?= base_url().'index.php/Ventas_historial/get_registers_by_filter' ?>",
+          data : {desde,hasta,worker,status},
+          type: "GET",
+          dataType: "JSON",
+          success: function(data){
+            
+
+            let tabla1 = $('#tabla')
+
+            tabla1.DataTable().destroy()
+
+            tabla1.dataTable({
+              data,
+              columns: [
+                {"data": "tipo_factura","render" : function(type){
+                  return type == 1 ? "Factura" : "Pre-Factura"
+                }},
+                {"data": "factura"},
+                {"data": "fecha1"},
+                {"data": "monto_pagado","render" : function(monto){
+                  return formatNumber(monto,2,',','.')
+                }},
+                {"data": "tipo_venta"},
+                {"data": {"data":"data"},"render" : function(login){
+                  return login.login+"-"+login.usuario
+                }},
+                {"data": "id","render": function(id){
+                    return `<button class='btn btn-info btn-sm' data-toggle='modal' data-target='#modal_detalle'
+                        data-id_venta = '${id}'><i class='fa fa-search'></i></button>`
+                }},
+                {"data": "id","render": function(id){
+                    return `<button class='btn btn-danger btn-sm imprimir'
+                        data-ruta = '<?= base_url().'Ventas_historial/imprimir_factura/'?>${id}'><i class='fa fa-download'></i></button>`
+                }},
+                {"data": {"data":"data"},"render": function(id){
+                    if(id.status == 0){
+                        return ""   
+                    }else{
+
+                        return `<button class='btn btn-warning btn-sm devolver'
+                            data-ruta = '<?=base_url().'Ventas/rollback/'?>${id}'><i class='fa fa-refresh'></i></button>`
+                    }
+                }}
+              ]
+            })
+
+            span.text('Filtrar')
+            $('#modal_filtros').modal('hide')
+          }
+        })
+    })
     });
 </script>

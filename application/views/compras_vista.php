@@ -2,7 +2,7 @@
 	<div class="container-fluid">
 		<div class="col-md-12">
 		<br><br>
-			<div class="panel panel-yellow">
+			<div class="panel panel-black">
 				<div class="panel-heading">
 					<h3>Historial de Compras&nbsp;&nbsp;<i class="fa fa-book"></i></h3>
 				</div>
