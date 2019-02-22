@@ -205,28 +205,13 @@
      ?>
             
     <div class="form-group">
-        <div class="col-md-6">
+        <div class="col-md-12">
             <div class="panel panel-red">
                 <div class="panel-heading">
                     <h3>Comparación de compras y Ventas en el año</h3>
                 </div>
                 <div class="panel-body">
                     <div id="chartdiv" style="width:100%; height:600px;"></div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="panel panel-black">
-                <div class="panel-heading">
-                    <h3>Retenciones de Iva</h3>
-                </div>
-                <div class="panel-body">
-                    <?php 
-                        if($this->session->userdata('retencion') == 0)
-                        {
-                            echo "<h3 class='text-center'>No posee</h3>";
-                        }
-                     ?>
                 </div>
             </div>
         </div>

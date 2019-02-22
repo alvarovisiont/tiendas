@@ -157,11 +157,14 @@ $(function(){
         let name = $(this).data('nombre')
 
         $('#nombre_articulo').val(name)
-        $("#cantidad").focus();
         $("#falta_dinero").hide('slow/400/fast');
         $('#mod_buscar_articulos').modal('hide')
-
+        
+        setTimeout(() =>{
+            $("#cantidad").focus();
+        },500)
     });
+
 
      $("#nombre_articulo" ).autocomplete({
             source: function(request, response)

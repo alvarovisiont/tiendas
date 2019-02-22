@@ -10,8 +10,8 @@ class Compras_Model extends CI_Model
    	//parent:: __Construct();
    }
 
-   public function traer_proveedores()
-   {
+   public function traer_proveedores(){
+   
          $sql = "SELECT id, nombre from proveedores";
    		$query = $this->db->query($sql);
    		if($query->num_rows() > 0)
@@ -312,11 +312,11 @@ class Compras_Model extends CI_Model
 
    public function graficas_estadisticas_dia($mes, $año)
    {
-     /* $sql = "SELECT SUM(monto_pagado) as monto, DAY(fecha_compra) as dia from compras where MONTH(fecha_compra) = $mes and YEAR(fecha_compra) = $año GROUP BY dia asc";
-    */
-        $sql = "SELECT monto_pagado as monto, fecha_compra as dia from compras";
-
-
+      $sql = "SELECT * from (
+      SELECT
+       SUM(monto_pagado) as monto, EXTRACT(DAY FROM fecha_compra) as dia from compras where EXTRACT(MONTH FROM fecha_compra) = $mes and EXTRACT(YEAR FROM fecha_compra) = $año GROUP BY dia
+      ) AS t1 ORDER BY dia asc";
+    
       $query = $this->db->query($sql);
       if($query->num_rows() > 0)
       {
@@ -332,9 +332,11 @@ class Compras_Model extends CI_Model
 
    public function grafico_estadistica_mes($año)
    {
-      /*$sql = "SELECT SUM(monto_pagado) as monto, MONTH(fecha_compra) as mes from compras where YEAR(fecha_compra) = $año GROUP BY mes asc";
-      */
-       $sql = "SELECT monto_pagado as monto, fecha_compra as mes from compras";
+      $sql = "SELECT * from( 
+         SELECT
+         SUM(monto_pagado) as monto, EXTRACT(MONTH FROM fecha_compra) as mes from compras where EXTRACT(YEAR FROM fecha_compra) = $año GROUP BY mes
+      ) as t1 ORDER BY mes asc";
+      
 
       $query = $this->db->query($sql);
       if($query->num_rows() > 0)
@@ -351,7 +353,10 @@ class Compras_Model extends CI_Model
 
    public function grafico_estadistica_año()
    {
-      /*$sql = "SELECT SUM(monto_pagado) as monto, YEAR(fecha_compra) as año from compras GROUP BY año asc";*/
+      $sql = "SELECT * from( 
+         SELECT
+         SUM(monto_pagado) as monto, EXTRACT(YEAR FROM fecha_compra) as año from compras GROUP BY año
+         ) as t1 order by año asc";
 
       $sql = "SELECT monto_pagado as monto, fecha_compra as año from compras";
    

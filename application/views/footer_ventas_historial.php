@@ -31,7 +31,7 @@
 
         $("#tabla").dataTable({
             "language" : {"url" : "json/esp.json"},
-            order : [1, 'desc'],
+            order : [2, 'desc'],
             responsive: true
         });
 
@@ -109,6 +109,7 @@
             tabla1.DataTable().destroy()
 
             tabla1.dataTable({
+              order: [2,'desc'],
               data,
               columns: [
                 {"data": "tipo_factura","render" : function(type){
@@ -133,7 +134,7 @@
                 }},
                 {"data": {"data":"data"},"render": function(id){
                     if(id.status == 0){
-                        return ""   
+                        return "<span class='badge' style='background-color: #F28D62; font-size: 16px;'>Anulado</span>"   
                     }else{
 
                         return `<button class='btn btn-warning btn-sm devolver'

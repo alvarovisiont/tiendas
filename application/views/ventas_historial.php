@@ -33,25 +33,29 @@
 						<tbody class="text-center">
 							<?php
 								
-									foreach ($datos as $row) 
-									{
+									foreach ($datos as $row) {
+
+										$anulado = $row->status == 1 ? "" : "#F28D62";
+
 										$detalle = "<button class='btn btn-info btn-sm' data-toggle='modal' data-target='#modal_detalle'
 										data-id_venta = '$row->id'><i class='fa fa-search'></i></button>";
 										
 										$imprimir = "<button class='btn btn-danger btn-sm imprimir'
 										data-ruta = '".base_url().'Ventas_historial/imprimir_factura/'.$row->id."'><i class='fa fa-download'></i></button>";
+										
 										$deshacer = "";
 										if($row->status == 1){
 
 											$deshacer = "<button class='btn btn-warning btn-sm devolver'
 											data-ruta = '".base_url().'Ventas/rollback/'.$row->id."'><i class='fa fa-refresh'></i></button>";
+										}else{
+											$deshacer = "<span class='badge' style='background-color: $anulado; font-size: 16px;'>Anulado</span>";
 										}
 										
-										$anulado = $row->status == 1 ? "" : "#F28D62";
 
 										$tipofact = $row->tipo_factura == 1 ? "Factura" : "Pre-Factura";
 
-										echo "<tr style='background-color:".$anulado.";'>
+										echo "<tr>
 										        <td>$tipofact</td>
 												<td>$row->factura</td>
 												<td>".date('d-m-Y' ,strtotime($row->fecha_venta))."</td>

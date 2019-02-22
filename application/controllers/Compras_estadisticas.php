@@ -12,15 +12,11 @@ class Compras_estadisticas extends CI_Controller
           $this->load->model('Compras_Model');
 	}
 
-	public function index()
-	{
+	public function index(){
 		
-		if(!$this->session->has_userdata('nivel'))
-		{
+		if(!$this->session->has_userdata('nivel')){
 			$this->load->view("login");		
-		}
-		else
-		{
+		}else{
 			$this->load->model('Auditoria_Model');
 			$this->Auditoria_Model->grabar_ultima_conexion();
 

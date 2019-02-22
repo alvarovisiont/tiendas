@@ -59,7 +59,7 @@
 					  	<li><a href="javascript:void(0)" data-ruta="<?php echo base_url().'Inventario/exportar_excel';?>" id="exportar_excel">Exportar Inventario</a></li>
 					  	<li><a href="#modal_modificar_inventario" data-toggle="modal">Modificar Inventario</a></li>
 
-					  	<li><a  <a href="<?= base_url().'index.php/inventario/historial'?>" >Historial</a></li>
+					  <?php /*	<li><a  <a href="<?= base_url().'index.php/inventario/historial'?>" >Historial</a></li> */ ?>
 					  </ul>
 					 </div>
 				</div>
