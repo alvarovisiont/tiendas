@@ -142,11 +142,17 @@ class Ventas_historial extends CI_Controller
 			}	
 		}
 		
+		if(!empty($where)){
+			$where.= " AND usu.id = ".$this->session->userdata('id');
+		}else{
+			$where.= "usu.id = ".$this->session->userdata('id');
+		}
+
 		if($this->session->userdata('nivel') == 1){		
 				$datos = $this->Ventas_Historial_Model->traer_datos_cliente($where);
-			}else{	
-				$datos = $this->Ventas_Historial_Model->traer_datos_cliente_id($this->session->userdata('id'),$where);	
-			}
+		}else{	
+			$datos = $this->Ventas_Historial_Model->traer_datos_cliente_id($this->session->userdata('id'),$where);	
+		}
 
 			echo json_encode($datos);
 	}
