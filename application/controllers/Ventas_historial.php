@@ -22,7 +22,9 @@ class Ventas_historial extends CI_Controller
 				$datos = $this->Ventas_Historial_Model->traer_datos_cliente();
 				$empleados = $this->Usuarios_Model->traer_trabajadores();
 			}else{	
-				$datos = $this->Ventas_Historial_Model->traer_datos_cliente_id($this->session->userdata('id'));	
+				$where= "usu.id = ".$this->session->userdata('id');
+
+				$datos = $this->Ventas_Historial_Model->traer_datos_cliente_id($this->session->userdata('id'),$where);	
 				$empleados = $this->Usuarios_Model->traer_trabajadores($this->session->userdata('id'));
 			}
 

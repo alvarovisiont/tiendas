@@ -33,7 +33,7 @@ class Admin extends CI_Controller
 			$this->load->model('Empleados_Model');
 
 			$datos = $this->Admin_Model->traer_datos();
-			$data = $this->Admin_Model->traer_compras_ventas();
+			$data = $this->Admin_Model->graficas_compra_ventas();
 			$empleados = $this->Usuarios_Model->traer_trabajadores();
 
 			$this->load->view("encabezado");

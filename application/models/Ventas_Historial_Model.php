@@ -50,7 +50,7 @@ class Ventas_Historial_Model extends CI_Model
          }
          else
          {
-            return false;
+            return [];
          }
    }
 
@@ -78,7 +78,7 @@ class Ventas_Historial_Model extends CI_Model
          }
          else
          {
-            return false;
+            return [];
          }
    }
 

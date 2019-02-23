@@ -47,22 +47,22 @@ $(function(){
 
     <?php
       foreach ($descuentos as $row) {
-        if($row->nombre === "Descuento Debito"){
+        if($row->tipo == 1){
           ?> 
             porcentaje_debito = parseFloat(<?php echo $row->cantidad; ?>)
             id_descuento_debito = parseFloat(<?php echo $row->id; ?>)
           <?php
-        }else if($row->nombre === "Descuento Efectivo"){
+        }else if($row->tipo == 3){
           ?> 
             porcentaje_efectivo = parseFloat(<?php echo $row->cantidad; ?>)
             id_descuento_efectivo = parseFloat(<?php echo $row->id; ?>)
           <?php
-        }else if($row->nombre === "Descuento Visa"){
+        }else if($row->tipo == 2){
           ?> 
           porcentaje_visa = parseFloat(<?php echo $row->cantidad; ?>)
           id_descuento_visa = parseFloat(<?php echo $row->id; ?>)
           <?php
-        }else if($row->nombre === "Descuento Transferencia"){
+        }else if($row->tipo == 4){
           ?>
           porcentaje_transferencia = parseFloat(<?php echo $row->cantidad; ?>)
           id_descuento_transferencia = parseFloat(<?php echo $row->id; ?>)
@@ -550,8 +550,10 @@ $(function(){
 
         var total_span,
             porcentaje = 0;
-
+        console.log('aqui')
+        
         if(isDiscountActive){
+          
 
           porcentaje = (sub_total_limpio * porcentaje_debito) / 100;
           total_span = parseFloat(sub_total_limpio) - parseFloat(porcentaje);
@@ -565,14 +567,18 @@ $(function(){
           $('#porcentaje_descuento').val(porcentaje_debito)
 
           if(!validate){
+            console.log(porcentaje_debito,'aqui validate')
             $('#monto_pago').val(total_span)
             total_span = formatNumber(total_span,2,',','.');
             $("#total span").text(total_span);
           }else{
+            console.log(porcentaje_debito,'no validate')
             return [total_span,porcentaje,id_descuento_debito];
           }
 
         }else{
+
+          console.log('aqui122')
 
           total_span = parseFloat(total_total)
 

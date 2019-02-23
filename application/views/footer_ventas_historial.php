@@ -103,7 +103,7 @@
           dataType: "JSON",
           success: function(data){
             
-
+            
             let tabla1 = $('#tabla')
 
             tabla1.DataTable().destroy()

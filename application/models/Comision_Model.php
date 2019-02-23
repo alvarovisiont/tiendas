@@ -16,8 +16,13 @@ class Comision_Model extends CI_Model
     }else{
 
       if($idempleado){
-        $search.= " and comision.id_empleado = ".$idempleado;
+        if($search){
+          $search.= " and comision.id_empleado = ".$idempleado;
+        }else{
+          $search.= " comision.id_empleado = ".$idempleado;
+        }
       }
+
       $sql = "comision.*,usuarios.nombre_apellido,ventas.factura,
        TO_CHAR(comision.created_at,'DD-MM-YYYY HH:MI:SS') as fecha1 ,
         CASE comision.type 
@@ -43,7 +48,11 @@ class Comision_Model extends CI_Model
   public function get_total_by_month($month = null,$search = null, $idempleado = null){
 
       if($idempleado){
-        $search.= " and comision.id_empleado = ".$idempleado;
+        if($search){
+          $search.= " and comision.id_empleado = ".$idempleado;
+        }else{
+          $search.= " comision.id_empleado = ".$idempleado;
+        }
       }
 
       if(!$search){
@@ -52,13 +61,13 @@ class Comision_Model extends CI_Model
 
       $sql = "SELECT * from (
                 SELECT
-                EXTRACT(MONTH from t1.created_at) as mes,
-                EXTRACT(YEAR from t1.created_at) as año, 
+                EXTRACT(MONTH from comision.created_at) as mes,
+                EXTRACT(YEAR from comision.created_at) as año, 
                 SUM(monto)as total, usuarios.nombre_apellido,
-                t1.id_empleado
-                FROM comision as t1
-                INNER JOIN usuarios ON usuarios.id = t1.id_empleado
-                WHERE $search AND t1.type = true
+                comision.id_empleado
+                FROM comision as comision
+                INNER JOIN usuarios ON usuarios.id = comision.id_empleado
+                WHERE $search AND comision.type = true
                 GROUP BY mes,año,nombre_apellido,id_empleado
               ) as t1 order by año desc ,mes desc";
 
@@ -68,7 +77,11 @@ class Comision_Model extends CI_Model
   public function get_total_by_month_anulate($month = null,$search = null, $idempleado = null){
 
       if($idempleado){
-        $search.= " and comision.id_empleado = ".$idempleado;
+        if($search){
+          $search.= " and comision.id_empleado = ".$idempleado;
+        }else{
+          $search.= " comision.id_empleado = ".$idempleado;
+        }
       }
 
       if(!$search){
@@ -77,13 +90,13 @@ class Comision_Model extends CI_Model
 
       $sql = "SELECT * from (
                 SELECT
-                EXTRACT(MONTH from t1.anulate_at) as mes,
-                EXTRACT(YEAR from t1.anulate_at) as año, 
+                EXTRACT(MONTH from comision.anulate_at) as mes,
+                EXTRACT(YEAR from comision.anulate_at) as año, 
                 SUM(monto)as total, usuarios.nombre_apellido,
-                t1.id_empleado
-                FROM comision as t1
-                INNER JOIN usuarios ON usuarios.id = t1.id_empleado
-                WHERE $search AND t1.type = false
+                comision.id_empleado
+                FROM comision as comision
+                INNER JOIN usuarios ON usuarios.id = comision.id_empleado
+                WHERE $search AND comision.type = false
                 GROUP BY mes,año,nombre_apellido,id_empleado
               ) as t1 order by año desc ,mes desc";
 
