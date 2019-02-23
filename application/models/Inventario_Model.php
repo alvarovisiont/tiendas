@@ -121,6 +121,8 @@ class Inventario_Model extends CI_Model
          $this->db->where('inventario.mostrar', 0);   
 
          $this->db->order_by("grupo","ASC");
+         $this->db->order_by("nombre","ASC");
+
          $query = $this->db->get();
          if($query->num_rows() > 0)
          {

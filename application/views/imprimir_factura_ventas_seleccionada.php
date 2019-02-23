@@ -6,7 +6,7 @@
 <style type="text/css">
 
 html {
-  margin: 0;
+  margin: -10;
 }
 body {
   font-family: "Arial", serif;
@@ -93,8 +93,8 @@ body {
    <table border="1" class="table3" >
   
      <tr>
-      <th align="center" width="20%">CODIGO</th>
-      <th align="center" width="45%">DESCRIPCIÓN</th>
+      <th align="center" width="10%">CODIGO</th>
+      <th align="center" width="55%">DESCRIPCIÓN</th>
       <th align="center" width="5%">CANT</th>
       <th align="center" width="15%">PRECIO</th>
       <th align="center" width="15%">IMPORTE</th> 
@@ -120,8 +120,8 @@ body {
 
          ?>
           <tr>
-              <td align="center"  height="4" width="20%" class="td1"> <?php echo $row->ref; ?></td>
-                 <td align="center" height="4" width="45%" class="td1"> <?php echo $row->nombre_articulo; ?></td>
+              <td align="center"  height="4" width="10%" class="td1"> <?php echo $row->ref; ?></td>
+                 <td align="center" height="4" width="55%" class="td1"> <?php echo $row->nombre_articulo; ?></td>
                  <td align="center" height="4" width="5%" class="td1"><?php echo $row->cantidad; ?></td>
                  <td align="center" height="4" width="15%" class="td1"><?php echo $pre = number_format($row->precio,2,",","."); ?></td>
                  
@@ -136,8 +136,8 @@ body {
      ?>   
 
  <tr>
-    <td align="center" width="20%" class="td1" > &nbsp;</td>
-      <td align="center" width="45%" class="td1"> &nbsp;</td>
+    <td align="center" width="10%" class="td1" > &nbsp;</td>
+      <td align="center" width="55%" class="td1"> &nbsp;</td>
       <td align="center" width="5%" class="td1" > &nbsp;</td>
       <td align="center" width="15%"  class="td1"> &nbsp;</td>
    
@@ -145,8 +145,8 @@ body {
      </tr>
 
  <tr>
-    <td align="center" width="20%" class="td1" > &nbsp;</td>
-      <td align="center" width="45%" class="td1"> &nbsp;</td>
+    <td align="center" width="10%" class="td1" > &nbsp;</td>
+      <td align="center" width="55%" class="td1"> &nbsp;</td>
       <td align="center" width="5%" class="td1" > &nbsp;</td>
       <td align="center" width="15%"  class="td1"> &nbsp;</td>
    
@@ -154,8 +154,8 @@ body {
      </tr>
 
 <tr>
-    <td align="center" width="20%" class="td1" > &nbsp;</td>
-      <td align="center" width="45%" class="td1"> &nbsp;</td>
+    <td align="center" width="10%" class="td1" > &nbsp;</td>
+      <td align="center" width="55%" class="td1"> &nbsp;</td>
       <td align="center" width="5%" class="td1" > &nbsp;</td>
       <td align="center" width="15%"  class="td1"> &nbsp;</td>
    
@@ -165,7 +165,7 @@ body {
 
  </table> 
 
-  <table border="1" class="table3" >
+  <table border="1" class="table2" >
   
      <tr>
       <th align="center" width="20%">Subtotal</th>
@@ -196,7 +196,7 @@ body {
      <tr>
       <td align="center" width="70%"> </td>
       <td align="center"  width="15%"> Forma de Pago</td>
-        <td align="center"  width="15%"> <?php echo $row->tipo_venta; ?></td>
+       <td align="center"  width="15%"> <?php echo $row->tipo_venta; ?></td>
      </tr>
    </table>
 
