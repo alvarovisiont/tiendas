@@ -41,7 +41,9 @@ $(function(){
         id_descuento_efectivo = null,
         id_descuento_visa = null,
         id_descuento_transferencia = null,
-        porcentaje_transferencia = null
+        porcentaje_transferencia = null,
+        mixto1 = "",
+        mixto2 = ""
 
     
 
@@ -344,6 +346,28 @@ $(function(){
         $("#grabar_compra").prop('disabled', false);
     });
 
+    function reset_values(){
+
+      $('#monto_dolares').prop('required',false)
+      $('#banco_debito').prop('required',false)
+      $('#nro_transferencia').prop('required',false)
+      $('#banco_transferencia').prop('required',false)
+      $('#monto_debito').prop('required',false)
+      $('#monto_debito').val(0)
+      $('#monto_dolares').prop('required',false)
+      $('#monto_dolares').val(0)
+      $('#monto_trans').prop('required',true)
+      $('#monto_trans').val(0)
+      $('#monto_pago').val(0)
+      $('.monto_debito').hide()
+      $('.section_trans').show()
+
+      $('#monto_pago').prop({
+        required: true,
+        readonly: false
+      })
+    }
+
     $('#aplicar_descuento').click(function(e){
       
       var validate = false
@@ -393,13 +417,141 @@ $(function(){
 
     });
 
+    /* ===========================================================
+                      SECCIÓN MODAL PAGO MIXTO
+    =============================================================*/
+
+    function showPaymentsMixFields(val){
+      val = parseInt(val,10)
+      
+      /*
+        1)Débito
+        2)Visa
+        3)Efectivo
+        4)Transferencia
+      */
+
+      switch(val){
+        
+        case 1:
+          $('#section_debito').show()
+          $('#banco_debito').prop('required',true)
+          $('.monto_debito').show()
+          $('#monto_debito').prop('required',true)
+        break;
+
+        case 2:
+          $('#section_mixto').show()
+          $('#monto_dolares').prop('required',true)
+        break;
+
+        case 3:
+
+          $('#monto_pago').prop({
+            required: true,
+            readonly: false
+          })
+
+        break;
+
+        case 4:
+          $('#section_trans').show()
+          $('.section_trans').show()
+          $('#monto_trans').prop('required',true)
+        break;
+      }
+
+    }
+
+    function calculate_visa_restante(val){
+
+      let selector = ""
+      switch(parseInt(val,10)){
+        case 1:
+          selector = "monto_debito"
+        break;
+        case 3:
+          selector = "monto_pago"
+        break;
+        case 4:
+          selector = "monto_trans"
+        break;
+      }
+
+      $('#'+selector).keyup(function(e){
+        let valor = parseFloat($(this).val()),
+            result = 0
+
+        result = (total_total - valor) / dolar_value
+        result = formatNumber(result,2,',','.')
+
+        $('#monto_dolares_mixto_restante').val(result)
+      })
+    }
+
+    $('#btn_modal_mixto').click(function(e){
+      let val1 = $('#campo_1_mixto').val(),
+          val2 = $('#campo_2_mixto').val()
+
+      if(val1 !== "" && val2 !== ""){
+        
+        if(val1 === val2){
+          
+          swal({
+            title: "Ambos campos no pueden ser los mismos",
+            type: "warning",
+            showButtonCancel: false,
+            showButtonConfirm: false,
+            timer: 2000
+          })
+
+        }else{
+          
+          $('#monto_pago').prop({
+            required: false,
+            readonly: true
+          })
+
+          showPaymentsMixFields(val1)
+          showPaymentsMixFields(val2)
+          
+          mixto1 = val1
+          mixto2 = val2
+          calculate_discount('mixto',null)
+
+          $('#modal_mixto').modal('hide')
+          $("#grabar_compra").prop('disabled', false);
+          
+          if(val1 == 2 || val2 == 2){
+            $('#monto_dolares_mixto_restante').val(total_total / dolar_value)
+            if(val1 == 2){
+              calculate_visa_restante(val2)
+            }else{
+              calculate_visa_restante(val1)
+            }
+          }
+        }
+
+      }else{
+        swal({
+          title: "Debe escojer ambos campos",
+          type: "warning",
+          showButtonCancel: false,
+          showButtonConfirm: false,
+          timer: 2000
+        })
+      }
+
+    })
+
+    /* ===========================================================
+                    FIN SECCIÓN MODAL PAGO MIXTO
+    =============================================================*/
+
     function hide_sections_payment_method(type){
       type = parseInt(type)
-      
-      $('#monto_dolares').prop('required',false)
-      $('#banco_debito').prop('required',false)
-      $('#nro_transferencia').prop('required',false)
-      $('#banco_transferencia').prop('required',false)
+
+      reset_values()
 
       if(type === 1){
         
@@ -421,7 +573,9 @@ $(function(){
         $('#section_debito').hide()
         $('#section_trans').hide()
         $('#section_dolar_cancelar').hide()
-        $('#monto_dolares').prop('required',true)
+        $('#section_mixto').hide()
+        //$('#monto_dolares').prop('required',true)
+        $('#modal_mixto').modal('show')
 
       }else if(type === 4){
         
@@ -550,7 +704,6 @@ $(function(){
 
         var total_span,
             porcentaje = 0;
-        console.log('aqui')
         
         if(isDiscountActive){
           
@@ -577,8 +730,6 @@ $(function(){
           }
 
         }else{
-
-          console.log('aqui122')
 
           total_span = parseFloat(total_total)
 
@@ -636,15 +787,113 @@ $(function(){
         }
 
       }else{
-        $('#porcentaje_descuento').val(0)
-        $("#total span").text(formatNumber(total_total,2,',','.'));
-        return [total_total,porcentaje,null];
+        
+        /* =========================================
+                            Mixto  
+        ============================================ */
+
+        let porcentaje_aux_array = calculate_min_value_percentaje_discount(mixto1,mixto2),
+        porcentaje_aux = porcentaje_aux_array[0],
+        id_descuento_aux = porcentaje_aux_array[1],
+        total_span,
+        porcentaje = 0;
+
+        if(isDiscountActive){
+
+          porcentaje = (sub_total_limpio * porcentaje_aux) / 100;
+          total_span = parseFloat(sub_total_limpio) - parseFloat(porcentaje);
+
+          sub_total_limpio = total_span;
+          iva_limpio = (sub_total_limpio * iva_conf) / 100
+          total_total = sub_total_limpio + iva_limpio
+
+          total_span = total_total
+
+          $('#porcentaje_descuento').val(porcentaje_aux)
+
+          if(!validate){
+            total_span = formatNumber(total_span,2,',','.');
+            $("#total span").text(total_span);
+          }else{
+            return [total_span,porcentaje,id_descuento_aux];
+          }        
+
+        }else{
+          total_span = parseFloat(total_total)
+
+          $('#porcentaje_descuento').val(0)
+          
+          if(!validate){
+            total_span = formatNumber(total_span,2,',','.');
+            $("#total span").text(total_span);
+          }else{
+            return [total_span,null,id_descuento_aux];
+          }                  
+
+        }
       }
         
     }
 
-    $("#form_agregar_compra").submit(function(e)
-    {
+    function calculate_min_value_percentaje_discount(val,val2){
+      let max1 = search_min_value_percentaje(val),
+          max2 = search_min_value_percentaje(val2)
+
+      if(max1[0] <= max2[0]){
+        return max1
+      }else{
+        return max2
+      }
+    }
+
+    function search_min_value_percentaje(val){
+
+      let porcentaje_aux = 0,
+          id_descuento_aux = 0
+
+      if(val == 1){
+        porcentaje_aux = porcentaje_debito
+        id_descuento_aux = id_descuento_debito
+      }else if(val == 2){
+        porcentaje_aux = porcentaje_visa
+        id_descuento_aux = id_descuento_visa
+      }else if(val == 3){
+        porcentaje_aux = porcentaje_efectivo
+        id_descuento_aux = id_descuento_efectivo
+      }else if(val == 4){
+        porcentaje_aux = porcentaje_transferencia
+        id_descuento_aux = id_descuento_transferencia
+      }
+
+      return [porcentaje_aux,id_descuento_aux]
+    }
+
+    function search_monto_pagado_mixto(val){
+
+      let monto_aux = 0
+
+      if(val == 1){
+        monto_aux = parseFloat($('#monto_debito').val())
+      }else if(val == 2){
+        let dolares = parseFloat($('#monto_dolares').val())
+        monto_aux = dolares * dolar_value
+      }else if(val == 3){
+        monto_aux = parseFloat($('#monto_pago').val())
+      }else if(val == 4){
+        monto_aux = parseFloat($('#monto_trans').val())
+      }
+
+      return monto_aux
+    }
+
+    function return_monto_pagado_mixto(){
+
+      let val1 = search_monto_pagado_mixto(mixto1),
+          val2 = search_monto_pagado_mixto(mixto2)
+      return val1 + val2
+    }
+
+    $("#form_agregar_compra").submit(function(e){
         e.preventDefault()
 
         var total_pagar = total_total,
@@ -667,8 +916,7 @@ $(function(){
           siglas = " $";
 
         }else if(metodo_pago === "mixto"){
-          let dolar_to_bs = monto_pagado_dolares * dolar_value
-          monto_pagado = parseFloat(monto_pagado) + dolar_to_bs
+          monto_pagado = return_monto_pagado_mixto()
         }
 
         var total_pagar_descuento = calculate_discount(metodo_pago,true),
@@ -681,8 +929,7 @@ $(function(){
         $('#id_descuento').val(id_descuento)
 
 
-        if(parseFloat(monto_pagado) < parseFloat(total_pagar))
-        {
+        if(parseFloat(monto_pagado) < parseFloat(total_pagar)){
           
           let monto = 0
 
@@ -690,9 +937,7 @@ $(function(){
           
             let dolar_total_pagar = parseFloat(total_pagar) / dolar_value
             monto = dolar_total_pagar - monto_pagado_limpio
-          
-          }else if(metodo_pago === "mixto"){
-            monto = parseFloat(total_pagar) - parseFloat(monto_pagado);
+
           }else{
             monto = parseFloat(total_pagar) - parseFloat(monto_pagado);
           }
@@ -705,6 +950,10 @@ $(function(){
         }
         else
         {
+            if(metodo_pago === "mixto") {
+              $('#tipos_mixto').val(mixto1+','+mixto2)
+            }
+
             var vuelto = parseFloat(monto_pagado) - parseFloat(total_pagar);
             $("#vuelto").val(vuelto);
             $("#total_subtotal").val(sub_total_limpio)

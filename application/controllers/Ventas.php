@@ -45,9 +45,16 @@ class Ventas extends CI_Controller
 				$option_bancos_debito.= "<option value='$row->id'>$row->nombre</option>";
 			}
 
+			$field_mixtos = "
+			<option value=''>--Seleccione--</option>
+			<option value='1'>Debito</option>
+			<option value='2'>Visa</option>
+			<option value='3'>Efectivo</option>
+			<option value='4'>Transferencia</option>";
+
 			$this->Ventas_Model->eliminar_articulos_flotantes();
 			$this->load->view("encabezado_compras");
-			$this->load->view("ventas", compact('clientes', 'articulos','workers','option_bancos','seller','config','all_discounts','option_bancos_debito'));
+			$this->load->view("ventas", compact('clientes', 'articulos','workers','option_bancos','seller','config','all_discounts','option_bancos_debito','field_mixtos'));
 			$this->load->view("footer_ventas",compact('config','descuentos'));
 		}
 		else
@@ -130,12 +137,12 @@ class Ventas extends CI_Controller
 			$config = $this->Configuracion_Finanza_Model->traer_datos();
 
 			$array_cliente = [
-								'nombre' => $this->input->post('nombre_cliente', TRUE),
-								'cedula' => $this->input->post('cedula_cliente', TRUE),
-								'telefono' => $this->input->post('telefono_cliente', TRUE),
-								'direccion' => $this->input->post('direccion_cliente', TRUE),
-								'fecha_compra' => date('Y-m-d')
-							];
+				'nombre' => $this->input->post('nombre_cliente', TRUE),
+				'cedula' => $this->input->post('cedula_cliente', TRUE),
+				'telefono' => $this->input->post('telefono_cliente', TRUE),
+				'direccion' => $this->input->post('direccion_cliente', TRUE),
+				'fecha_compra' => date('Y-m-d')
+			];
 
 			$vuelto = $this->input->post('vuelto');
 			$tipo_venta = $this->input->post('metodo_pago');
@@ -157,22 +164,26 @@ class Ventas extends CI_Controller
 				'banco_debito' => $this->input->post('banco_debito'),
 				'banco_transferencia' =>  $this->input->post('banco_transferencia'),
 				'tipo_factura' =>  $this->input->post('tipo_factura'),
-				'dolar_value' => $config->dolar_value,
+				'dolar_value' => $config->dolar_today,
 				'id_descuento' => $iddescuento,
 				'monto_descuento' => $montodescuento,
 				'porcentaje_descuento' => $this->input->post('porcentaje_descuento'),
 				'sub_total' => $this->input->post('total_subtotal'),
 				'iva' => $this->input->post('total_iva'),
-
+				'monto_debito' => $this->input->post('monto_debito'),
+				'monto_transferencia' => $this->input->post('monto_trans'),
+				'tipos_mixto' => $this->input->post('tipos_mixto'),
 			];
 
-			if($tipo_venta === "transferencia"){
+			if($tipo_venta === "transferencia" || $tipo_venta === "mixto"){
 				// verificar si la transferencia ya había sido hecha antes
-				$trans = $this->Ventas_Model->verificar_transferencia($arreglo_metodo_pago['nro_transferencia'],$arreglo_metodo_pago['banco_transferencia']);
+				if($arreglo_metodo_pago['nro_transferencia']){
+					$trans = $this->Ventas_Model->verificar_transferencia($arreglo_metodo_pago['nro_transferencia'],$arreglo_metodo_pago['banco_transferencia']);
 
-				if($trans > 0){
-					echo json_encode(['r' => false, 'motivo'=> "Nro de transferencia repetido"]);
-					exit();
+					if($trans > 0){
+						echo json_encode(['r' => false, 'motivo'=> "Nro de transferencia repetido"]);
+						exit();
+					}
 				}
 			}
 

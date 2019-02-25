@@ -10,6 +10,7 @@
 			<input type="hidden" id="porcentaje_descuento" name="porcentaje_descuento" value="0">
 			<input type="hidden" id="total_subtotal" name="total_subtotal" value="0">
 			<input type="hidden" id="total_iva" name="total_iva" value="0">
+			<input type="hidden" id="tipos_mixto" name="tipos_mixto" value="">
 
 			<br>
 				<div class="form-group">
@@ -133,29 +134,47 @@
 						</div>
 					</div>
 					<div class="form-group" id="section_trans" style="display: none;">
-						<label class="control-label col-md-2">Nro° Transferencia</label>
-						<div class="col-md-4">
-							<input type="text" name="nro_transferencia" id="nro_transferencia" class="form-control">
+						<div class="row">
+							<label class="control-label col-md-3">Nro° Transferencia</label>
+							<div class="col-md-3">
+								<input type="text" name="nro_transferencia" id="nro_transferencia" class="form-control">
+							</div>
+							<label class="control-label col-md-3">Banco</label>
+							<div class="col-md-3">
+								<select name="banco_transferencia" id="banco_transferencia" class="form-control">
+									<?= $$option_bancos ?>
+								</select>
+							</div>
 						</div>
-						<label class="control-label col-md-2">Banco</label>
-						<div class="col-md-4">
-							<select name="banco_transferencia" id="banco_transferencia" class="form-control">
-								<?= $$option_bancos ?>
-							</select>
+						<div class="row section_trans" style="display: none">
+							<br>
+							<label class="control-label col-md-3">Monto Transferencia</label>
+							<div class="col-md-3">
+								<input type="number" name="monto_trans" id="monto_trans" class="form-control" value="0" step="any">
+							</div>
 						</div>
+							
 					</div>
 					<div class="form-group" id="section_debito" style="display: none;">
 						<label class="control-label col-md-3">Banco</label>
 						<div class="col-md-3">
 							<select name="banco_debito" id="banco_debito" class="form-control">
-								<?= $$option_bancos_debito ?>
-							</select>
+								<?= $option_bancos_debito ?>
+							</select>	
+						</div>
+						<label class="control-label col-md-3 monto_debito" style="display: none">Monto Debito</label>
+						<div class="col-md-3 monto_debito" style="display: none">
+							<input type="number" name="monto_debito" id="monto_debito" class="form-control" value="0" step="any">
 						</div>
 					</div>
 					<div class="form-group" id="section_mixto" style="display: none;">
 						<label class="control-label col-md-3">Cantidad en Visa</label>
 						<div class="col-md-3">
 							<input type="number" name="monto_dolares" id="monto_dolares" class="form-control" value="0" step="any">
+						</div>
+						<label class="control-label col-md-3">Restante</label>
+						<div class="col-md-3">
+							<input type="text" id="monto_dolares_mixto_restante" class="form-control" readonly="">
 						</div>
 					</div>
 					<div class="form-group">
@@ -182,7 +201,7 @@
 							<button type="submit" class="btn btn-primary btn-block btn-md" disabled="" id="grabar_compra">Grabar Compra&nbsp;&nbsp;<i class="fa fa-check"></i></button>
 						</div>
 					</div>
-
+					<br><br>
 				</section>
 			</form>
 		</div>
@@ -348,6 +367,40 @@
 	      </div>
 	      <div class="modal-footer">
 	      	<button class="btn btn-primary btn-md" type="button" data-dismiss="modal">Cerrar&nbsp;<i class="fa fa-remove"></i></button>
+	      </div>
+    	</div>
+	</div>
+</div>
+
+<div class="modal fade" id="modal_mixto" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+  	<div class="modal-dialog modal-lg" role="document">
+    	<div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	        <h3 class="text-center">Campos para el pago Mixto</h3>
+	      </div>
+	      <div class="modal-body">
+	      	<h4 class="text-center">Por favor escoja los 2 tipos de pago</h4>
+	      	<hr>
+	      	<div class="row">
+	      		<div class="col-md-6 col-sm-6 col-xs-12">
+	      			<label class="control-label">Campo1</label>
+	      			<select class="form-control" id="campo_1_mixto">
+	      				<?= $field_mixtos ?>
+	      			</select>
+	      		</div>
+	      		<div class="col-md-6 col-sm-6 col-xs-12">
+	      			<label class="control-label">Campo2</label>
+	      			<select class="form-control" id="campo_2_mixto">
+	      				<?= $field_mixtos ?>
+	      			</select>
+	      		</div>
+	      	</div>
+	      </div>
+	      <div class="modal-footer">
+	      	<button class="btn btn-success btn-md" type="button" id="btn_modal_mixto">Aceptar&nbsp;<i class="fa fa-remove"></i></button>
 	      </div>
     	</div>
 	</div>

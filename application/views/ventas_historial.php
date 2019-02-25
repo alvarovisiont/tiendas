@@ -32,7 +32,7 @@
 						</thead>
 						<tbody class="text-center">
 							<?php
-								
+									
 									foreach ($datos as $row) {
 
 										$anulado = $row->status == 1 ? "" : "#F28D62";
@@ -60,7 +60,7 @@
 												<td>$row->factura</td>
 												<td>".date('d-m-Y' ,strtotime($row->fecha_venta))."</td>
 												<td>".number_format($row->monto_pagado,2,',','.')."</td>
-												<td>$row->tipo_venta</td>
+												<td>".type_payment($row->tipo_venta,json_decode($row->type_mixtos))."</td>
 												<td>$row->login - $row->usuario</td>
 												<td>".$detalle."</td>
 												<td>".$imprimir."</td>

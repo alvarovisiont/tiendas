@@ -195,11 +195,6 @@ class Ventas_Model extends CI_Model
 
    public function grabar_compra($monto, $tipo, $vuelto,$arreglo_pago)
    {
-      return $this->verificar($monto, $tipo, $vuelto,$arreglo_pago);
-   }
-
-   private function verificar($monto, $tipo, $vuelto,$arreglo_pago)
-   {
       $max_id = $this->db->query("SELECT factura,prefactura from configuracion_empresa")->row();
       
       $max_id = $arreglo_pago['tipo_factura'] == 1 ? $max_id->factura + 1 : $max_id->prefactura  + 1;
@@ -227,12 +222,25 @@ class Ventas_Model extends CI_Model
       ];      
 
       if($tipo === "mixto"){
+         
          $array['monto_dolares'] = $arreglo_pago['monto_dolares'];
+         $array['monto_debito'] = $arreglo_pago['monto_debito'];
+         $array['monto_transferencia'] = $arreglo_pago['monto_transferencia'];
+         $array['monto_efectivo'] = $monto;
+         $array['monto_dolar_configuracion'] = $arreglo_pago['monto_dolares'] ? $arreglo_pago['dolar_value'] : null;
+         $array['id_banco_debito'] = $arreglo_pago['banco_debito'];
+         $array['nro_transferencia'] = $arreglo_pago['nro_transferencia'];
+         $array['id_banco'] = $arreglo_pago['banco_transferencia'];
+
+         $array['monto_pagado'] = $this->determinate_amount_pay($array['monto_dolares'],$array['monto_debito'],$array['monto_transferencia'],$array['monto_efectivo'],$array['monto_dolar_configuracion']);
+
+         $array['tipos_mixto'] = "{".$arreglo_pago['tipos_mixto']."}";
+
       }elseif($tipo === "transferencia"){
          $array['nro_transferencia'] = $arreglo_pago['nro_transferencia'];
          $array['id_banco'] = $arreglo_pago['banco_transferencia'];
       }elseif($tipo === "debito"){
-         $array['id_banco'] = $arreglo_pago['banco_debito'];
+         $array['id_banco_debito'] = $arreglo_pago['banco_debito'];
       }elseif($tipo === "visa"){
          $array['monto_dolares'] = $monto;
          $array['monto_pagado'] = $monto * $arreglo_pago['dolar_value'];
@@ -261,9 +269,19 @@ class Ventas_Model extends CI_Model
          $this->db->query($sql);
       }
 
-   return $id_venta;
-      
+      return $id_venta;
    }
+
+   private function determinate_amount_pay($debito,$visa,$efectivo,$trans,$dolar_configuration){
+      $debito = $debito ? $debito : 0;
+      $visa = $visa ? $visa : 0;
+      $efectivo = $efectivo ? $efectivo : 0;
+      $trans = $trans ? $trans : 0;
+
+      return $debito + ($visa * $dolar_configuration) + $efectivo + $trans;
+   }
+
+
 
    private function set_cantidad_inventario($type,$id_venta){
       $this->db->select('cantidad, nombre_articulo');
