@@ -35,7 +35,7 @@
 
 					<input type="button" value="Login" onclick="submitForm()">
 					<button type="submit" id="btn_form" style="display: none"></button>
-					<a href="">Forgot password?</a>
+					<a href="">Olvido su Contraseña?</a>
 					<p id="aviso" class="alert alert-danger mt-5" style="display: none;"></p>
 				</div>
 			</form>
