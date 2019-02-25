@@ -400,7 +400,7 @@
 	      	</div>
 	      </div>
 	      <div class="modal-footer">
-	      	<button class="btn btn-success btn-md" type="button" id="btn_modal_mixto">Aceptar&nbsp;<i class="fa fa-remove"></i></button>
+	      	<button class="btn btn-success btn-md" type="button" id="btn_modal_mixto">Aceptar&nbsp;<i class="fa fa-thumbs-up"></i></button>
 	      </div>
     	</div>
 	</div>
