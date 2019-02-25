@@ -27,7 +27,7 @@
 						<select name="perfil" id="perfil" class="form-control" required="">
 							<option value=""></option>
 							<option value="1">Administrador</option>
-							<option value="2">Contador</option>
+							<?php /* <option value="2">Contador</option> */ ?>
 							<option value="3">Trabajador</option>
 						</select>
 					</div>

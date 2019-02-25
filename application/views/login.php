@@ -167,8 +167,9 @@
  <div class="container" id="contenedor">
         <div class="card card-container">
             <!-- <img class="profile-img-card" src="//lh3.googleusercontent.com/-6V8xOA6M7BA/AAAAAAAAAAI/AAAAAAAAAAA/rzlHcD0KYwo/photo.jpg?sz=120" alt="" /> -->
-            <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
-            <p id="profile-name" class="profile-name-card"></p>
+            <img id="profile-img" class="profile-img-card" src="./img/logotipo.png" />
+
+           <p id="profile-name" class="profile-name-card"></p>
             <form class="form-signin" action="<?php echo base_url();?>Login/verificar" method="POST" id="form_registro">
                 <input type="text" id="usuario" name="usuario" class="form-control" placeholder="Usuario" required autofocus>
                 <input type="password" id="clave" name="clave" class="form-control" placeholder="Clave" required>
