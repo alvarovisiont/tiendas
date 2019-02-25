@@ -28,8 +28,12 @@
 		<div class="white-panel">
 			<form class="form-signin" action="" method="POST" id="form_registro">
 				<div class="login-show">
-					<h2>LOGIN</h2>
-					
+					<div class="row">
+						<div class="offset-md-3 col-md-4">
+							<img id="profile-img" class="profile-img-card" src="./img/logotipo.png"  width="160px" />
+						</div>
+					</div>
+					</h2>
 					<input type="text" id="usuario" name="usuario" placeholder="Usuario" required="" class="form-control">
 					<input type="password" id="clave" name="clave" class="form-control" placeholder="Clave" required="">
 
