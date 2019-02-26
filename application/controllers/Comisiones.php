@@ -135,7 +135,7 @@ class Comisiones extends CI_Controller
 				
 			$data = $this->Comision_Model->get(null,$where);
 			$datos= $this->Comision_Model->get_total_by_month(null,$where);
-			$datos_anulate = $this->Comision_Model->get_total_by_month_anulate(null,$where);
+			//$datos_anulate = $this->Comision_Model->get_total_by_month_anulate(null,$where);
 
 	  }else{
 			$data = $this->Comision_Model->get(null,$where, $this->session->userdata('id'));
