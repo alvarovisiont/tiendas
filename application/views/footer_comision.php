@@ -81,7 +81,7 @@
               data: grupal,
               columns: [
                 {"data": "nombre_apellido"},
-                {"data": "total", "render": function (total) {
+                {"data": "total_nuevo", "render": function (total) {
                   return `<span class='badge letras' style='background-color: darkred; color: white;'>${formatNumber(total,2,',','.')}</span>`
                 }},
                 {"data": "mes", "render" : function (mes) {

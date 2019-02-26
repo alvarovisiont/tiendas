@@ -56,11 +56,11 @@
 						<tbody class="text-center">
 							<?php
 
-								foreach ($data_by_month as $row) 
+								foreach ($datos as $row) 
 								{
 									echo "<tr>
 											<td>$row->nombre_apellido</td>
-											<td><span class='badge letras' style='background-color: darkred; color: white;'>".number_format($row->total,2,',','.')."</span></td>
+											<td><span class='badge letras' style='background-color: darkred; color: white;'>".number_format($row->total_nuevo,2,',','.')."</span></td>
 											<td>".month_return($row->mes)."</td>
 											<td>$row->año</td>
 										</tr>";

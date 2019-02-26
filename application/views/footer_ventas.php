@@ -145,6 +145,16 @@ $(function(){
       sub_total_respaldo = sub_total_limpio
     }
 
+    function transform_amount_visa(amount,type){
+      amount = parseFloat(amount)
+      if(type){
+        return amount * dolar_value
+      }else{
+        let result = parseFloat((amount / dolar_value).toFixed(2))
+        return result 
+      }
+    }
+
     $("#tabla_clientes tbody").on('click', 'tr .escoger_cliente', function()
     {
         $("#cedula_cliente").val($(this).data('cedula'));
@@ -361,6 +371,8 @@ $(function(){
       $('#monto_pago').val(0)
       $('.monto_debito').hide()
       $('.section_trans').show()
+      $("#monto_suficiente").html('').hide();
+      $("#falta_dinero").html('');
 
       $('#monto_pago').prop({
         required: true,
@@ -523,7 +535,8 @@ $(function(){
           $("#grabar_compra").prop('disabled', false);
           
           if(val1 == 2 || val2 == 2){
-            $('#monto_dolares_mixto_restante').val(total_total / dolar_value)
+            let val_format = formatNumber(total_total / dolar_value,2,',','.')
+            $('#monto_dolares_mixto_restante').val(val_format)
             if(val1 == 2){
               calculate_visa_restante(val2)
             }else{
@@ -897,7 +910,7 @@ $(function(){
         e.preventDefault()
 
         var total_pagar = total_total,
-        monto_pagado = $("#monto_pago").val(),
+        monto_pagado = parseFloat($("#monto_pago").val()),
         monto_pagado_limpio = monto_pagado,
         metodo_pago  = '',
         monto_pagado_dolares = parseFloat($('#monto_dolares').val()),
@@ -910,15 +923,6 @@ $(function(){
           }
         })
 
-        if(metodo_pago === "visa"){
-
-          monto_pagado = parseFloat(monto_pagado) * dolar_value
-          siglas = " $";
-
-        }else if(metodo_pago === "mixto"){
-          monto_pagado = return_monto_pagado_mixto()
-        }
-
         var total_pagar_descuento = calculate_discount(metodo_pago,true),
             id_descuento = total_pagar_descuento[2]
 
@@ -928,15 +932,23 @@ $(function(){
         $('#descuento_value').val(descuento)
         $('#id_descuento').val(id_descuento)
 
+        if(metodo_pago === "visa"){
+
+          monto_pagado = parseFloat(monto_pagado)
+          total_pagar = transform_amount_visa(total_pagar,false)
+          siglas = " $";
+
+        }else if(metodo_pago === "mixto"){
+          monto_pagado = return_monto_pagado_mixto()
+        }
 
         if(parseFloat(monto_pagado) < parseFloat(total_pagar)){
           
           let monto = 0
 
           if(metodo_pago === "visa"){
-          
-            let dolar_total_pagar = parseFloat(total_pagar) / dolar_value
-            monto = dolar_total_pagar - monto_pagado_limpio
+
+            monto = total_pagar - monto_pagado_limpio
 
           }else{
             monto = parseFloat(total_pagar) - parseFloat(monto_pagado);

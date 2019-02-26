@@ -59,22 +59,32 @@ class Comision_Model extends CI_Model
         $search = "'1'";
       }
 
-      $sql = "SELECT * from (
-                SELECT
-                EXTRACT(MONTH from comision.created_at) as mes,
-                EXTRACT(YEAR from comision.created_at) as año, 
-                SUM(monto)as total, usuarios.nombre_apellido,
-                comision.id_empleado
-                FROM comision as comision
-                INNER JOIN usuarios ON usuarios.id = comision.id_empleado
-                WHERE $search AND comision.type = true
-                GROUP BY mes,año,nombre_apellido,id_empleado
-              ) as t1 order by año desc ,mes desc";
+      $sql = "SELECT *, 
+      (total - 
+        (
+          SELECT COALESCE(sum(monto),0) from comision as t 
+          where t.type = false and t1.id_empleado = t.id_empleado
+          AND(t1.mes = EXTRACT(MONTH FROM t.anulate_at) AND t1.mes <> EXTRACT(MONTH FROM t.created_at))
+          AND ( t1.año = EXTRACT(YEAR FROM t.anulate_at)
+        )
+      )) as total_nuevo
+      from (
+        SELECT
+        EXTRACT(MONTH from comision.created_at) as mes,
+        EXTRACT(YEAR from comision.created_at) as año,
+        SUM(comision.monto) as total,
+        usuarios.nombre_apellido,
+        comision.id_empleado
+        FROM comision as comision
+        INNER JOIN usuarios ON usuarios.id = comision.id_empleado
+        WHERE $search and comision.type = true
+        GROUP BY mes,año,nombre_apellido,id_empleado
+      ) as t1 order by año desc ,mes desc";
 
     return $this->db->query($sql)->result();
   }
 
-  public function get_total_by_month_anulate($month = null,$search = null, $idempleado = null){
+  /*public function get_total_by_month_anulate($month = null,$search = null, $idempleado = null){
 
       if($idempleado){
         if($search){
@@ -92,16 +102,18 @@ class Comision_Model extends CI_Model
                 SELECT
                 EXTRACT(MONTH from comision.anulate_at) as mes,
                 EXTRACT(YEAR from comision.anulate_at) as año, 
+                EXTRACT(MONTH from comision.created_at) as mes_creado,
+                EXTRACT(YEAR from comision.created_at) as año_creado, 
                 SUM(monto)as total, usuarios.nombre_apellido,
                 comision.id_empleado
                 FROM comision as comision
                 INNER JOIN usuarios ON usuarios.id = comision.id_empleado
                 WHERE $search AND comision.type = false
-                GROUP BY mes,año,nombre_apellido,id_empleado
+                GROUP BY mes,año,nombre_apellido,id_empleado,comision.created_at
               ) as t1 order by año desc ,mes desc";
 
     return $this->db->query($sql)->result();
-  }
+  }*/
 
   public function store($data){
   	$this->db->insert('comision',$data);
