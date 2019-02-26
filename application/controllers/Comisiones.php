@@ -140,22 +140,7 @@ class Comisiones extends CI_Controller
 	  }else{
 			$data = $this->Comision_Model->get(null,$where, $this->session->userdata('id'));
 			$datos= $this->Comision_Model->get_total_by_month(null,$where, $this->session->userdata('id'));
-			$datos_anulate = $this->Comision_Model->get_total_by_month_anulate(null,$where, $this->session->userdata('id'));
-
 		}	
-
-		$data_by_month = [];
-
-		foreach ($datos as $row) {
-			
-			foreach ($datos_anulate as $row1) {
-				if(($row->mes === $row1->mes) && ($row->año === $row1->año) && 	($row->id_empleado === $row1->id_empleado)) {
-					$row->total = $row->total - $row1->total;
-				}
-			}
-
-			$data_by_month[] = $row;
-		}
 
 		$html = $this->load->view('imprimir_comisiones_venta', compact('$data_by_month', 'data'), TRUE);
 			
