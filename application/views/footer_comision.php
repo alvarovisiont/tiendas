@@ -67,11 +67,21 @@
                   return porce+" %"
                 }},
                 {"data": "monto", "render" : function(monto){
-                  return `<span class='badge letras' style='background-color: darkred; color: white;'>${formatNumber(monto,2,',','.')} Bs.S</span>`
+                  return `<span class='badge letras' style='background-color: #BC9427; color: white;'>${formatNumber(monto,2,',','.')} Bs.S</span>`
                 }},
                 {"data": "fecha1"},
-                {"data": "type"},
-                {"data": "fecha2"}
+                {"data": "type", "render" : function(type){
+                  
+                  let span = ""
+                  
+                  if(type === "debito"){
+                    span="<span class='badge letras' style='background-color: darkred; color: white; font-size: 16px;''>"+type+"</span>";
+                  }else{
+                    span="<span class='badge' style='background-color: #337ab7; color: white; font-size: 16px;'>"+type+"</span>";
+                  }
+
+                  return span
+                }}
               ]
             })
 
@@ -82,7 +92,7 @@
               columns: [
                 {"data": "nombre_apellido"},
                 {"data": "total_nuevo", "render": function (total) {
-                  return `<span class='badge letras' style='background-color: darkred; color: white;'>${formatNumber(total,2,',','.')}</span>`
+                  return `<span class='badge letras' style='background-color: #BC9427; color: white;'>${formatNumber(total,2,',','.')}</span>`
                 }},
                 {"data": "mes", "render" : function (mes) {
                   return meses[mes - 1]
@@ -101,8 +111,8 @@
 
 
   $("#exportar_pdf_bss").click(function(){
-            var ruta = $(this).data('ruta');
-            window.open(ruta, "_blank");
-        });
+    var ruta = $(this).data('ruta');
+    window.open(ruta, "_blank");
+  });
   
 </script>

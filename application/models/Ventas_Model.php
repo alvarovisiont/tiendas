@@ -405,10 +405,22 @@ class Ventas_Model extends CI_Model
    public function rollback_sell($id){
 
       $this->set_cantidad_inventario("suma",$id);
-      //$this->db->where('id_venta',$id)->delete('ventas_detalle');
+      
       $update_comision = ['type' => false, 'anulate_at' => date('Y-m-d H:i:s')];
       
-      $this->db->where('id_venta',$id)->update('comision',$update_comision);
+      $comision = $this->db->where('id_venta',$id)->get('comision')->row();
+
+      $array_comision = [
+               'id_empleado' => $comision->id_empleado,
+               'porcentaje' => $comision->porcentaje,
+               'monto' =>  $comision->monto,
+               'id_venta' => $comision->id_venta,
+               'created_at' => date('Y-m-d H:i:s'),
+               'type' => false,
+               'anulate_at' => date('Y-m-d H:i:s')
+            ];      
+      
+      $this->db->insert('comision',$array_comision);
 
       $this->db->where('id',$id)->update('ventas',['status' => 0]);
    }

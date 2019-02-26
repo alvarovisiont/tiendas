@@ -13,15 +13,12 @@
 			<br>
 			<br>
 
-			<div class="col-md-12">
-				<br>
-				<div class="col-md-offset-6 col-md-3">
-					<button type="submit" class="btn btn-danger btn-md btn-block btn-outline" data-ruta="<?php echo base_url().'Comisiones';?>" id="exportar_pdf_bss">Exportar a PDF&nbsp;&nbsp;&nbsp;<i class="fa fa-file-pdf-o"></i></button>
-				</div>
-             </div>
 			<div class="panel panel-black">
 				<div class="panel-heading">
-					<h3>Comisiones Registradas&nbsp;&nbsp;<i class="fa fa-percentaje"></i></h3>	
+					<h3>
+						Comisiones Registradas
+						<button type="submit" class="btn btn-danger btn-md btn-outline pull-right" data-ruta="<?php echo base_url().'Comisiones';?>" id="exportar_pdf_bss">Exportar a PDF&nbsp;&nbsp;&nbsp;<i class="fa fa-file-pdf-o"></i></button>
+					</h3>	
 				</div>
 				<div class="panel-body">
 					<table class="table table-streped table-hover" id="tabla">
@@ -30,21 +27,26 @@
 							<th class="text-center">Factura</th>
 							<th class="text-center">Porcentaje</th>
 							<th class="text-center">Monto</th>
-							<th class="text-center">Fecha Venta</th>
+							<th class="text-center">Fecha Registro</th>
 							<th class="text-center">Tipo</th>
-							<th class="text-center">Fecha Anulación</th>
 						</thead>
 						<tbody class="text-center">
 							<?php
 								foreach ($data as $row) {
+									$type="";
+									if($row->type === "debito"){
+										$type="<span class='badge letras' style='background-color: darkred; color: white; font-size: 16px;''>$row->type</span>";
+									}else{
+										$type="<span class='badge' style='background-color: #337ab7; color: white; font-size: 16px;'>$row->type</span>";
+									}
+
 									echo "<tr>
 											<td>$row->nombre_apellido</td>
 											<td>$row->factura</td>
 											<td>$row->porcentaje %</td>
-											<td><span class='badge letras' style='background-color: darkred; color: white;'>".number_format($row->monto,2,',','.')." Bs.S</span></td>
+											<td><span class='badge letras' style='background-color: #BC9427; color: white;'>".number_format($row->monto,2,',','.')." Bs.S</span></td>
 											<td>$row->fecha1</td>
-											<td>$row->type</td>
-											<td>$row->fecha2</td>
+											<td>$type</td>
 										</tr>";
 								}
 							?>
@@ -71,7 +73,7 @@
 								{
 									echo "<tr>
 											<td>$row->nombre_apellido</td>
-											<td><span class='badge letras' style='background-color: darkred; color: white;'>".number_format($row->total_nuevo,2,',','.')."</span></td>
+											<td><span class='badge letras' style='background-color: #BC9427; color: white;'>".number_format($row->total_nuevo,2,',','.')."</span></td>
 											<td>".month_return($row->mes)."</td>
 											<td>$row->año</td>
 										</tr>";
