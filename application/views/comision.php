@@ -1,13 +1,24 @@
+<form action="<?php echo base_url();?>comisiones/pdf" method="POST" class="form-horizontal">
+
+
+
 <div class="row">
 	<div class="container-fluid">
 		<div class="col-md-12">
 			<br>
 			<div class="col-md-6 col-sm-6 col-xl-12 col-md-offset-3 col-sm-offset-3">
-				<button class="btn btn-primary btn-block" data-target="#modal_filtros" data-toggle="modal">Filtrar&nbsp;<i class="fa fa-search"></i></button>
+				<button type="button" class="btn btn-primary btn-block" data-target="#modal_filtros" data-toggle="modal">Filtrar&nbsp;<i class="fa fa-search"></i></button>
 			</div>
 			<br>
 			<br>
 			<br>
+
+			<div class="col-md-12">
+				<br>
+				<div class="col-md-offset-6 col-md-3">
+					<button type="submit" class="btn btn-danger btn-md btn-block btn-outline" data-ruta="<?php echo base_url().'Comisiones';?>" id="exportar_pdf_bss">Exportar a PDF&nbsp;&nbsp;&nbsp;<i class="fa fa-file-pdf-o"></i></button>
+				</div>
+             </div>
 			<div class="panel panel-black">
 				<div class="panel-heading">
 					<h3>Comisiones Registradas&nbsp;&nbsp;<i class="fa fa-percentaje"></i></h3>	
@@ -104,9 +115,12 @@
 	      	</div>
 	      </div>
 	      <div class="modal-footer">
-	      	<button class="btn btn-default btn-md" type="button" data-dismiss="modal">Cerrar&nbsp;<i class="fa fa-remove"></i></button>
-	      	<button class="btn btn-success" id="btn_filter"><span id="span_filter">Fitrar</span>&nbsp;<i class="fa fa-search"></i></button>
+	      	<button type="button" class="btn btn-default btn-md" type="button" data-dismiss="modal">Cerrar&nbsp;<i class="fa fa-remove"></i></button>
+	      	<button type="button" class="btn btn-success" id="btn_filter"><span id="span_filter">Fitrar</span>&nbsp;<i class="fa fa-search"></i></button>
 	      </div>
     	</div>
 	</div>
 </div>
+
+
+</form>
