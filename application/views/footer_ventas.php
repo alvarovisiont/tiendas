@@ -139,18 +139,19 @@ $(function(){
     });
 
     function igualar_respaldo () {
-      // body... 
+      // función para dar valor a las variables de respaldo
       total_respaldo = total_total
       iva_respaldo = iva_limpio
       sub_total_respaldo = sub_total_limpio
     }
 
     function transform_amount_visa(amount,type){
+      // función para hacer la conversión entre visa y bs
       amount = parseFloat(amount)
       if(type){
         return amount * dolar_value
       }else{
-        let result = parseFloat((amount / dolar_value).toFixed(2))
+        let result = parseFloat(formatNumber((amount / dolar_value),2,'','.'))
         return result 
       }
     }
@@ -434,6 +435,7 @@ $(function(){
     =============================================================*/
 
     function showPaymentsMixFields(val){
+      //-- función que muestra cada sección de cada campo mixto
       val = parseInt(val,10)
       
       /*
@@ -477,6 +479,8 @@ $(function(){
 
     function calculate_visa_restante(val){
 
+      // función para mostrar el restande dolares por cancelar si es visa uno de los campos mixtos
+
       let selector = ""
       switch(parseInt(val,10)){
         case 1:
@@ -495,13 +499,16 @@ $(function(){
             result = 0
 
         result = (total_total - valor) / dolar_value
-        result = formatNumber(result,2,',','.')
+        result = formatNumber(result,3,',','.')
 
         $('#monto_dolares_mixto_restante').val(result)
       })
     }
 
     $('#btn_modal_mixto').click(function(e){
+
+      // -- función para mostrar los campos mixtos una vez escojidos
+
       let val1 = $('#campo_1_mixto').val(),
           val2 = $('#campo_2_mixto').val()
 
@@ -535,7 +542,7 @@ $(function(){
           $("#grabar_compra").prop('disabled', false);
           
           if(val1 == 2 || val2 == 2){
-            let val_format = formatNumber(total_total / dolar_value,2,',','.')
+            let val_format = formatNumber(total_total / dolar_value,4,',','.')
             $('#monto_dolares_mixto_restante').val(val_format)
             if(val1 == 2){
               calculate_visa_restante(val2)
@@ -562,6 +569,9 @@ $(function(){
     =============================================================*/
 
     function hide_sections_payment_method(type){
+      
+      // -- función para mostrar los tipos de pago
+
       type = parseInt(type)
 
       reset_values()
@@ -685,7 +695,7 @@ $(function(){
           $('#porcentaje_descuento').val(porcentaje_visa)
 
           if(!validate){
-            $('#dolares_cancelar').val(formatNumber(total_dolar,2,',','.'))
+            $('#dolares_cancelar').val(formatNumber(total_dolar,3,',','.'))
             $('#monto_pago').val('')
 
             total_span = formatNumber(total_span,2,',','.');
@@ -701,7 +711,7 @@ $(function(){
           $('#porcentaje_descuento').val(0)
 
           if(!validate){
-            $('#dolares_cancelar').val(formatNumber(total_dolar,2,',','.'))
+            $('#dolares_cancelar').val(formatNumber(total_dolar,3,',','.'))
             $('#monto_pago').val('')
 
             total_span = formatNumber(total_span,2,',','.');
@@ -733,12 +743,10 @@ $(function(){
           $('#porcentaje_descuento').val(porcentaje_debito)
 
           if(!validate){
-            console.log(porcentaje_debito,'aqui validate')
             $('#monto_pago').val(total_span)
             total_span = formatNumber(total_span,2,',','.');
             $("#total span").text(total_span);
           }else{
-            console.log(porcentaje_debito,'no validate')
             return [total_span,porcentaje,id_descuento_debito];
           }
 
@@ -849,6 +857,9 @@ $(function(){
     }
 
     function calculate_min_value_percentaje_discount(val,val2){
+
+      // -- Función para determinar el porcentaje mas bajo entre los campo mixto
+
       let max1 = search_min_value_percentaje(val),
           max2 = search_min_value_percentaje(val2)
 
@@ -860,6 +871,8 @@ $(function(){
     }
 
     function search_min_value_percentaje(val){
+
+      // -- Función para devolver el porcentaje y el id de cada campo mixto
 
       let porcentaje_aux = 0,
           id_descuento_aux = 0
@@ -883,6 +896,8 @@ $(function(){
 
     function search_monto_pagado_mixto(val){
 
+      // -- Función para determinar el monto de cada campo mixto
+
       let monto_aux = 0
 
       if(val == 1){
@@ -900,6 +915,7 @@ $(function(){
     }
 
     function return_monto_pagado_mixto(){
+      // -- Función para la suma de los montos mixtos
 
       let val1 = search_monto_pagado_mixto(mixto1),
           val2 = search_monto_pagado_mixto(mixto2)
@@ -934,34 +950,42 @@ $(function(){
 
         if(metodo_pago === "visa"){
 
-          monto_pagado = parseFloat(monto_pagado)
-          total_pagar = transform_amount_visa(total_pagar,false)
+          //-- Si es visa hacemos la conversión para el total pagar
+
+          monto_pagado = transform_amount_visa(monto_pagado,true)
           siglas = " $";
 
         }else if(metodo_pago === "mixto"){
-          monto_pagado = return_monto_pagado_mixto()
+          
+          //-- Si es mixto y tiene visa hacemos la conversión para el total pagar
+            monto_pagado = return_monto_pagado_mixto()
         }
+
+        /* ===== If para ver si el monto pagado es suficiente ==== */
 
         if(parseFloat(monto_pagado) < parseFloat(total_pagar)){
           
+          // -- Si el monto pagado es insuficiente
+
           let monto = 0
 
           if(metodo_pago === "visa"){
 
             monto = total_pagar - monto_pagado_limpio
-
+            monto = monto / dolar_value
+            monto = formatNumber(monto,3,',','.');
           }else{
             monto = parseFloat(total_pagar) - parseFloat(monto_pagado);
+            monto = formatNumber(monto,2,',','.');
           }
 
-            monto = formatNumber(monto,2,',','.');
             $("#falta_dinero").html('');
             $("#falta_dinero").show('slow/400/fast');
             $("#falta_dinero").text('La cantidad de dinero es insuficiente, restante por pagar: ' + monto+siglas);
             return false;
-        }
-        else
-        {
+        
+        }else{
+
             if(metodo_pago === "mixto") {
               $('#tipos_mixto').val(mixto1+','+mixto2)
             }
@@ -993,16 +1017,18 @@ $(function(){
                                   return false;
                               }
                           });
-                          if(monto_pagado == total_pagar)
-                          {
+                          if(monto_pagado == total_pagar){
+
+                            // --- Si no hay q dar vuelto
+
                               $("#falta_dinero").hide();
                               $("#monto_suficiente").html('');
                               $("#monto_suficiente").show('slow/400/fast');
                               $("#monto_suficiente").text('total vuelto: ' + 0); 
                               $("#grabar_compra").prop('disabled', true);  
-                          }
-                          else
-                          {
+                          }else{
+                              // --- Si hay q dar vuelto
+
                               $("#falta_dinero").hide();
                               var monto = parseFloat(monto_pagado) - parseFloat(total_pagar);
 

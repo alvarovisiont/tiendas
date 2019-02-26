@@ -228,11 +228,13 @@ class Ventas_Model extends CI_Model
          $array['monto_transferencia'] = $arreglo_pago['monto_transferencia'];
          $array['monto_efectivo'] = $monto;
          $array['monto_dolar_configuracion'] = $arreglo_pago['monto_dolares'] ? $arreglo_pago['dolar_value'] : null;
-         $array['id_banco_debito'] = $arreglo_pago['banco_debito'];
-         $array['nro_transferencia'] = $arreglo_pago['nro_transferencia'];
-         $array['id_banco'] = $arreglo_pago['banco_transferencia'];
+         
+         $array['id_banco_debito'] = $arreglo_pago['banco_debito'] ? $arreglo_pago['banco_debito'] : 0;
 
-         $array['monto_pagado'] = $this->determinate_amount_pay($array['monto_dolares'],$array['monto_debito'],$array['monto_transferencia'],$array['monto_efectivo'],$array['monto_dolar_configuracion']);
+         $array['nro_transferencia'] = $arreglo_pago['nro_transferencia'];
+         $array['id_banco'] = $arreglo_pago['banco_transferencia'] ? $arreglo_pago['banco_transferencia'] : 0;
+
+         $array['monto_pagado'] = $this->determinate_amount_pay($array['monto_debito'],$array['monto_dolares'],$array['monto_efectivo'],$array['monto_transferencia'],$array['monto_dolar_configuracion']);
 
          $array['tipos_mixto'] = "{".$arreglo_pago['tipos_mixto']."}";
 
@@ -278,7 +280,9 @@ class Ventas_Model extends CI_Model
       $efectivo = $efectivo ? $efectivo : 0;
       $trans = $trans ? $trans : 0;
 
-      return $debito + ($visa * $dolar_configuration) + $efectivo + $trans;
+      $monto =  $debito + ($visa * $dolar_configuration) + $efectivo + $trans;
+      
+      return $monto;
    }
 
 
