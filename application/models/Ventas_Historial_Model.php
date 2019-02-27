@@ -55,8 +55,8 @@ class Ventas_Historial_Model extends CI_Model
    }
 
    public function traer_datos_cliente_id($idusuario,$where = null){
-      $this->db->select("v.*, c.cedula as cedula, c.nombre as nombre, usu.nombre_apellido as usuario, usu.usuario as login,
-         TO_CHAR(v.fecha_venta,'DD-MM-YYYY HH:II:SS') as fecha1");  
+      $this->db->select("v.*, array_to_json(v.tipos_mixto) as type_mixtos,c.cedula as cedula, c.nombre as nombre, usu.nombre_apellido as usuario, usu.usuario as login,
+         TO_CHAR(v.fecha_venta,'DD-MM-YYYY HH:MI:SS') as fecha1");  
       $this->db->from('ventas as v');
       $this->db->join('clientes as c', 'c.id_venta = v.id');
       $this->db->join('comision as comi', 'comi.id_venta = v.id');
