@@ -20,7 +20,6 @@
 				<div class="panel-body">
 					<table class="table table-streped table-hover table-responsive" id="tabla">
 						<thead>
-							<th class="text-center">Tipo Factura</th>
 							<th class="text-center">Factura</th>
 							<th class="text-center">Fecha Venta</th>
 							<th class="text-center">monto_pagado</th>
@@ -51,12 +50,8 @@
 										}else{
 											$deshacer = "<span class='badge' style='background-color: $anulado; font-size: 16px;'>Anulado</span>";
 										}
-										
-
-										$tipofact = $row->tipo_factura == 1 ? "Factura" : "Pre-Factura";
 
 										echo "<tr>
-										        <td>$tipofact</td>
 												<td>$row->factura</td>
 												<td>".date('d-m-Y' ,strtotime($row->fecha_venta))."</td>
 												<td>".number_format($row->monto_pagado,2,',','.')."</td>

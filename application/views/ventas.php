@@ -146,7 +146,7 @@
 								</select>
 							</div>
 						</div>
-						<div class="row section_trans" style="display: none">
+						<div class="row section_trans_mixto" style="display: none">
 							<br>
 							<label class="control-label col-md-3">Monto Transferencia</label>
 							<div class="col-md-3">

@@ -1,12 +1,44 @@
-.letras
-{
+.letras{
 	font-size: 16px;
 	font-weight: bold;
 	color: white;
 }
 
-.tabla_modal
-{
+.letras_black{
+	font-size: 18px;
+	font-weight: bold;
+	color: black;
+}
+
+.rojo_badge{
+	background-color: darkred;
+	color: white;
+	font-size: 18px;
+}
+
+.verde_badge{
+	background-color: #4FC438;
+	color: white !important;
+	font-size: 18px;
+}
+
+.box_total{
+	background-color: #F0EBEB;
+	text-align: center;
+  	margin-top: 25px;
+  	height: 140px;
+  	border-radius: 10%;
+  	box-shadow: 4px 2px 2px #999880;
+	
+}
+
+.box_total > span{
+	color: black;
+	font-weight: bold;
+	font-size: 20px;
+}
+
+.tabla_modal{
 	position:relative;
 	display: table;
 	overflow-y: auto;

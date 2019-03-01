@@ -22,3 +22,27 @@ function formatNumber(number, decimals, dec_point, thousands_sep){
     return s.join(dec);
       
 }
+
+function number_decimals_format(amount,format = null){
+      let decimals_array = "",
+          quantity = 2
+      amount = amount.toString()
+
+      if(amount.indexOf(',') !== -1){  
+        decimals_array = amount.split(',')
+      }else if(amount.indexOf('.') !== -1){
+        decimals_array = amount.split('.')
+      }
+
+      if(decimals_array.length > 1){
+        if(parseInt(decimals_array[1].length) > 2){
+          quantity = parseInt(decimals_array[1].length)
+        }
+      }
+
+      if(!format){
+        return quantity
+      }else{
+        return formatNumber(amount,quantity,',','.')
+      }
+}

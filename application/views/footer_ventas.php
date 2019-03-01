@@ -43,7 +43,9 @@ $(function(){
         id_descuento_transferencia = null,
         porcentaje_transferencia = null,
         mixto1 = "",
-        mixto2 = ""
+        mixto2 = "",
+        verify_is_paying = false,
+        method_payment = ""
 
     
 
@@ -286,7 +288,13 @@ $(function(){
                         //definir el total a pagar-----------------------
 
                         $("#total span").text(total_pagar);
+
+                        if(verify_is_paying){
+                          calculate_discount(method_payment,null)
+                        }
+
                         //----------------------------------------------------
+
                     }
                     else if(typeof(data.inventario_insuficiente) != "undefined")
                     {
@@ -341,6 +349,9 @@ $(function(){
                 total_total = 0
                 iva_limpio = 0
                 sub_total_limpio = 0
+                
+                verify_is_paying = false
+                method_payment = ""
 
                 $("#section_registrar").hide('slow');
                 $("#monto_pago").val('')
@@ -351,6 +362,10 @@ $(function(){
             $('#falta_dinero').hide()
 
             igualar_respaldo()
+
+            if(verify_is_paying){
+              calculate_discount(method_payment,null)
+            }
     });
 
     $("#monto_pago").keyup(function(){
@@ -371,7 +386,7 @@ $(function(){
       $('#monto_trans').val(0)
       $('#monto_pago').val(0)
       $('.monto_debito').hide()
-      $('.section_trans').show()
+      $('.section_trans_mixto').hide()
       $("#monto_suficiente").html('').hide();
       $("#falta_dinero").html('');
 
@@ -406,6 +421,9 @@ $(function(){
 
     $("input[name='metodo_pago']").click(function(){
         val = $(this).val();
+        
+        verify_is_paying = true
+        method_payment = val
 
       if(val === "efectivo"){
         hide_sections_payment_method(1)
@@ -470,7 +488,7 @@ $(function(){
 
         case 4:
           $('#section_trans').show()
-          $('.section_trans').show()
+          $('.section_trans_mixto').show()
           $('#monto_trans').prop('required',true)
         break;
       }
@@ -499,7 +517,7 @@ $(function(){
             result = 0
 
         result = (total_total - valor) / dolar_value
-        result = formatNumber(result,3,',','.')
+        result = formatNumber(result,number_decimals_format(result),',','.')
 
         $('#monto_dolares_mixto_restante').val(result)
       })
@@ -695,7 +713,7 @@ $(function(){
           $('#porcentaje_descuento').val(porcentaje_visa)
 
           if(!validate){
-            $('#dolares_cancelar').val(formatNumber(total_dolar,3,',','.'))
+            $('#dolares_cancelar').val(formatNumber(total_dolar,number_decimals_format(total_dolar),',','.'))
             $('#monto_pago').val('')
 
             total_span = formatNumber(total_span,2,',','.');
@@ -711,7 +729,7 @@ $(function(){
           $('#porcentaje_descuento').val(0)
 
           if(!validate){
-            $('#dolares_cancelar').val(formatNumber(total_dolar,3,',','.'))
+            $('#dolares_cancelar').val(formatNumber(total_dolar,number_decimals_format(total_dolar),',','.'))
             $('#monto_pago').val('')
 
             total_span = formatNumber(total_span,2,',','.');
@@ -951,9 +969,10 @@ $(function(){
         if(metodo_pago === "visa"){
 
           //-- Si es visa hacemos la conversión para el total pagar
-
+          console.log(monto_pagado,'aqui1')
           monto_pagado = transform_amount_visa(monto_pagado,true)
           siglas = " $";
+          console.log(monto_pagado,'aqui2')
 
         }else if(metodo_pago === "mixto"){
           
@@ -971,9 +990,9 @@ $(function(){
 
           if(metodo_pago === "visa"){
 
-            monto = total_pagar - monto_pagado_limpio
+            monto = total_pagar - monto_pagado
             monto = monto / dolar_value
-            monto = formatNumber(monto,3,',','.');
+            monto = formatNumber(monto,number_decimals_format(monto),',','.');
           }else{
             monto = parseFloat(total_pagar) - parseFloat(monto_pagado);
             monto = formatNumber(monto,2,',','.');
@@ -986,11 +1005,16 @@ $(function(){
         
         }else{
 
+             var vuelto = parseFloat(monto_pagado) - parseFloat(total_pagar);
+
             if(metodo_pago === "mixto") {
               $('#tipos_mixto').val(mixto1+','+mixto2)
+            }else if(metodo_pago === "visa"){
+              vuelto = vuelto / dolar_value
             }
 
-            var vuelto = parseFloat(monto_pagado) - parseFloat(total_pagar);
+            
+            if(visa)
             $("#vuelto").val(vuelto);
             $("#total_subtotal").val(sub_total_limpio)
             $("#total_iva").val(iva_limpio)
@@ -1030,13 +1054,8 @@ $(function(){
                               // --- Si hay q dar vuelto
 
                               $("#falta_dinero").hide();
-                              var monto = parseFloat(monto_pagado) - parseFloat(total_pagar);
 
-                              if(metodo_pago === "visa"){
-                                  monto = monto / dolar_value
-                              }
-
-                              monto = formatNumber(monto,2,',','.');
+                              var monto = formatNumber(vuelto,number_decimals_format(vuelto),',','.');
                               $("#monto_suficiente").html('');
                               $("#monto_suficiente").show('slow/400/fast');
                               $("#monto_suficiente").html('total vuelto: ' + monto+siglas);    

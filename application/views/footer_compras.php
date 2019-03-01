@@ -19,6 +19,8 @@
     <script src="./js/sb-admin-2.min.js"></script>
     <!-- Custom Theme JavaScript -->
     <script src="./js/main.js"></script>
+    <script src="./js/amcharts/amcharts.js" type="text/javascript"></script>
+    <script src="./js/amcharts/serial.js" type="text/javascript"></script>
 </body>
 </html>
 <script type="text/javascript">

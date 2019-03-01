@@ -246,6 +246,7 @@ class Ventas_Model extends CI_Model
       }elseif($tipo === "visa"){
          $array['monto_dolares'] = $monto;
          $array['monto_pagado'] = $monto * $arreglo_pago['dolar_value'];
+         $array['monto_dolar_configuracion'] = $arreglo_pago['dolar_value'];
       }
             
       $this->db->insert('ventas', $array);
