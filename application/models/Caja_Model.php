@@ -12,6 +12,8 @@ class Caja_Model extends CI_Model
    }
 
    public function count_all_stadistics($search = null){
+    
+    // totales generales
 
     if(!$search){
       $search = "'1'";
@@ -54,6 +56,8 @@ class Caja_Model extends CI_Model
 
    public function count_all_transfers($search = null){
     
+    // totales transferencias
+
     if(!$search){
       $search = "'1'";
     }
@@ -82,6 +86,8 @@ class Caja_Model extends CI_Model
 
    public function count_all_debit($search = null){
     
+    // totales debito
+
     if(!$search){
       $search = "'1'";
     }
