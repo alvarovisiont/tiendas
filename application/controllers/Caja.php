@@ -31,9 +31,9 @@ class Caja extends CI_Controller
 			$totales = $this->Caja_Model->count_all_stadistics();
 
 
-			$totales_debito = $this->Caja_Model->count_all_debit();
+			$totales_debito = $this->Caja_Model->count_all_debit($search);
 
-			$totales_transferencia_dia = $this->Caja_Model->count_all_transfers();
+			$totales_transferencia_dia = $this->Caja_Model->count_all_transfers($search);
 
 			$totales->total_dolares = $this->numbers_decimal_format($totales->total_dolares);
 
