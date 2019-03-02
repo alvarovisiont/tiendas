@@ -1014,7 +1014,6 @@ $(function(){
             }
 
             
-            if(visa)
             $("#vuelto").val(vuelto);
             $("#total_subtotal").val(sub_total_limpio)
             $("#total_iva").val(iva_limpio)
