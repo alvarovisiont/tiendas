@@ -23,10 +23,13 @@ class Caja extends CI_Controller
 			
 			$search = "CAST(t.fecha_venta AS DATE) = '".date('Y-m-d')."'";
 
+
+			$totales_by_day = $this->Caja_Model->count_all_stadistics($search,);
+			
 			$config = $this->Configuracion_Finanza_Model->traer_datos();
 
 			$totales = $this->Caja_Model->count_all_stadistics();
-			$totales_by_day = $this->Caja_Model->count_all_stadistics($search,);
+
 
 			$totales_debito = $this->Caja_Model->count_all_debit();
 

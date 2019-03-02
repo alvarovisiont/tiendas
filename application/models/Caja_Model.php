@@ -33,23 +33,45 @@ class Caja_Model extends CI_Model
       + CAST(total_debito AS REAL) + CAST(total_efectivo AS REAL)) as total_totales
       from (
         SELECT 
-         COALESCE(((SELECT SUM(monto_pagado) FROM ventas where tipo_venta like 'transferencia' and ventas.fecha_venta = t.fecha_venta) + (SELECT sum(monto_transferencia) from ventas WHERE ventas.fecha_venta = t.fecha_venta)),0) as total_transferencia,
+          COALESCE(
+            (
+              COALESCE((SELECT SUM(monto_pagado) FROM ventas where tipo_venta like 'transferencia' and ventas.fecha_venta = t.fecha_venta),0)
+              + 
+              COALESCE((SELECT sum(monto_transferencia) from ventas WHERE ventas.fecha_venta = t.fecha_venta),0)
+            )
+          ,0) as total_transferencia,
                
          COALESCE((SELECT SUM(monto_dolares) FROM ventas where ventas.fecha_venta = t.fecha_venta),0) as total_dolares,
 
-         COALESCE((SELECT SUM(monto_dolares * COALESCE(CAST(monto_dolar_configuracion AS REAL),1)) FROM ventas where ventas.fecha_venta = t.fecha_venta),0) as total_dolares_bs,
+         COALESCE((SELECT SUM(COALESCE(monto_dolares,0) * COALESCE(CAST(monto_dolar_configuracion AS REAL),1)) FROM ventas where ventas.fecha_venta = t.fecha_venta),0) as total_dolares_bs,
 
-         COALESCE(((SELECT SUM(monto_pagado) FROM ventas where tipo_venta like 'debito' and ventas.fecha_venta = t.fecha_venta) + (SELECT sum(monto_debito) from ventas where  ventas.fecha_venta = t.fecha_venta)),0) as total_debito,
+          COALESCE
+          (
+            (
+              COALESCE((SELECT SUM(monto_pagado) FROM ventas where tipo_venta like 'debito' and ventas.fecha_venta = t.fecha_venta),0)
+              + 
+              COALESCE((SELECT sum(monto_debito) from ventas where  ventas.fecha_venta = t.fecha_venta),0)
+            )
+          ,0) 
+            as total_debito,
 
-         COALESCE(((SELECT SUM(monto_pagado) FROM ventas where tipo_venta like 'efectivo' and ventas.fecha_venta = t.fecha_venta) + (SELECT sum(monto_efectivo) from ventas where  ventas.fecha_venta = t.fecha_venta)),0) as total_efectivo
+          COALESCE
+          (
+            (
+              COALESCE((SELECT SUM(monto_pagado) FROM ventas where tipo_venta like 'efectivo' and ventas.fecha_venta = t.fecha_venta),0)
+              + 
+              COALESCE((SELECT sum(monto_efectivo) from ventas where  ventas.fecha_venta = t.fecha_venta),0)
+            )
+          ,0) 
+          as total_efectivo
 
          from ventas as t
          WHERE $search
          GROUP BY t.tipo_venta,t.fecha_venta
-
         ) as t1 
       ) AS T2";
     
+
     return $this->db->query($sql)->row();
 
    }
