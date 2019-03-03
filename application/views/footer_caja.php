@@ -82,7 +82,6 @@
         
         // SERIAL CHART
         chart2 = new AmCharts.AmSerialChart();
-        chart2.clear();
         chart2.dataProvider = chartDatos;
         chart2.categoryField = "category";
         chart2.startDuration = 1;
