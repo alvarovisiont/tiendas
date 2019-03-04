@@ -58,6 +58,13 @@ body {
 
 <header>
 
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+
    <table border="1" align="right" class="table1" >
      <tr>
       <td>FECHA</td>
@@ -73,13 +80,13 @@ body {
 
    <table border="1" align="right" class="table2">
      <tr>
-      <td align="left" width="70%">Nombre o Razón Social <br> <B><?php echo $datos->nombre; ?><B> </td>
+      <td align="left" width="70%">Nombre o Razón Social <br> <B><?php echo strtoupper($datos->nombre); ?><B> </td>
       <td align="left"  width="30%" >C.I / R.I.F <br> <B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $datos->cedula; ?><B> </td>
      </tr>
    </table>
   <table border="1" align="right" class="table2">
      <tr>
-      <td align="left" width="70%">Dirección Físcal <br> <B><?php echo $datos->direccion; ?><B> </td> 
+      <td align="left" width="70%">Dirección Físcal <br> <B><?php echo strtoupper($datos->direccion); ?><B> </td>  
      </tr>
    </table>
   <table border="1" align="right" class="table2">
@@ -199,14 +206,6 @@ body {
        <td align="center"  width="15%"> <?php echo $row->tipo_venta; ?></td>
      </tr>
    </table>
-
-   <br> 
-
-  <div style="width: 45%; float: left; padding-right: 10%">
-        Observaciones: <br>
-        _____________________________________________
-        
-  </div>
 
 </body>
 </html>
