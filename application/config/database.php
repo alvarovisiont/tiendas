@@ -73,7 +73,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $active_group = 'default';
 $query_builder = TRUE;
 
-/*db['default'] = array(
+db['default'] = array(
 	'dsn'	=> '',
 	'hostname' => 'ec2-50-16-196-57.compute-1.amazonaws.com',
 	'username' => 'ngiyxmrhpaurxx',
@@ -94,10 +94,10 @@ $query_builder = TRUE;
 	'failover' => array(),
 	'save_queries' => TRUE
 );
-*/
 
 
-$db['default'] = array(
+
+/*$db['default'] = array(
 	'dsn'	=> '',
 	'hostname' => 'localhost',
 	'username' => 'postgres',
