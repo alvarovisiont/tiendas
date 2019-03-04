@@ -119,6 +119,8 @@ db['default'] = array(
 	'save_queries' => TRUE
 );
 
+*/
+
 
 
 /*$db['prueba'] = array(
