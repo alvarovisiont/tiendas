@@ -1,130 +1,123 @@
 <div class="row">
 	<div class="container-fluid">
-		<div class="col-md-12">
 		<br>
-		<br>
-		<h2 class="text-center alert alert-warning">Monto de la caja mensual:&nbsp;&nbsp;
-					<span class="badge" style="background-color: darkred; color: white; font-size: 16px;"> 
-						<?php 
-							$siglas = "";
-							if ($monto < 0) 
-							{
-								$siglas = "- ";
-							}
-							else
-							{
-								$siglas = "+ ";	
-							}
-							echo $siglas.number_format($monto,2,',','.');
-						?>
-					</span>
-				</h2>
-			<div class="col-md-12">	
-				<div class="panel panel-red">
+		<div class="row">
+			<div class="col-md-8 col-md-offset-2">
+				<button class="btn btn-block btn-primary" data-toggle="modal" data-target="#modal_filtro">Filtrar&nbsp;<i class="fa fa-search"></i></button>
+			</div>
+		</div>
+		<div class="col-md-3" style="margin-top: 30px;">
+			<h3 class="text-center">Totales Generales</h3>
+			<div class="col-md-12 box_total">
+				<h3>Transferencia</h3>
+				<br>
+				<span class="badge verde_badge" id="badge_transferencia"><?= number_format($totales->total_transferencia,2,',','.')." ".$config->siglas; ?></span>
+			</div>
+			
+			<div class="col-md-12 box_total">
+				<h3>Dolares</h3>
+				<span class="badge verde_badge" id="badge_dolares">
+					<?= $totales->total_dolares.'$' ?></span>
+				<br>
+				<br>
+				<span class="badge verde_badge" id="badge_dolares_bs">
+					<?= number_format($totales->total_dolares_bs,2,',','.').' '.$config->siglas ?></span>
+			</div>
+			<div class="col-md-12 box_total">
+				<h3>Efectivo</h3>
+				<br>
+				<span class="badge verde_badge" id="badge_efectivo"><?= number_format($totales->total_efectivo,2,',','.')." ".$config->siglas; ?></span>
+			</div>
+			<div class="col-md-12 box_total">
+				<h3>Debito</h3>
+				<br>
+				<span class="badge verde_badge" id="badge_debito"><?= number_format($totales->total_debito,2,',','.')." ".$config->siglas; ?></span>
+			</div>
+		</div>
+		<div class="col-md-9" style="margin-top: 50px;">
+			<div class="panel panel-black">
+				<div class="panel-heading">
+					<h3>Totales del día</h3>
+				</div>
+				<div class="panel-body">	
+					<table class="table table-bordered"> 
+						<tbody>
+							<tr>
+								<td class="letras_black">Transferencia</td>
+								<td class="text-right"><span class="badge rojo_badge"><?= number_format($totales_day->total_transferencia,2,',','.')." ".$config->siglas; ?></span></td>
+							</tr>
+							<tr>
+								<td class="letras_black">Visa</td>
+								<td class="text-right"><span class="badge rojo_badge"><?= $totales_day->total_dolares."$ - ". number_format($totales_day->total_dolares_bs,2,',','.')." ".$config->siglas; ?></span></td>
+							</tr>
+							<tr>
+								<td class="letras_black">Efectivo</td>
+								<td class="text-right"><span class="badge rojo_badge"><?= number_format($totales_day->total_efectivo,2,',','.')." ".$config->siglas; ?></span></td>
+							</tr>
+							<tr>
+								<td class="letras_black">Débito</td>
+								<td class="text-right"><span class="badge rojo_badge"><?= number_format($totales_day->total_debito,2,',','.')." ".$config->siglas; ?></span></td>
+							</tr>
+						</tbody>
+						<tfoot>
+							<tr>
+								<td colspan="2" class="text-right"><b style="font-size: 20px;">TOTAL: <?= number_format($totales_day->total_totales,2,',','.')." ".$config->siglas; ?></b></td>
+							</tr>
+						</tfoot>
+					</table>
+				</div>
+			</div>
+			<br>
+			<div class="col-md-12">
+				<div class="panel panel-black">
 					<div class="panel-heading">
-						<h3 style="color: white; display: inline-block;">Movimientos de la caja</h3>
+						<h3>Monto de transferencias hechas por banco</h3>
 					</div>
 					<div class="panel-body">
-						<table class="table table-streped table-hover" id="tabla">
-							<thead>
-								<th class="text-center">Factura</th>
-								<th class="text-center">Fecha Venta</th>
-								<th class="text-center">monto_pagado</th>
-								<th class="text-center">Vuelto</th>
-								<th class="text-center">Tipo de Venta</th>
-								<th>Detalle Venta</th>
-								<th>Cliente</th>
-							</thead>
-							<tbody class="text-center">
-								<?php
-									
-									foreach ($datos as $row) 
-									{
-										$detalle = "<button class='btn btn-info btn-sm' data-toggle='modal' data-target='#modal_detalle'
-										data-id_venta = '$row->id'><i class='fa fa-search'></i></button>";
-										$cliente = "<button class='btn btn-danger btn-sm' data-toggle='modal' data-target='#modal_cliente'
-										data-id_venta = '$row->id'><i class='fa fa-user'></i></button>";
-
-										echo "<tr>
-												<td>$row->factura</td>
-												<td>".date('d-m-Y' ,strtotime($row->fecha_venta))."</td>
-												<td>".number_format($row->monto_pagado,2,",",".")."</td>
-												<td>".number_format($row->vuelto,2,",",".")."</td>
-												<td>$row->tipo_venta</td>
-												<td>".$detalle."</td>
-												<td>".$cliente."</td>
-											</tr>";
-									}
-								?>
-							</tbody>
-						</table>	
+						<div id="chart_trans_day" style="width: 100%; height: 200px;"></div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div class="panel panel-black">
+					<div class="panel-heading">
+						<h3>Monto de debito</h3>
+					</div>
+					<div class="panel-body">
+						<div id="chart_debit_day" style="width: 100%; height: 200px;"></div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
+	</div>	
 </div>
-<div class="modal fade" id="modal_detalle" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  	<div class="modal-dialog tabla_modal modal-lg" role="document">
+<div class="modal fade" id="modal_filtro" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  	<div class="modal-dialog modal-lg" role="document">
     	<div class="modal-content">
 	      <div class="modal-header">
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	          <span aria-hidden="true">&times;</span>
 	        </button>
-	        <h3 class="text-center">Detalles de la Venta&nbsp;<i class="fa fa-file-text"></i></h3>
+	        <h3 class="text-center">Filtros de Busqueda</h3>
 	      </div>
-	      <div class="modal-body">
-	      	<div class="row" id="div_detalle">
-	      		<table class="table table-streped table-hover" id="tabla_detalle">
-	      			<thead>
-	      				<th class="text-center">Nombre Arículo</th>
-	      				<th class="text-center">Marca</th>
-	      				<th class="text-center">Precio</th>
-	      				<th class="text-center">Cantidad</th>
-	      				<th class="text-center">Sub_Total</th>
-	      				<th class="text-center">Iva</th>
-	      				<th class="text-center">Total</th>
-	      			</thead>
-	      			<tbody class="text-center">
-	      				
-	      			</tbody>
-	      		</table>
-	      	</div>
-	      </div>
-	      <div class="modal-footer">
-	      	<button class="btn btn-primary btn-md" type="button" data-dismiss='modal'>cerrar&nbsp;<i class="fa fa-remove"></i></button>
-	      </div>
-    	</div>
+	      <form id="form_filter" class="form-horizontal">
+		      <div class="modal-body">
+		      	<div class="form-group">
+		      		<div class="col-md-6">
+		      			<label class="control-label">Desde</label>
+		      			<input type="date" name="desde_filtro" id="desde_filtro" class="form-control">
+		      		</div>
+		      		<div class="col-md-6">
+		      			<label class="control-label">hasta</label>
+		      			<input type="date" name="hasta_filtro" id="hasta_filtro" class="form-control">
+		      		</div>
+		      	</div>
+		      </div>
+		      <div class="modal-footer">
+		      	<button class="btn btn-default" type="button" data-dismiss='modal'>Cerrar&nbsp;<i class="fa fa-remove"></i></button>
+		      	<button class="btn btn-success" type="submit" id="btn_filter">Aceptar&nbsp;<i class="fa fa-thumbs-up"></i></button>
+		      </div>
+		    </form>
+    </div>
 	</div>
 </div>
-<div class="modal fade" id="modal_cliente" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  	<div class="modal-dialog tabla_modal" role="document">
-    	<div class="modal-content">
-	      <div class="modal-header">
-	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-	          <span aria-hidden="true">&times;</span>
-	        </button>
-	        <h3 class="text-center">Detalles de la Venta&nbsp;<i class="fa fa-file-text"></i></h3>
-	      </div>
-	      <div class="modal-body">
-	      	<div class="row" id="div_detalle_cliente">
-	      		<table class="table table-streped table-hover" id="tabla_detalle_cliente">
-	      			<thead>
-	      				<th class="text-center">Nombre</th>
-	      				<th class="text-center">Cedúla</th>
-	      				<th class="text-center">Teléfono</th>
-	      				<th class="text-center">Dirección</th>
-	      			</thead>
-	      			<tbody class="text-center">
-	      				
-	      			</tbody>
-	      		</table>
-	      	</div>
-	      </div>
-	      <div class="modal-footer">
-	      	<button class="btn btn-primary btn-md" type="button" data-dismiss='modal'>cerrar&nbsp;<i class="fa fa-remove"></i></button>
-	      </div>
-    	</div>
-	</div>
-</div>
-

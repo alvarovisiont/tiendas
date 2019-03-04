@@ -112,9 +112,6 @@
               order: [2,'desc'],
               data,
               columns: [
-                {"data": "tipo_factura","render" : function(type){
-                  return type == 1 ? "Factura" : "Pre-Factura"
-                }},
                 {"data": "factura"},
                 {"data": "fecha1"},
                 {"data": "monto_pagado","render" : function(monto){

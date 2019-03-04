@@ -4,7 +4,7 @@ body{
   font-family: 'Mukta', sans-serif;
 	height:100vh;
 	min-height:550px;
-	background-image: url(https://www.planwallpaper.com/static/images/Background-Design-Images-40-HD-Screensavers-1024x640.jpg);
+	background-image: url("../img/fondo3.jpg");
 	background-repeat: no-repeat;
 	background-size:cover;
 	background-position:center;
