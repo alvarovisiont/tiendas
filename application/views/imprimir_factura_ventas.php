@@ -58,12 +58,14 @@ body {
 
 <header>
 
+  <?php $cd = substr ($datos->factura, 0, 3);
+
+  if ($cd == 'Pre'){ } else { ?>
   <br>
   <br>
   <br>
-  <br>
-  <br>
-  <br>
+  <br>  
+ <?php } ?>
 
 
    <table border="1" align="right" class="table1" >

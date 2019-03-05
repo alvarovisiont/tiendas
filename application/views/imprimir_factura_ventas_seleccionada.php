@@ -57,14 +57,15 @@ body {
 <body>
 
 <header>
+  <?php $cd = substr ($datos->factura, 0, 3);
 
+  if ($cd == 'Pre'){ } else { ?>
   <br>
   <br>
   <br>
-  <br>
-  <br>
-  <br>
-
+  <br>  
+ <?php } ?>
+  
    <table border="1" align="right" class="table1" >
      <tr>
       <td>FECHA</td>
@@ -203,8 +204,22 @@ body {
      <tr>
       <td align="center" width="70%"> </td>
       <td align="center"  width="15%"> Forma de Pago</td>
-       <td align="center"  width="15%"> <?php echo $row->tipo_venta; ?></td>
+       <td align="center"  width="15%"> <?php echo strtoupper($row->tipo_venta); ?></td>
      </tr>
+
+     <?php $cadetipo = strtoupper($row->tipo_venta); 
+
+        if ($cadetipo == 'TRANSFERENCIA'){ ?>
+
+      <tr>
+      <td align="center" width="70%"> </td>
+      <td align="center"  width="15%">Banesco</td>
+       <td align="center"  width="15%"> <?php echo $row->nro_transferencia; ?></td>
+     </tr>
+
+
+       <?php }
+      ?>
    </table>
 
 </body>

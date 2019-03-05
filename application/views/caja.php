@@ -15,7 +15,7 @@
 			</div>
 			
 			<div class="col-md-12 box_total">
-				<h3>Dolares</h3>
+				<h3>Visa</h3>
 				<span class="badge verde_badge" id="badge_dolares">
 					<?= $totales->total_dolares.'$' ?></span>
 				<br>
