@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Bootstrap Admin Theme</title>
+    <title>INVERSIONES BET- SUR AL, C.A</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="./css/bootstrap.css" rel="stylesheet">
@@ -71,10 +71,18 @@
                         <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
+
+                     <?php
+                    if($this->session->userdata('nivel') == 1)
+                    {
+                    ?>     
                         <li><a href="<?php echo base_url()?>Usuarios_administracion"><i class="fa fa-user fa-fw"></i> Usuarios</a>
                         </li>
                         <li><a href="<?php echo base_url().'Configuracion'; ?>"><i class="fa fa-gear fa-fw"></i> Configuración</a>
                         </li>
+                    <?php    
+                    }
+                    ?>    
                         <li class="divider"></li>
                         <li><a href="<?php echo base_url().'Login/salir';?>"><i class="fa fa-sign-out fa-fw"></i> Salir</a>
                         </li>
@@ -190,7 +198,7 @@
                             <!-- /.nav-second-level -->
                         </li>
                         
-                        <li><a href="<?php echo base_url().'Comisiones'; ?>"><i class='fa fa-money'></i>&nbsp;Comisiones</a></li>
+                        <li><a href="<?php echo base_url().'Comisiones'; ?>"><i class='fa fa-money'></i>&nbsp;Bonificaciones</a></li>
 
                         <li><a href="<?php echo base_url().'Auditoria'; ?>"><i class='fa fa-book'></i>&nbsp;Auditoria del Sistema</a></li>
                 <?php
@@ -253,7 +261,7 @@
                             </ul>
                         </li>
 
-                          <li><a href="<?php echo base_url().'Comisiones'; ?>"><i class='fa fa-money'></i>&nbsp;Comisiones</a></li>
+                          <li><a href="<?php echo base_url().'Comisiones'; ?>"><i class='fa fa-money'></i>&nbsp;Bonificaciones</a></li>
                 <?php
                     } ?>
                     

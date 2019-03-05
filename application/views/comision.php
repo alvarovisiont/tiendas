@@ -16,7 +16,7 @@
 			<div class="panel panel-black">
 				<div class="panel-heading">
 					<h3>
-						Comisiones Registradas
+						Bonificaciones Registradas
 						<button type="submit" class="btn btn-danger btn-md btn-outline pull-right" data-ruta="<?php echo base_url().'Comisiones';?>" id="exportar_pdf_bss">Exportar a PDF&nbsp;&nbsp;&nbsp;<i class="fa fa-file-pdf-o"></i></button>
 					</h3>	
 				</div>

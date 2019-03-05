@@ -243,7 +243,7 @@ class Inventario extends CI_Controller
 					}else
 					{
 
-					if (trim($value['A']) <> "")
+							if (trim($value['A']) <> "")
 					{	
 					//ingresar al inventario
 					$varref = trim($value['A']);
@@ -269,7 +269,7 @@ class Inventario extends CI_Controller
 					'precio_proveedor' => $varprove,
 					'iva' => 16,
 					'precio' => $variprecio,
-					'fecha_agregado' => '2019-02-21',
+					'fecha_agregado' => '2019-03-04',
 					'observacion' => "",
 					'mostrar' => 0,
 					];
@@ -330,11 +330,11 @@ class Inventario extends CI_Controller
 					'id_proveedor' => 1,
 					'marca' => $row->marca,
 					'grupo' => $row->grupo,
-					'cantidad' => 0,
-					'precio_proveedor' => 0,
+					'cantidad' => $row->cantidad,
+					'precio_proveedor' => $row->precio_proveedor,
 					'iva' => 16,
-					'precio' => 0,
-					'fecha_agregado' => '2019-02-19',
+					'precio' => $row->precio,
+					'fecha_agregado' => '2019-03-04',
 					'observacion' => "",
 					'mostrar' => 0,
 					];

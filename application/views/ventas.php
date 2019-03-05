@@ -17,7 +17,7 @@
 					<label class="control-label col-md-2">Cédula del Cliente</label>
 					<div class="col-md-4">
 						<div class="input-group">
-							<input type="text" name="cedula_cliente" id="cedula_cliente" class="form-control" placeholder="solo números">
+							<input type="text" name="cedula_cliente" id="cedula_cliente" class="form-control" placeholder="ejemplo J-406621870">
 							<div class="input-group-btn">
 							 	<button type="button" class="btn btn-danger btn-md btn-block" id="buscar_clientes">Buscar&nbsp;<i class="fa fa-search"></i></button>
 							</div>
