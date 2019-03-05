@@ -243,21 +243,19 @@ class Inventario extends CI_Controller
 					}else
 					{
 
-					if (trim($value['A']) <> "")
+							if (trim($value['A']) <> "")
 					{	
 					//ingresar al inventario
 					$varref = trim($value['A']);
 					$varnombre = trim($value['B']);
-					$varcanti = 10;//(INT)$value['C'];
+					$varcanti = (INT)$value['C'];
 
-					$marca1 = trim($value['G']);
-
-					$varprove = (FLOAT)$value['F'];
+					$varprove = (FLOAT)$value['E'];
 
 					$vari = 0;
-					$vari = (FLOAT)$value['F'] * $configuraciones->retencion;
+					$vari = (FLOAT)$value['E'] * $configuraciones->retencion;
                     $vari = $vari / 100;
-                    $vari = (FLOAT)$value['F'] + $vari;
+                    $vari = (FLOAT)$value['E'] + $vari;
 
                     $variprecio = $vari;
 
@@ -265,13 +263,13 @@ class Inventario extends CI_Controller
 					'nombre' => strtoupper($varnombre),
 					'ref' => $varref,
 					'id_proveedor' => 1,
-					'marca' => $marca1,
+					'marca' => 'S/N',
 					'grupo' => 'S/N',
 					'cantidad' => $varcanti,
 					'precio_proveedor' => $varprove,
 					'iva' => 16,
 					'precio' => $variprecio,
-					'fecha_agregado' => '2019-03-04',
+					'fecha_agregado' => '2019-02-21',
 					'observacion' => "",
 					'mostrar' => 0,
 					];
