@@ -248,11 +248,11 @@ class Inventario extends CI_Controller
 					//ingresar al inventario
 					$varref = trim($value['A']);
 					$varnombre = trim($value['B']);
-					$varcanti = (INT)$value['C'];
+					$varcanti = 10;//(INT)$value['C'];
 
 					$marca1 = trim($value['G']);
 
-					$varprove = 10; //(FLOAT)$value['F'];
+					$varprove = (FLOAT)$value['F'];
 
 					$vari = 0;
 					$vari = (FLOAT)$value['F'] * $configuraciones->retencion;
