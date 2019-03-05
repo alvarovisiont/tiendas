@@ -102,7 +102,7 @@ $db['default'] = array(
 	'hostname' => 'localhost',
 	'username' => 'postgres',
 	'password' => '123456',
-	'database' => 'tienda',
+	'database' => 'tienda2019',
 	'dbdriver' => 'postgre',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
@@ -119,8 +119,8 @@ $db['default'] = array(
 	'save_queries' => TRUE
 );
 
-*/
 
+*/
 
 
 /*$db['prueba'] = array(
