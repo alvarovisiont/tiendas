@@ -1,7 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-if ( ! function_exists('type_payment'))
-{
+if ( ! function_exists('type_payment')){
     function type_payment($type,$val){
     	if($type === "mixto"){
     		
@@ -53,4 +52,30 @@ if ( ! function_exists('type_payment'))
 
         return $month[$val - 1];
     }   
+}
+
+if ( ! function_exists('numbers_decimal_format')){
+	function numbers_decimal_format($amount){
+		
+		$monto = null;
+
+		if(strpos($amount, ",")){
+			$arreglo_explode = explode(',', $amount);
+		}else{
+			$arreglo_explode = explode('.', $amount);
+		}
+		
+		$total_decimals = 2;
+		
+		if(count($arreglo_explode) > 1){
+			$total_decimals =  strlen($arreglo_explode[1]);
+		}
+		
+		if($total_decimals <= 6){
+			$monto = number_format($amount,$total_decimals,',','.');
+		}else{
+			$monto = number_format($amount,6,',','.');
+		}
+		return $monto;
+	}
 }

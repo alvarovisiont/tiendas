@@ -270,10 +270,10 @@ $(function(){
                             var sub_total1 = sub_total
                             var iva1 = iva
 
-                            sub_total = formatNumber(sub_total,2,',','.');
-                            iva = formatNumber(iva,2,',','.');
-                            let total1 = formatNumber(total,2,',','.');
-                            total_pagar = formatNumber(total_pagar,2,',','.');
+                            sub_total = number_decimals_format(sub_total,true)
+                            iva = number_decimals_format(iva,true)
+                            let total1 = number_decimals_format(total,true);
+                            total_pagar = number_decimals_format(total_pagar,true)
 
 
 
@@ -333,7 +333,7 @@ $(function(){
 
             $(this).parent().parent().remove();
 
-            nuevo_total_pagar = formatNumber(nuevo_total_pagar,2,',','.');
+            nuevo_total_pagar = number_decimals_format(nuevo_total_pagar,true);
             
             $("#total span").text(nuevo_total_pagar);
 
@@ -517,7 +517,7 @@ $(function(){
             result = 0
 
         result = (total_total - valor) / dolar_value
-        result = formatNumber(result,number_decimals_format(result),',','.')
+        result = number_decimals_format(result,true)
 
         $('#monto_dolares_mixto_restante').val(result)
       })
@@ -664,7 +664,7 @@ $(function(){
 
           if(!validate){
             
-            total_span = formatNumber(total_span,2,',','.');
+            total_span = number_decimals_format(total_span,true)
             $('#monto_pago').val(0)
             $("#total span").text(total_span);
 
@@ -680,7 +680,7 @@ $(function(){
 
           if(!validate){
             
-            total_span = formatNumber(total_span,2,',','.');
+            total_span = number_decimals_format(total_span,true)
             $("#total span").text(total_span);
             $('#monto_pago').val(0)
 
@@ -713,10 +713,10 @@ $(function(){
           $('#porcentaje_descuento').val(porcentaje_visa)
 
           if(!validate){
-            $('#dolares_cancelar').val(formatNumber(total_dolar,number_decimals_format(total_dolar),',','.'))
+            $('#dolares_cancelar').val(number_decimals_format(total_dolar,true))
             $('#monto_pago').val('')
 
-            total_span = formatNumber(total_span,2,',','.');
+            total_span = number_decimals_format(total_span,true)
             $("#total span").text(total_span);
           }else{
             return [total_total,porcentaje,id_descuento_visa];
@@ -729,10 +729,10 @@ $(function(){
           $('#porcentaje_descuento').val(0)
 
           if(!validate){
-            $('#dolares_cancelar').val(formatNumber(total_dolar,number_decimals_format(total_dolar),',','.'))
+            $('#dolares_cancelar').val(number_decimals_format(total_dolar,true))
             $('#monto_pago').val('')
 
-            total_span = formatNumber(total_span,2,',','.');
+            total_span = number_decimals_format(total_span,true)
             $("#total span").text(total_span);
           }else{
             return [total_total,null,id_descuento_visa];
@@ -762,7 +762,7 @@ $(function(){
 
           if(!validate){
             $('#monto_pago').val(total_span)
-            total_span = formatNumber(total_span,2,',','.');
+            total_span = number_decimals_format(total_span,true)
             $("#total span").text(total_span);
           }else{
             return [total_span,porcentaje,id_descuento_debito];
@@ -776,7 +776,7 @@ $(function(){
 
           if(!validate){
             $('#monto_pago').val(total_span)
-            total_span = formatNumber(total_span,2,',','.');
+            total_span = number_decimals_format(total_span,true)
             $("#total span").text(total_span);
           }else{
             return [total_span,null,id_descuento_debito];
@@ -804,7 +804,7 @@ $(function(){
 
           if(!validate){
             $('#monto_pago').val(total_span)
-            total_span = formatNumber(total_span,2,',','.');
+            total_span = number_decimals_format(total_span,true)
             $("#total span").text(total_span);
           }else{
             return [total_span,porcentaje,id_descuento_transferencia];
@@ -817,7 +817,7 @@ $(function(){
           
           if(!validate){
             $('#monto_pago').val(total_span)
-            total_span = formatNumber(total_span,2,',','.');
+            total_span = number_decimals_format(total_span,true)
             $("#total span").text(total_span);
           }else{
             return [total_span,null,id_descuento_transferencia];
@@ -851,7 +851,7 @@ $(function(){
           $('#porcentaje_descuento').val(porcentaje_aux)
 
           if(!validate){
-            total_span = formatNumber(total_span,2,',','.');
+            total_span = number_decimals_format(total_span,true)
             $("#total span").text(total_span);
           }else{
             return [total_span,porcentaje,id_descuento_aux];
@@ -863,7 +863,7 @@ $(function(){
           $('#porcentaje_descuento').val(0)
           
           if(!validate){
-            total_span = formatNumber(total_span,2,',','.');
+            total_span = number_decimals_format(total_span,true)
             $("#total span").text(total_span);
           }else{
             return [total_span,null,id_descuento_aux];
@@ -992,10 +992,10 @@ $(function(){
 
             monto = total_pagar - monto_pagado
             monto = monto / dolar_value
-            monto = formatNumber(monto,number_decimals_format(monto),',','.');
+            monto = number_decimals_format(monto,true)
           }else{
             monto = parseFloat(total_pagar) - parseFloat(monto_pagado);
-            monto = formatNumber(monto,2,',','.');
+            monto = number_decimals_format(monto,true)
           }
 
             $("#falta_dinero").html('');
@@ -1054,7 +1054,7 @@ $(function(){
 
                               $("#falta_dinero").hide();
 
-                              var monto = formatNumber(vuelto,number_decimals_format(vuelto),',','.');
+                              var monto = number_decimals_format(vuelto,true)
                               $("#monto_suficiente").html('');
                               $("#monto_suficiente").show('slow/400/fast');
                               $("#monto_suficiente").html('total vuelto: ' + monto+siglas);    

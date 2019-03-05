@@ -35,11 +35,16 @@ function number_decimals_format(amount,format = null){
       }
 
       if(decimals_array.length > 1){
-        if(parseInt(decimals_array[1].length) > 2){
+        if(parseInt(decimals_array[1].length) > 2 && parseInt(decimals_array[1].length) <= 6){
           quantity = parseInt(decimals_array[1].length)
+        }else if(parseInt(decimals_array[1].length) > 6){ 
+          quantity = 6
+        }else if(parseInt(decimals_array[1].length) < 2){
+          quantity = 2
         }
       }
 
+      
       if(!format){
         return quantity
       }else{

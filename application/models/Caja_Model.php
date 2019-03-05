@@ -21,36 +21,62 @@ class Caja_Model extends CI_Model
     
     $sql = "
     SELECT  
-      COALESCE(SUM(total_transferencia),0) as total_transferencia,
+      COALESCE(CAST(SUM(total_transferencia)AS NUMERIC(20,2)),0) as total_transferencia,
+
       COALESCE(SUM(total_dolares),0) as total_dolares,
-      COALESCE(SUM(total_dolares_bs),0) as total_dolares_bs,
-      COALESCE(SUM(total_debito),0) as total_debito,
-      COALESCE(SUM(total_efectivo),0) as total_efectivo,
-      COALESCE(SUM(total_totales),0) as total_totales
+
+      COALESCE(CAST(SUM(total_dolares_bs) AS NUMERIC(20,2)),0) as total_dolares_bs,
+
+      COALESCE(CAST(SUM(total_debito) AS NUMERIC(20,2)),0) as total_debito,
+
+      COALESCE(CAST(SUM(total_efectivo) AS NUMERIC(20,2)),0) as total_efectivo,
+
+      COALESCE(CAST(SUM(total_totales) AS NUMERIC(20,2)),0) as total_totales
     FROM (
       SELECT DISTINCT *,
-      ( CAST(total_transferencia as REAL) + CAST(total_dolares_bs AS REAL) 
-      + CAST(total_debito AS REAL) + CAST(total_efectivo AS REAL)) as total_totales
+      ( total_transferencia + total_dolares_bs 
+        + total_debito + total_efectivo
+      ) 
+      as total_totales
       from (
         SELECT 
           COALESCE(
             (
-              COALESCE((SELECT SUM(monto_pagado) FROM ventas where tipo_venta like 'transferencia' and ventas.fecha_venta = t.fecha_venta),0)
+              (SELECT SUM(COALESCE(monto_pagado,0)) FROM ventas where tipo_venta like 'transferencia' and ventas.fecha_venta = t.fecha_venta)
               + 
-              COALESCE((SELECT sum(monto_transferencia) from ventas WHERE ventas.fecha_venta = t.fecha_venta),0)
+              (SELECT sum(COALESCE(monto_transferencia,0)) from ventas WHERE ventas.fecha_venta = t.fecha_venta)
             )
           ,0) as total_transferencia,
                
-         COALESCE((SELECT SUM(monto_dolares) FROM ventas where ventas.fecha_venta = t.fecha_venta),0) as total_dolares,
+          (
+            (SELECT SUM(COALESCE(monto_dolares,0)) 
+            FROM ventas where ventas.fecha_venta = t.fecha_venta)
+            -
+            (SELECT sum(COALESCE(vuelto,0)) from ventas where  ventas.fecha_venta = t.fecha_venta and tipo_venta like 'visa')
+          )
+          as total_dolares,
 
-         COALESCE((SELECT SUM(COALESCE(monto_dolares,0) * COALESCE(CAST(monto_dolar_configuracion AS REAL),1)) FROM ventas where ventas.fecha_venta = t.fecha_venta),0) as total_dolares_bs,
+          COALESCE(
+            (
+              (SELECT SUM(COALESCE(monto_dolares,0) 
+                * COALESCE(monto_dolar_configuracion,1))
+                FROM ventas 
+                where ventas.fecha_venta = t.fecha_venta)
+              -
+              (SELECT sum(COALESCE(vuelto,0) 
+                * COALESCE(monto_dolar_configuracion,1))
+                from ventas 
+                where  ventas.fecha_venta = t.fecha_venta 
+                and tipo_venta like 'visa')
+            )
+          ,0) as total_dolares_bs,
 
           COALESCE
           (
             (
-              COALESCE((SELECT SUM(monto_pagado) FROM ventas where tipo_venta like 'debito' and ventas.fecha_venta = t.fecha_venta),0)
+              (SELECT SUM(COALESCE(monto_pagado,0)) FROM ventas where tipo_venta like 'debito' and ventas.fecha_venta = t.fecha_venta)
               + 
-              COALESCE((SELECT sum(monto_debito) from ventas where  ventas.fecha_venta = t.fecha_venta),0)
+              (SELECT sum(COALESCE(monto_debito,0)) from ventas where  ventas.fecha_venta = t.fecha_venta)
             )
           ,0) 
             as total_debito,
@@ -58,9 +84,13 @@ class Caja_Model extends CI_Model
           COALESCE
           (
             (
-              COALESCE((SELECT SUM(monto_pagado) FROM ventas where tipo_venta like 'efectivo' and ventas.fecha_venta = t.fecha_venta),0)
-              + 
-              COALESCE((SELECT sum(monto_efectivo) from ventas where  ventas.fecha_venta = t.fecha_venta),0)
+              (
+                (SELECT SUM(COALESCE(monto_pagado,0)) FROM ventas where tipo_venta like 'efectivo' and ventas.fecha_venta = t.fecha_venta)
+                +   
+                (SELECT sum(COALESCE(monto_efectivo,0)) from ventas where  ventas.fecha_venta = t.fecha_venta)
+              )
+              -
+              (SELECT sum(COALESCE(vuelto,0)) from ventas where  ventas.fecha_venta = t.fecha_venta and tipo_venta not like 'visa')
             )
           ,0) 
           as total_efectivo
@@ -84,7 +114,7 @@ class Caja_Model extends CI_Model
       $search = "'1'";
     }
 
-    $sql = "SELECT SUM(total) as total, nombre from (
+    $sql = "SELECT CAST(SUM(total) AS NUMERIC(20,2)) as total, nombre from (
       SELECT 
        COALESCE(
        (
@@ -114,7 +144,7 @@ class Caja_Model extends CI_Model
       $search = "'1'";
     }
 
-    $sql = "SELECT SUM(total) as total, nombre from (
+    $sql = "SELECT CAST(SUM(total) AS NUMERIC(20,2)) as total, nombre from (
       SELECT 
        COALESCE(
        (

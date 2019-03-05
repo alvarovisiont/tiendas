@@ -33,19 +33,23 @@ class Caja extends CI_Controller
 
 			$totales_debito = $this->Caja_Model->count_all_debit($search);
 
+
 			$totales_transferencia_dia = $this->Caja_Model->count_all_transfers($search);
 
-			$totales->total_dolares = $this->numbers_decimal_format($totales->total_dolares);
+			$totales->total_dolares = numbers_decimal_format($totales->total_dolares);
 
-			$totales_by_day->total_dolares = $this->numbers_decimal_format($totales_by_day->total_dolares);
+			$totales_by_day->total_dolares = numbers_decimal_format($totales_by_day->total_dolares);
 
+			$totales_debito_all = $this->Caja_Model->count_all_debit();
+			$totales_transferencia_all =  $this->Caja_Model->count_all_transfers();
 
 
 			$array = ['totales' => $totales, 'config' => $config];
-			$array1 = ['totales_day' => $totales_by_day];
+			$array1 = ['totales_day' => $totales_by_day,'transferencia_dia' => $totales_transferencia_dia,'debito_total' => $totales_debito];
+
 			$data = array_merge($array,$array1);
 
-			$data_footer = ['transferencia_dia' => $totales_transferencia_dia,'config' => $config,'debito_total' => $totales_debito];
+			$data_footer = ['transferencia_dia' => $totales_transferencia_all,'config' => $config,'debito_total' => $totales_debito_all];
 
 
 
@@ -79,22 +83,5 @@ class Caja extends CI_Controller
 
 		echo json_encode(['general' => $total_general, 'total_transfer' => $total_transfer_general,'total_debito' => $total_debito]);
 
-	}
-
-	private function numbers_decimal_format($amount){
-			
-			if(strpos($amount, ",")){
-				$arreglo_explode = explode(',', $amount);
-			}else{
-				$arreglo_explode = explode('.', $amount);
-			}
-			
-			$total_decimals = 2;
-			
-			if(count($arreglo_explode) > 1){
-				$total_decimals =  strlen($arreglo_explode[1]);
-			}
-			
-			return number_format($amount,$total_decimals,',','.');
 	}
 }
