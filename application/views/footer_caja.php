@@ -124,13 +124,13 @@
 
       }
 
-      function make_data_chart(arreglo){
+      function make_data_chart(arregloChart){
         let chart;
         let graph;
         let relleno = [];
-        if(arreglo.length > 0){
+        if(arregloChart.length > 0){
 
-          arreglo.forEach((i,e) =>{
+          arregloChart.forEach((i,e) =>{
             relleno.push({
               category: i.nombre,
               total: i.total
@@ -145,6 +145,25 @@
         }
 
         return relleno;
+      }
+
+      function make_rows_table(arreglo){
+        let html = ""
+        if(arreglo.length > 0){
+
+          arreglo.forEach((i,e) => {
+            html+= ` 
+                    <tr>
+                      <td>${i.nombre}</td>
+                      <td><span class='badge rojo_badge'>${number_decimals_format(i.total,true)}</span></td>
+                    </tr>
+                    `
+          })
+        }else{
+          html = "<tr><td colspan='2' class='text-center'>Sin registros</td></tr>"
+        }
+
+        return html
       }
 
     $(function(){
@@ -170,6 +189,8 @@
       ?>
 
       chartData = relleno;
+
+      chartData = chartData.length > 0 ? chartData : make_data_chart(relleno)
       
       render_transfer_chart(chartData)          
 
@@ -194,6 +215,8 @@
 
       chartData = relleno;
       
+      chartData = chartData.length > 0 ? chartData : make_data_chart(relleno)
+
       render_debito_chart(chartData)          
       
 
@@ -213,26 +236,57 @@
           success: function(data){
             
             let general = data.general,
-                trans   = general.total_transferencia,
-                debito  = general.total_debito,
-                efectivo= general.total_efectivo,
-                dolares = general.total_dolares,
-                dolares_bs = general.total_dolares_bs
+                trans   = number_decimals_format(general.total_transferencia,true),
+                debito  = number_decimals_format(general.total_debito,true),
+                efectivo= number_decimals_format(general.total_efectivo,true),
+                dolares = number_decimals_format(general.total_dolares,true),
+                dolares_bs = number_decimals_format(general.total_dolares_bs,true),
+                total_totales = number_decimals_format(general.total_totales,true)
 
-            $('#badge_transferencia').text(number_decimals_format(trans,true)+" "+siglas)
-            $('#badge_debito').text(number_decimals_format(debito,true)+" "+siglas)
-            $('#badge_efectivo').text(number_decimals_format(efectivo,true)+" "+siglas)
-            $('#badge_dolares').html(number_decimals_format(dolares,true)+"$")
-            $('#badge_dolares_bs').html(number_decimals_format(dolares_bs,true)+" "+siglas)
+            /*$('#badge_transferencia').text(trans+" "+siglas)
+            $('#badge_debito').text(debito+" "+siglas)
+            $('#badge_efectivo').text(efectivo" "+siglas)
+            $('#badge_dolares').html(dolares+"$")
+            $('#badge_dolares_bs').html(dolares_bs+" "+siglas)*/
 
             btn.html("Aceptar&nbsp;<i class='fa fa-thumbs-up'></i>")
             
 
-            let data1 = make_data_chart(data.total_transfer)
+            /*let data1 = make_data_chart(data.total_transfer)
             let data2 = make_data_chart(data.total_debito)
             
             render_transfer_chart(data1)
-            render_debito_chart(data2)
+            render_debito_chart(data2)*/
+            let body = `
+                      <tr>
+                        <td class="letras_black">Transferencia</td>
+                        <td class="text-right"><span class="badge rojo_badge">${trans} ${siglas}</span></td>
+                      </tr>
+                      <tr>
+                        <td class="letras_black">Visa</td>
+                        <td class="text-right"><span class="badge rojo_badge">${dolares}$ - ${dolares_bs} ${siglas}</span></td>
+                      </tr>
+                      <tr>
+                        <td class="letras_black">Efectivo</td>
+                        <td class="text-right"><span class="badge rojo_badge">${efectivo} ${siglas}</span></td>
+                      </tr>
+                      <tr>
+                        <td class="letras_black">Debito</td>
+                        <td class="text-right"><span class="badge rojo_badge">${debito} ${siglas}</span></td>
+                      </tr>`
+
+            let footer = `<tr>
+                            <td class="text-right" colspan="2">
+                              <b style="font-size: 20px;">TOTAL: ${total_totales} ${siglas}</b>
+                            </td>
+                          </tr>`
+            $('#tabla_totales > tbody').html(body)
+            $('#tabla_totales > tfoot').html(footer)
+
+            let row1 = make_rows_table(data.total_transfer)
+            let row2 = make_rows_table(data.total_debito)
+            $('#tabla_trans > tbody').html(row1)
+            $('#tabla_debito > tbody').html(row2)
 
             $('#modal_filtro').modal('hide')
           }
