@@ -269,7 +269,7 @@ class Inventario extends CI_Controller
 					'precio_proveedor' => $varprove,
 					'iva' => 16,
 					'precio' => $variprecio,
-					'fecha_agregado' => '2019-02-21',
+					'fecha_agregado' => '2019-03-04',
 					'observacion' => "",
 					'mostrar' => 0,
 					];
