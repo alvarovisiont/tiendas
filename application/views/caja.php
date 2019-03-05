@@ -45,12 +45,6 @@
 				</div>
 				<div class="panel-body">	
 					<table class="table table-bordered" id="tabla_totales">  
-						<thead>
-							<tr>
-								<th class="text-center">Método de pago</th>
-								<th class="text-center">Monto</th>
-							</tr>
-						</thead>
 						<tbody>
 							<tr>
 								<td class="letras_black">Transferencia</td>
