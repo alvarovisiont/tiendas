@@ -38,6 +38,11 @@ class Ventas_Historial_Model extends CI_Model
       $this->db->order_by("v.id","desc");
       if($where){
          $this->db->where($where);
+         $this->db->where('comi.type', true);
+      }else
+      {
+         $this->db->where('comi.type', true);
+        
       }
 
        $query = $this->db->get();
