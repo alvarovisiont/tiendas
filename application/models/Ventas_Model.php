@@ -45,14 +45,10 @@ class Ventas_Model extends CI_Model
 
    public function buscar_clientes($filtro,$string)
    {  
-         if($string == 1){
-            $this->db->like('nombre',$filtro);
-            $this->db->or_like('telefono',$filtro);
-         }else{
+         
             $this->db->where('cedula', $filtro);
             $this->db->or_like('nombre',$filtro);
             $this->db->or_like('telefono',$filtro);
-         }
 
          $this->db->select('nombre, telefono, direccion');
          $query = $this->db->get('clientes',1);
