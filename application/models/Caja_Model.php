@@ -96,7 +96,7 @@ class Caja_Model extends CI_Model
           as total_efectivo
 
          from ventas as t
-         WHERE $search
+         WHERE $search AND (t.status = 1)
          GROUP BY t.tipo_venta,t.fecha_venta
         ) as t1 
       ) AS T2";
@@ -129,7 +129,8 @@ class Caja_Model extends CI_Model
        banco.nombre
        from ventas as t
        LEFT JOIN banco ON banco.id = t.id_banco
-       WHERE $search AND (banco.op = 1 and banco.nombre IS NOT NULL)
+       WHERE $search AND (banco.op = 1 and banco.nombre IS NOT NULL) 
+       AND (t.status = 1)
        GROUP BY t.id_banco,banco.nombre,t.fecha_venta
     ) as t1 GROUP BY nombre";
     return $this->db->query($sql)->result();
@@ -160,6 +161,7 @@ class Caja_Model extends CI_Model
        from ventas as t
        LEFT JOIN banco ON banco.id = t.id_banco_debito
        WHERE $search AND (banco.op = 2 and banco.nombre IS NOT NULL)
+       AND (t.status = 1)
        GROUP BY t.id_banco_debito,banco.nombre,t.fecha_venta
     ) as t1 GROUP BY nombre";
     return $this->db->query($sql)->result();

@@ -35,8 +35,8 @@
 			</div>
 			<div class="clearfix"></div>
 			<br>
-			<button class="btn btn-warning btn-block" data-toggle="modal" data-target="#modal_transferencias"><b>Total Transferencias y Montos</b></button>
-			
+			<button class="btn btn-warning btn-block" data-toggle="modal" data-target="#modal_transferencias"><b>Historial Transferencias <br>y Puntos</b></button>
+			<br><br>
 		</div>
 		<div class="col-md-9" style="margin-top: 50px;">
 			<div class="panel panel-black">
