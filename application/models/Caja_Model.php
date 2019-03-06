@@ -42,17 +42,17 @@ class Caja_Model extends CI_Model
         SELECT 
           COALESCE(
             (
-              (SELECT SUM(COALESCE(monto_pagado,0)) FROM ventas where tipo_venta like 'transferencia' and ventas.fecha_venta = t.fecha_venta)
+              (SELECT SUM(COALESCE(monto_pagado,0)) FROM ventas where tipo_venta like 'transferencia' and ventas.fecha_venta = t.fecha_venta and ventas.status = 1)
               + 
-              (SELECT sum(COALESCE(monto_transferencia,0)) from ventas WHERE ventas.fecha_venta = t.fecha_venta)
+              (SELECT sum(COALESCE(monto_transferencia,0)) from ventas WHERE ventas.fecha_venta = t.fecha_venta and ventas.status = 1)
             )
           ,0) as total_transferencia,
                
           (
             (SELECT SUM(COALESCE(monto_dolares,0)) 
-            FROM ventas where ventas.fecha_venta = t.fecha_venta)
+            FROM ventas where ventas.fecha_venta = t.fecha_venta and ventas.status = 1)
             -
-            (SELECT sum(COALESCE(vuelto,0)) from ventas where  ventas.fecha_venta = t.fecha_venta and tipo_venta like 'visa')
+            (SELECT sum(COALESCE(vuelto,0)) from ventas where  ventas.fecha_venta = t.fecha_venta and tipo_venta like 'visa' and ventas.status = 1)
           )
           as total_dolares,
 
@@ -61,22 +61,22 @@ class Caja_Model extends CI_Model
               (SELECT SUM(COALESCE(monto_dolares,0) 
                 * COALESCE(monto_dolar_configuracion,1))
                 FROM ventas 
-                where ventas.fecha_venta = t.fecha_venta)
+                where ventas.fecha_venta = t.fecha_venta and ventas.status = 1)
               -
               (SELECT sum(COALESCE(vuelto,0) 
                 * COALESCE(monto_dolar_configuracion,1))
                 from ventas 
                 where  ventas.fecha_venta = t.fecha_venta 
-                and tipo_venta like 'visa')
+                and tipo_venta like 'visa' and ventas.status = 1)
             )
           ,0) as total_dolares_bs,
 
           COALESCE
           (
             (
-              (SELECT SUM(COALESCE(monto_pagado,0)) FROM ventas where tipo_venta like 'debito' and ventas.fecha_venta = t.fecha_venta)
+              (SELECT SUM(COALESCE(monto_pagado,0)) FROM ventas where tipo_venta like 'debito' and ventas.fecha_venta = t.fecha_venta and ventas.status = 1)
               + 
-              (SELECT sum(COALESCE(monto_debito,0)) from ventas where  ventas.fecha_venta = t.fecha_venta)
+              (SELECT sum(COALESCE(monto_debito,0)) from ventas where  ventas.fecha_venta = t.fecha_venta and ventas.status = 1)
             )
           ,0) 
             as total_debito,
@@ -85,18 +85,18 @@ class Caja_Model extends CI_Model
           (
             (
               (
-                (SELECT SUM(COALESCE(monto_pagado,0)) FROM ventas where tipo_venta like 'efectivo' and ventas.fecha_venta = t.fecha_venta)
+                (SELECT SUM(COALESCE(monto_pagado,0)) FROM ventas where tipo_venta like 'efectivo' and ventas.fecha_venta = t.fecha_venta and ventas.status = 1)
                 +   
-                (SELECT sum(COALESCE(monto_efectivo,0)) from ventas where  ventas.fecha_venta = t.fecha_venta)
+                (SELECT sum(COALESCE(monto_efectivo,0)) from ventas where  ventas.fecha_venta = t.fecha_venta and ventas.status = 1)
               )
               -
-              (SELECT sum(COALESCE(vuelto,0)) from ventas where  ventas.fecha_venta = t.fecha_venta and tipo_venta not like 'visa')
+              (SELECT sum(COALESCE(vuelto,0)) from ventas where  ventas.fecha_venta = t.fecha_venta and tipo_venta not like 'visa' and ventas.status = 1)
             )
           ,0) 
           as total_efectivo
 
          from ventas as t
-         WHERE $search AND (t.status = 1)
+         WHERE $search 
          GROUP BY t.tipo_venta,t.fecha_venta
         ) as t1 
       ) AS T2";
@@ -118,12 +118,12 @@ class Caja_Model extends CI_Model
       SELECT 
        COALESCE(
        (
-         COALESCE((SELECT SUM(monto_pagado) FROM ventas as v where v.tipo_venta like 'transferencia' and v.id_banco = t.id_banco
+         COALESCE((SELECT SUM(COALESCE(monto_pagado,0)) FROM ventas as v where v.tipo_venta like 'transferencia' and v.id_banco = t.id_banco
           AND v.fecha_venta = t.fecha_venta
          ),0) 
         + 
         COALESCE(
-          (SELECT sum(monto_transferencia) from ventas as v where v.id_banco = t.id_banco and v.fecha_venta = t.fecha_venta),0)
+          (SELECT sum(COALESCE(monto_transferencia,0)) from ventas as v where v.id_banco = t.id_banco and v.fecha_venta = t.fecha_venta),0)
       ),0) as total,
 
        banco.nombre
@@ -149,12 +149,12 @@ class Caja_Model extends CI_Model
       SELECT 
        COALESCE(
        (
-         COALESCE((SELECT SUM(monto_pagado) FROM ventas as v where v.tipo_venta like 'debito' and v.id_banco_debito = t.id_banco_debito
+         COALESCE((SELECT SUM(COALESCE(monto_pagado,0)) FROM ventas as v where v.tipo_venta like 'debito' and v.id_banco_debito = t.id_banco_debito
           AND v.fecha_venta = t.fecha_venta
          ),0) 
         + 
         COALESCE(
-          (SELECT sum(monto_debito) from ventas as v where v.id_banco_debito = t.id_banco_debito and v.fecha_venta = t.fecha_venta),0)
+          (SELECT sum(COALESCE(monto_debito,0)) from ventas as v where v.id_banco_debito = t.id_banco_debito and v.fecha_venta = t.fecha_venta),0)
       ),0) as total,
 
        banco.nombre
